@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html data-bs-theme="light" lang="fr" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{% block title %}Se connecter | Inventaire{% endblock %}</title>
+        <link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/img/favicons/favicon.jpg') }}">
+        <meta name="theme-color" content="#ffffff">
+        <script src="{{ asset('assets/js/config.js') }}"></script>
+        <script src="{{ asset('assets/vendors/simplebar/simplebar.min.js') }}"></script>
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,500,600,700%7cPoppins:300,400,500,600,700,800,900&amp;display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css" integrity="sha384-b6lVK+yci+bfDmaY1u0zE8YYJt0TZxLEAFyYSLHId4xoVvsrQu3INevFKo+Xir8e" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link href="{{ asset('assets/vendors/simplebar/simplebar.min.css') }}" rel="stylesheet">
+        <link href="{{ asset('assets/css/theme.css') }}" rel="stylesheet" id="style-default">
+        <link href="{{ asset('assets/css/user.css') }}" rel="stylesheet" id="user-style-default">
+        {% block stylesheets %}{% endblock %}
+    </head>
+    <body>
+        <main class="main" id="top">
+            <div class="container-fluid">
+                <div class="row min-vh-100 bg-100">
+                    <div class="bg-holder" style="background-image:url({{ asset('assets/img/connexion/ASV.jpg') }});background-position: 50% 10%;"></div>
+                    <div class="col-sm-10 col-md-6 px-sm-0 align-self-center mx-auto py-5">
+                        <div class="row justify-content-center g-0">
+                            <div class="col-lg-9 col-xl-8 col-xxl-6">
+{#                                {% block erreurs %}{% endblock %}#}
+                                <div class="card">
+                                    <div class="card-header bg-circle-shape bg-shape text-center p-2">
+                                        <span class="font-sans-serif fw-bolder fs-3 z-1 position-relative text-white" data-bs-theme="light">
+                                            Inventaire - ASV
+                                        </span>
+                                    </div>
+                                    <div class="card-body p-4">
+                                        <div class="d-flex justify-content-center">
+                                            <img class="img-fluid" style="max-width: 65%; height: auto;" src="{{ asset('assets/img/logos/ASV.webp') }}" alt="">
+                                        </div>
+                                        <div class="row flex-between-center">
+                                            {% block erreurs %}{% endblock %}
+                                        </div>
+                                        {% block formulaire %}{% endblock %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <script src="{{ asset('assets/vendors/jquery/jquery.min.js') }}"></script>
+        <script src="{{ asset('assets/vendors/popper/popper.min.js') }}"></script>
+        <script src="{{ asset('assets/vendors/bootstrap/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('assets/vendors/anchorjs/anchor.min.js') }}"></script>
+        <script src="{{ asset('assets/vendors/is/is.min.js') }}"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" integrity="sha512-fD9DI5bZwQxOi7MhYWnnNPlvXdp/2Pj3XSTRrFs5FQa4mizyGLnJcN6tuvUS6LbmgN1ut+XGSABKvjN0H6Aoow==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="{{ asset('assets/vendors/lodash/lodash.min.js') }}"></script>
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
+        <script src="{{ asset('assets/vendors/list.js/list.min.js') }}"></script>
+        <script src="{{ asset('assets/js/theme.js') }}"></script>
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>
