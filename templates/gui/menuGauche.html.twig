@@ -1,0 +1,145 @@
+<nav class="navbar navbar-light navbar-vertical navbar-expand-xl">
+    <script>
+        var navbarStyle = localStorage.getItem("navbarStyle");
+        if (navbarStyle && navbarStyle !== 'transparent') {
+            document.querySelector('.navbar-vertical').classList.add(`navbar-${navbarStyle}`);
+        }
+    </script>
+    <div class="d-flex align-items-center">
+        <div class="toggle-icon-wrapper">
+            <button class="btn navbar-toggler-humburger-icon navbar-vertical-toggle" data-bs-toggle="tooltip" data-bs-placement="left" title="Ouvrir/Fermer">
+                <span class="navbar-toggle-icon">
+                    <span class="toggle-line"></span>
+                </span>
+            </button>
+        </div>
+        <a class="navbar-brand" href="{{ path('admin.home') }}">
+            <div class="d-flex align-items-center py-3">
+{#                <img class="me-2" src="{{ asset('assets/admin/img/icons/spot-illustrations/falcon.png') }}" alt="" width="40" />#}
+                <span class="font-sans-serif">Inventaire</span>
+            </div>
+        </a>
+    </div>
+    <div class="collapse navbar-collapse" id="navbarVerticalCollapse">
+        <div class="navbar-vertical-content scrollbar">
+            <ul class="navbar-nav flex-column mb-3" id="navbarVerticalNav">
+                <li class="nav-item">
+                    <div class="d-flex align-items-center">
+                        <a class="nav-link {% if menu_active == 'home' %}active{% endif %}" href="" role="button">
+                            <div class="d-flex align-items-center">
+                                <span class="nav-link-icon">
+                                    <span class="fas fa-home"></span>
+                                </span>
+                                <span class="nav-link-text ps-1">Accueil</span>
+                            </div>
+                        </a>
+                    </div>
+                </li>
+                <br>
+{#                <li class="nav-item">#}
+{#                    <div class="d-flex align-items-center">#}
+{#                        <a class="nav-link {% if menu_active == 'contact' %}active{% endif %}" href="" role="button">#}
+{#                            <div class="d-flex align-items-center">#}
+{#                                <span class="nav-link-icon">#}
+{#                                    <span class="fas fa-envelope"></span>#}
+{#                                </span>#}
+{#                                <span class="nav-link-text ps-1">Contact</span>#}
+{#                            </div>#}
+{#                        </a>#}
+{#                    </div>#}
+{#                </li>#}
+                <li class="nav-item">
+                    <a class="nav-link dropdown-indicator" href="#gestion" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="gestion">
+                        <div class="d-flex align-items-center">
+                            <span class="nav-link-icon">
+                                <span class="bi bi-pencil-fill"></span>
+                            </span>
+                            <span class="nav-link-text ps-1">Gestion</span>
+                        </div>
+                    </a>
+                    <ul class="nav collapse {% if menu_active == 'ecran' or menu_active == 'emplacement' or menu_active == 'serveur' or menu_active == 'statut' or menu_active == 'stockage' or menu_active == 'tablette' or menu_active == 'telephone' or menu_active == 'utilisateur' or menu_active == 'pc_fixe' or menu_active == 'pc_portable' %}show{% endif %}" id="gestion">
+                        <li class="nav-item">
+                            <a class="nav-link {% if menu_active == 'ecran' %}active{% endif %}" href="">
+                                <div class="d-flex align-items-center">
+                                    <span class="nav-link-text ps-1">Écran</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if menu_active == 'emplacement' %}active{% endif %}" href="">
+                                <div class="d-flex align-items-center">
+                                    <span class="nav-link-text ps-1">Emplacement</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link dropdown-indicator collapsed" href="#pc" data-bs-toggle="collapse" aria-expanded="false" aria-controls="multi-level">
+                                <div class="d-flex align-items-center">
+                                    <span class="nav-link-text ps-1">PC</span>
+                                </div>
+                            </a>
+                            <ul class="nav collapse {% if menu_active == 'pc_fixe' or menu_active == 'pc_portable' %}show{% endif %}" id="pc">
+                                <li class="nav-item">
+                                    <a class="nav-link {% if menu_active == 'pc_fixe' %}active{% endif %}" href="">
+                                        <div class="d-flex align-items-center">
+                                            <span class="nav-link-text ps-1">Fixe</span>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link {% if menu_active == 'pc_portable' %}active{% endif %}" href="">
+                                        <div class="d-flex align-items-center">
+                                            <span class="nav-link-text ps-1">Portable</span>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if menu_active == 'serveur' %}active{% endif %}" href="">
+                                <div class="d-flex align-items-center">
+                                    <span class="nav-link-text ps-1">Serveur</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if menu_active == 'statut' %}active{% endif %}" href="">
+                                <div class="d-flex align-items-center">
+                                    <span class="nav-link-text ps-1">Statut</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if menu_active == 'stockage' %}active{% endif %}" href="">
+                                <div class="d-flex align-items-center">
+                                    <span class="nav-link-text ps-1">Stockage</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if menu_active == 'tablette' %}active{% endif %}" href="">
+                                <div class="d-flex align-items-center">
+                                    <span class="nav-link-text ps-1">Tablette</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if menu_active == 'telephone' %}active{% endif %}" href="">
+                                <div class="d-flex align-items-center">
+                                    <span class="nav-link-text ps-1">Téléphone</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if menu_active == 'utilisateur' %}active{% endif %}" href="">
+                                <div class="d-flex align-items-center">
+                                    <span class="nav-link-text ps-1">Utilisateur</span>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
