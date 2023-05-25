@@ -39,12 +39,16 @@ class Utilisateur
     #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: PcFixe::class)]
     private Collection $pcFixes;
 
+    #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: PcPortable::class)]
+    private Collection $pcPortables;
+
     public function __construct()
     {
         $this->ecrans = new ArrayCollection();
         $this->telephones = new ArrayCollection();
         $this->tablettes = new ArrayCollection();
         $this->pcFixes = new ArrayCollection();
+        $this->pcPortables = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -214,6 +218,36 @@ class Utilisateur
             // set the owning side to null (unless already changed)
             if ($pcFix->getUtilisateur() === $this) {
                 $pcFix->setUtilisateur(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PcPortable>
+     */
+    public function getPcPortables(): Collection
+    {
+        return $this->pcPortables;
+    }
+
+    public function addPcPortable(PcPortable $pcPortable): self
+    {
+        if (!$this->pcPortables->contains($pcPortable)) {
+            $this->pcPortables->add($pcPortable);
+            $pcPortable->setUtilisateur($this);
+        }
+
+        return $this;
+    }
+
+    public function removePcPortable(PcPortable $pcPortable): self
+    {
+        if ($this->pcPortables->removeElement($pcPortable)) {
+            // set the owning side to null (unless already changed)
+            if ($pcPortable->getUtilisateur() === $this) {
+                $pcPortable->setUtilisateur(null);
             }
         }
 

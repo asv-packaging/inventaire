@@ -1,0 +1,37 @@
+{% extends 'security/base.html.twig' %}
+
+{% block title %}Se connecter | Inventaire{% endblock %}
+
+{% block erreurs %}
+    {% if error %}
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>Erreur :</strong> {{ error.messageKey|trans(error.messageData, 'security') }}
+            <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block formulaire %}
+    <form method="post">
+        <div class="mb-3">
+            <label class="form-label" for="email">Adresse mail</label>
+            <input class="form-control" id="email" name="email" type="email" placeholder="Votre mail" required autofocus />
+        </div>
+        <div class="mb-3">
+            <div class="d-flex justify-content-between">
+                <label class="form-label" for="password">Mot de passe</label>
+            </div>
+            <input class="form-control" id="password" name="password" placeholder="Votre mot de passe" type="password" />
+        </div>
+        <div class="mb-3" hidden>
+            <input type="hidden" id="csrf_token" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" id="se-souvenir-de-moi" name="_remember_me" type="checkbox" />
+            <label class="form-check-label" for="se-souvenir-de-moi">Se souvenir de moi</label>
+        </div>
+        <div class="mb-3">
+            <button class="btn btn-primary d-block w-100 mt-3" type="submit">Se connecter</button>
+        </div>
+    </form>
+{% endblock %}
