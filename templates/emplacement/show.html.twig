@@ -1,0 +1,79 @@
+{% extends 'gui/base.html.twig' %}
+
+{% block title %}Emplacements | Inventaire{% endblock %}
+
+{% block body %}
+    <div class="d-flex mb-4 mt-3">
+        <span class="fa-stack me-2 ms-n1">
+            <i class="fas fa-circle fa-stack text-300"></i>
+            <i class="fa-inverse fa-stack-1x text-danger fas fa-map-pin"></i>
+        </span>
+        <div class="col">
+            <h5 class="mb-0 text-danger position-relative">
+                <span class="bg-200 dark__bg-1100 pe-3">Emplacements</span>
+                <span class="border position-absolute top-50 translate-middle-y w-100 start-0 z-n1"></span>
+            </h5>
+            <p class="mb-0">Cette page vous permet de voir tous les emplacements.</p>
+        </div>
+    </div>
+    <div class="row g-0">
+        <div class="col-lg-12 ps-lg-2">
+            {% for message in app.flashes('success') %}
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>Parfait :</strong> {{ message }}
+                    <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+            <div class="sticky-sidebar">
+                <div class="card mb-3">
+                    <div class="card-header d-flex flex-between-center">
+                        <h5 class="mb-0">Tous les emplacements</h5>
+                        <a class="btn btn-falcon-default btn-sm" href="{{ path('admin.emplacement.add') }}">
+                            Ajouter
+                        </a>
+                    </div>
+                    <div class="card-body bg-light">
+                        <div class="table-responsive scrollbar">
+                            <table class="table overflow-hidden">
+                                <thead>
+                                    <tr>
+                                        <th class="align-middle text-center">#</th>
+                                        <th class="align-middle text-center">Nom</th>
+                                        <th class="align-middle text-center">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% if emplacements | length != 0 %}
+                                        {% for emplacement in emplacements %}
+                                            <tr class="align-middle text-center">
+                                                <td class="text-nowrap">{{ emplacement.id }}</td>
+                                                <td class="text-nowrap">{{ emplacement.nom }}</td>
+                                                <td class="text-nowrap">
+                                                    <a href="{{ path('admin.emplacement.edit', {id: emplacement.id}) }}" class="btn btn-primary btn-sm">
+                                                        <span class="bi bi-pencil-square"></span>
+                                                    </a>
+
+                                                    <form method="post" action="{{ path('admin.emplacement.delete', {id: emplacement.id}) }}" style="display: inline-block" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer l\'emplacement : \'{{ emplacement.nom }}\' ?')">
+                                                        <input type="hidden" name="_method" value="DELETE">
+                                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ emplacement.id) }}">
+                                                        <button class="btn btn-danger btn-sm">
+                                                            <span class="bi bi-trash-fill"></span>
+                                                        </button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    {% else %}
+                                        <tr class="align-middle text-center">
+                                            <td colspan="5">Aucun emplacement n'a été trouvé.</td>
+                                        </tr>
+                                    {% endif %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

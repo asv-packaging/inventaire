@@ -2,11 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\StatutRepository;
+use App\Repository\EtatRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: StatutRepository::class)]
-class Statut
+#[ORM\Entity(repositoryClass: EtatRepository::class)]
+class Etat
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -26,7 +26,7 @@ class Statut
         return $this->nom;
     }
 
-    public function setNom(string $nom): self
+    public function setNom(string $nom): static
     {
         $this->nom = $nom;
 

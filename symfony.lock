@@ -9,7 +9,7 @@
         }
     },
     "doctrine/doctrine-bundle": {
-        "version": "2.9",
+        "version": "2.10",
         "recipe": {
             "repo": "github.com/symfony/recipes",
             "branch": "main",
@@ -49,6 +49,18 @@
             "tests/bootstrap.php"
         ]
     },
+    "sensio/framework-extra-bundle": {
+        "version": "6.2",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "5.2",
+            "ref": "fb7e19da7f013d0d422fa9bce16f5c510e27609b"
+        },
+        "files": [
+            "config/packages/sensio_framework_extra.yaml"
+        ]
+    },
     "symfony/console": {
         "version": "6.0",
         "recipe": {
@@ -74,7 +86,7 @@
         ]
     },
     "symfony/flex": {
-        "version": "2.2",
+        "version": "2.3",
         "recipe": {
             "repo": "github.com/symfony/recipes",
             "branch": "main",
@@ -117,7 +129,7 @@
         ]
     },
     "symfony/maker-bundle": {
-        "version": "1.48",
+        "version": "1.49",
         "recipe": {
             "repo": "github.com/symfony/recipes",
             "branch": "main",
@@ -162,7 +174,7 @@
         ]
     },
     "symfony/phpunit-bridge": {
-        "version": "6.2",
+        "version": "6.3",
         "recipe": {
             "repo": "github.com/symfony/recipes",
             "branch": "main",
@@ -265,6 +277,6 @@
         ]
     },
     "twig/extra-bundle": {
-        "version": "v3.6.0"
+        "version": "v3.6.1"
     }
 }

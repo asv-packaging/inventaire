@@ -15,7 +15,6 @@
         </div>
         <a class="navbar-brand" href="{{ path('admin.home') }}">
             <div class="d-flex align-items-center py-3">
-{#                <img class="me-2" src="{{ asset('assets/admin/img/icons/spot-illustrations/falcon.png') }}" alt="" width="40" />#}
                 <span class="font-sans-serif">Inventaire</span>
             </div>
         </a>
@@ -25,7 +24,7 @@
             <ul class="navbar-nav flex-column mb-3" id="navbarVerticalNav">
                 <li class="nav-item">
                     <div class="d-flex align-items-center">
-                        <a class="nav-link {% if menu_active == 'home' %}active{% endif %}" href="" role="button">
+                        <a class="nav-link {% if menu_active == 'home' %}active{% endif %}" href="{{ path('admin.home') }}" role="button">
                             <div class="d-flex align-items-center">
                                 <span class="nav-link-icon">
                                     <span class="fas fa-home"></span>
@@ -57,18 +56,18 @@
                             <span class="nav-link-text ps-1">Gestion</span>
                         </div>
                     </a>
-                    <ul class="nav collapse {% if menu_active == 'ecran' or menu_active == 'emplacement' or menu_active == 'serveur' or menu_active == 'statut' or menu_active == 'stockage' or menu_active == 'tablette' or menu_active == 'telephone' or menu_active == 'utilisateur' or menu_active == 'pc_fixe' or menu_active == 'pc_portable' %}show{% endif %}" id="gestion">
+                    <ul class="nav collapse {% if menu_active == 'ecran' or menu_active == 'emplacement' or menu_active == 'serveur' or menu_active == 'etat' or menu_active == 'stockage' or menu_active == 'tablette' or menu_active == 'telephone' or menu_active == 'utilisateur' or menu_active == 'pc_fixe' or menu_active == 'pc_portable' %}show{% endif %}" id="gestion">
                         <li class="nav-item">
                             <a class="nav-link {% if menu_active == 'ecran' %}active{% endif %}" href="">
                                 <div class="d-flex align-items-center">
-                                    <span class="nav-link-text ps-1">Écran</span>
+                                    <span class="nav-link-text ps-1">Écrans</span>
                                 </div>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {% if menu_active == 'emplacement' %}active{% endif %}" href="">
+                            <a class="nav-link {% if menu_active == 'emplacement' %}active{% endif %}" href="{{ path('admin.emplacement.show') }}">
                                 <div class="d-flex align-items-center">
-                                    <span class="nav-link-text ps-1">Emplacement</span>
+                                    <span class="nav-link-text ps-1">Emplacements</span>
                                 </div>
                             </a>
                         </li>
@@ -82,14 +81,14 @@
                                 <li class="nav-item">
                                     <a class="nav-link {% if menu_active == 'pc_fixe' %}active{% endif %}" href="">
                                         <div class="d-flex align-items-center">
-                                            <span class="nav-link-text ps-1">Fixe</span>
+                                            <span class="nav-link-text ps-1">Fixes</span>
                                         </div>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link {% if menu_active == 'pc_portable' %}active{% endif %}" href="">
                                         <div class="d-flex align-items-center">
-                                            <span class="nav-link-text ps-1">Portable</span>
+                                            <span class="nav-link-text ps-1">Portables</span>
                                         </div>
                                     </a>
                                 </li>
@@ -98,42 +97,42 @@
                         <li class="nav-item">
                             <a class="nav-link {% if menu_active == 'serveur' %}active{% endif %}" href="">
                                 <div class="d-flex align-items-center">
-                                    <span class="nav-link-text ps-1">Serveur</span>
+                                    <span class="nav-link-text ps-1">Serveurs</span>
                                 </div>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {% if menu_active == 'statut' %}active{% endif %}" href="">
+                            <a class="nav-link {% if menu_active == 'etat' %}active{% endif %}" href="{{ path('admin.etat.show') }}">
                                 <div class="d-flex align-items-center">
-                                    <span class="nav-link-text ps-1">Statut</span>
+                                    <span class="nav-link-text ps-1">États</span>
                                 </div>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {% if menu_active == 'stockage' %}active{% endif %}" href="">
+                            <a class="nav-link {% if menu_active == 'stockage' %}active{% endif %}" href="{{ path('admin.stockage.show') }}">
                                 <div class="d-flex align-items-center">
-                                    <span class="nav-link-text ps-1">Stockage</span>
+                                    <span class="nav-link-text ps-1">Stockages</span>
                                 </div>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link {% if menu_active == 'tablette' %}active{% endif %}" href="">
                                 <div class="d-flex align-items-center">
-                                    <span class="nav-link-text ps-1">Tablette</span>
+                                    <span class="nav-link-text ps-1">Tablettes</span>
                                 </div>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link {% if menu_active == 'telephone' %}active{% endif %}" href="">
                                 <div class="d-flex align-items-center">
-                                    <span class="nav-link-text ps-1">Téléphone</span>
+                                    <span class="nav-link-text ps-1">Téléphones</span>
                                 </div>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {% if menu_active == 'utilisateur' %}active{% endif %}" href="">
+                            <a class="nav-link {% if menu_active == 'utilisateur' %}active{% endif %}" href="{{ path('admin.utilisateur.show') }}">
                                 <div class="d-flex align-items-center">
-                                    <span class="nav-link-text ps-1">Utilisateur</span>
+                                    <span class="nav-link-text ps-1">Utilisateurs</span>
                                 </div>
                             </a>
                         </li>
