@@ -1,0 +1,62 @@
+{% extends 'gui/base.html.twig' %}
+
+{% block title %}Éditer le serveur | Inventaire{% endblock %}
+
+{% block body %}
+    <div class="d-flex mb-4 mt-3">
+        <span class="fa-stack me-2 ms-n1">
+            <i class="fas fa-circle fa-stack text-300"></i>
+            <i class="fa-inverse fa-stack-1x text-danger fas fa-server"></i>
+        </span>
+        <div class="col">
+            <h5 class="mb-0 text-danger position-relative">
+                <span class="bg-200 dark__bg-1100 pe-3">Serveurs</span>
+                <span class="border position-absolute top-50 translate-middle-y w-100 start-0 z-n1"></span>
+            </h5>
+            <p class="mb-0">Cette page vous permet d'éditer un serveur.</p>
+        </div>
+    </div>
+    <div class="row g-0">
+        <div class="col-lg-12 ps-lg-2">
+            {% for message in app.flashes('error') %}
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>Erreur :</strong> {{ message }}
+                    <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+            <div class="sticky-sidebar">
+                <div class="card mb-3">
+                    <div class="card-header d-flex flex-between-center">
+                        <h5 class="mb-0">Éditer un serveur</h5>
+                        <a class="btn btn-falcon-default btn-sm" href="{{ path('admin.serveur.show') }}">
+                            Retour
+                        </a>
+                    </div>
+                    <div class="card-body bg-light">
+                        {{ form_start(serveurForm) }}
+                        {{ form_row(serveurForm.nom) }}
+                        {{ form_row(serveurForm.ip) }}
+                        {{ form_row(serveurForm.marque) }}
+                        {{ form_row(serveurForm.modele) }}
+                        {{ form_row(serveurForm.processeur) }}
+                        {{ form_row(serveurForm.memoire) }}
+                        {{ form_row(serveurForm.stockage_nombre) }}
+                        {{ form_row(serveurForm.stockage, {'placeholder': 'Choisir un type de stockage'}) }}
+                        {{ form_row(serveurForm.os) }}
+                        {{ form_row(serveurForm.physique) }}
+                        {{ form_row(serveurForm.numero_serie) }}
+                        {{ form_row(serveurForm.emplacement, {'placeholder': 'Choisir un emplacement'}) }}
+                        {{ form_row(serveurForm.etat, {'placeholder': 'Choisir un état'}) }}
+                        {{ form_row(serveurForm.date_achat) }}
+                        {{ form_row(serveurForm.date_garantie) }}
+                        {{ form_row(serveurForm.commentaire) }}
+                        <div class="d-flex justify-content-end">
+                            <button class="btn btn-primary me-1 mb-1" type="submit">Éditer</button>
+                        </div>
+                        {{ form_end(serveurForm) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -16,7 +16,7 @@ class EmplacementFormType extends AbstractType
             ->add('nom', TextType::class, [
                 'label' => 'Nom de l\'emplacement',
                 'attr' => [
-                    'placeholder' => 'Nom du l\'emplacement',
+                    'placeholder' => 'Nom de l\'emplacement',
                 ],
             ])
         ;

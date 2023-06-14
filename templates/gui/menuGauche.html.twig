@@ -58,7 +58,7 @@
                     </a>
                     <ul class="nav collapse {% if menu_active == 'ecran' or menu_active == 'emplacement' or menu_active == 'serveur' or menu_active == 'etat' or menu_active == 'stockage' or menu_active == 'tablette' or menu_active == 'telephone' or menu_active == 'utilisateur' or menu_active == 'pc_fixe' or menu_active == 'pc_portable' %}show{% endif %}" id="gestion">
                         <li class="nav-item">
-                            <a class="nav-link {% if menu_active == 'ecran' %}active{% endif %}" href="">
+                            <a class="nav-link {% if menu_active == 'ecran' %}active{% endif %}" href="{{ path('admin.ecran.show') }}">
                                 <div class="d-flex align-items-center">
                                     <span class="nav-link-text ps-1">Écrans</span>
                                 </div>
@@ -95,7 +95,7 @@
                             </ul>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {% if menu_active == 'serveur' %}active{% endif %}" href="">
+                            <a class="nav-link {% if menu_active == 'serveur' %}active{% endif %}" href="{{ path('admin.serveur.show') }}">
                                 <div class="d-flex align-items-center">
                                     <span class="nav-link-text ps-1">Serveurs</span>
                                 </div>
@@ -123,7 +123,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {% if menu_active == 'telephone' %}active{% endif %}" href="">
+                            <a class="nav-link {% if menu_active == 'telephone' %}active{% endif %}" href="{{ path('admin.telephone.show') }}">
                                 <div class="d-flex align-items-center">
                                     <span class="nav-link-text ps-1">Téléphones</span>
                                 </div>

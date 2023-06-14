@@ -61,7 +61,7 @@ class EtatController extends AbstractController
     #[Route('/{id}', name: 'edit', methods: ['GET', 'POST'])]
     public function edit(Etat $etat, EntityManagerInterface $entityManager, Request $request): Response
     {
-        $etatForm = $this->createForm(StatutFormType::class, $statut);
+        $etatForm = $this->createForm(EtatFormType::class, $etat);
 
         $etatForm->handleRequest($request);
 

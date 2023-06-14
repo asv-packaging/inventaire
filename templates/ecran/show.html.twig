@@ -1,0 +1,151 @@
+{% extends 'gui/base.html.twig' %}
+
+{% block title %}Écrans | Inventaire{% endblock %}
+
+{% block body %}
+    <div class="d-flex mb-4 mt-3">
+        <span class="fa-stack me-2 ms-n1">
+            <i class="fas fa-circle fa-stack text-300"></i>
+            <i class="fa-inverse fa-stack-1x text-danger fas fa-display"></i>
+        </span>
+        <div class="col">
+            <h5 class="mb-0 text-danger position-relative">
+                <span class="bg-200 dark__bg-1100 pe-3">Écrans</span>
+                <span class="border position-absolute top-50 translate-middle-y w-100 start-0 z-n1"></span>
+            </h5>
+            <p class="mb-0">Cette page vous permet de voir tous les écrans.</p>
+        </div>
+    </div>
+    <div class="row g-0">
+        <div class="col-lg-12 ps-lg-2">
+            {% for message in app.flashes('success') %}
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>Parfait :</strong> {{ message }}
+                    <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+            <div class="sticky-sidebar">
+                <div class="card mb-3">
+                    <div class="card-header d-flex flex-between-center">
+                        <h5 class="mb-0">Tous les écrans</h5>
+                        <a class="btn btn-falcon-default btn-sm" href="{{ path('admin.ecran.add') }}">
+                            Ajouter
+                        </a>
+                    </div>
+                    <div class="card-body bg-light">
+                        <div class="table-responsive scrollbar">
+                            <table class="table overflow-hidden">
+                                <thead>
+                                    <tr>
+                                        <th class="align-middle text-center">#</th>
+                                        <th class="align-middle text-center">Nom</th>
+                                        <th class="align-middle text-center">Marque</th>
+                                        <th class="align-middle text-center">Modèle</th>
+                                        <th class="align-middle text-center">Utilisateur</th>
+                                        <th class="align-middle text-center">Emplacement</th>
+                                        <th class="align-middle text-center">Numéro de série</th>
+                                        <th class="align-middle text-center">Date d'achat</th>
+                                        <th class="align-middle text-center">Date de garantie</th>
+                                        <th class="align-middle text-center">État</th>
+                                        <th class="align-middle text-center">Commentaire</th>
+                                        <th class="align-middle text-center">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% if ecrans | length != 0 %}
+                                        {% for ecran in ecrans %}
+                                            <tr class="align-middle text-center">
+                                                <td class="text-nowrap">{{ ecran.id }}</td>
+                                                <td class="text-nowrap">{{ ecran.nom }}</td>
+                                                <td class="text-nowrap">
+                                                    {% if ecran.marque != null %}
+                                                        {{ ecran.marque }}
+                                                    {% else %}
+                                                        <span class="badge text-bg-danger">N/A</span>
+                                                    {% endif %}
+                                                </td>
+                                                <td class="text-nowrap">
+                                                    {% if ecran.modele != null %}
+                                                        {{ ecran.modele }}
+                                                    {% else %}
+                                                        <span class="badge text-bg-danger">N/A</span>
+                                                    {% endif %}
+                                                </td>
+                                                <td class="text-nowrap">
+                                                    {% if ecran.utilisateur_nom != null or ecran.utilisateur_prenom != null %}
+                                                        {{ ecran.utilisateur_nom }} {{ ecran.utilisateur_prenom }}
+                                                    {% else %}
+                                                        <span class="badge text-bg-danger">N/A</span>
+                                                    {% endif %}
+                                                </td>
+                                                <td class="text-nowrap">
+                                                    {% if ecran.emplacement_nom != null %}
+                                                        {{ ecran.emplacement_nom }}
+                                                    {% else %}
+                                                        <span class="badge text-bg-danger">N/A</span>
+                                                    {% endif %}
+                                                </td>
+                                                <td class="text-nowrap">
+                                                    {% if ecran.numero_serie != null %}
+                                                        {{ ecran.numero_serie }}
+                                                    {% else %}
+                                                        <span class="badge text-bg-danger">N/A</span>
+                                                    {% endif %}
+                                                </td>
+                                                <td class="text-nowrap">
+                                                    {% if ecran.date_achat != null %}
+                                                        {{ ecran.date_achat }}
+                                                    {% else %}
+                                                        <span class="badge text-bg-danger">N/A</span>
+                                                    {% endif %}
+                                                </td>
+                                                <td class="text-nowrap">
+                                                    {% if ecran.date_garantie != null %}
+                                                        {{ ecran.date_garantie }}
+                                                    {% else %}
+                                                        <span class="badge text-bg-danger">N/A</span>
+                                                    {% endif %}
+                                                </td>
+                                                <td class="text-nowrap">
+                                                    {% if ecran.etat_nom != null %}
+                                                        {{ ecran.etat_nom }}
+                                                    {% else %}
+                                                        <span class="badge text-bg-danger">N/A</span>
+                                                    {% endif %}
+                                                </td>
+                                                <td class="text-nowrap">
+                                                    {% if ecran.commentaire != null %}
+                                                        {{ ecran.commentaire }}
+                                                    {% else %}
+                                                        <span class="badge text-bg-danger">N/A</span>
+                                                    {% endif %}
+                                                </td>
+                                                <td class="text-nowrap">
+                                                    <a href="{{ path('admin.ecran.edit', {id: ecran.id}) }}" class="btn btn-primary btn-sm">
+                                                        <span class="bi bi-pencil-square"></span>
+                                                    </a>
+
+                                                    <form method="post" action="{{ path('admin.ecran.delete', {id: ecran.id}) }}" style="display: inline-block" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer l\'écran : \'{{ ecran.nom }}\' ?')">
+                                                        <input type="hidden" name="_method" value="DELETE">
+                                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ ecran.id) }}">
+                                                        <button class="btn btn-danger btn-sm">
+                                                            <span class="bi bi-trash-fill"></span>
+                                                        </button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    {% else %}
+                                        <tr class="align-middle text-center">
+                                            <td colspan="12">Aucun écran n'a été trouvé.</td>
+                                        </tr>
+                                    {% endif %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
