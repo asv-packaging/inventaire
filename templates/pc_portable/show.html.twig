@@ -1,0 +1,184 @@
+{% extends 'gui/base.html.twig' %}
+
+{% block title %}PC Portable | Inventaire{% endblock %}
+
+{% block body %}
+    <div class="d-flex mb-4 mt-3">
+        <span class="fa-stack me-2 ms-n1">
+            <i class="fas fa-circle fa-stack text-300"></i>
+            <i class="fa-inverse fa-stack-1x text-danger fas fa-laptop"></i>
+        </span>
+        <div class="col">
+            <h5 class="mb-0 text-danger position-relative">
+                <span class="bg-200 dark__bg-1100 pe-3">PC Portables</span>
+                <span class="border position-absolute top-50 translate-middle-y w-100 start-0 z-n1"></span>
+            </h5>
+            <p class="mb-0">Cette page vous permet de voir tous les PC Portables.</p>
+        </div>
+    </div>
+    <div class="row g-0">
+        <div class="col-lg-12 ps-lg-2">
+            {% for message in app.flashes('success') %}
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>Parfait :</strong> {{ message }}
+                    <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+            <div class="sticky-sidebar">
+                <div class="card mb-3">
+                    <div class="card-header d-flex flex-between-center">
+                        <h5 class="mb-0">Tous les PC Portables</h5>
+                        <a class="btn btn-falcon-default btn-sm" href="{{ path('admin.pc_portable.add') }}">
+                            Ajouter
+                        </a>
+                    </div>
+                    <div class="card-body bg-light">
+                        <div class="table-responsive scrollbar">
+                            <table class="table overflow-hidden">
+                                <thead>
+                                    <tr>
+                                        <th class="align-middle text-center">#</th>
+                                        <th class="align-middle text-center">Nom</th>
+                                        <th class="align-middle text-center">IP</th>
+                                        <th class="align-middle text-center">Marque</th>
+                                        <th class="align-middle text-center">Modèle</th>
+                                        <th class="align-middle text-center">Utilisateur</th>
+                                        <th class="align-middle text-center">Processeur</th>
+                                        <th class="align-middle text-center">Mémoire</th>
+                                        <th class="align-middle text-center">Stockage</th>
+                                        <th class="align-middle text-center">OS</th>
+                                        <th class="align-middle text-center">Numéro de série</th>
+                                        <th class="align-middle text-center">Emplacement</th>
+                                        <th class="align-middle text-center">État</th>
+                                        <th class="align-middle text-center">Commentaire</th>
+                                        <th class="align-middle text-center">Date d'achat</th>
+                                        <th class="align-middle text-center">Date de garantie</th>
+                                        <th class="align-middle text-center">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% if pcPortables | length != 0 %}
+                                        {% for pcPortable in pcPortables %}
+                                            <tr class="align-middle text-center">
+                                                <td class="text-nowrap">{{ pcPortable.id }}</td>
+                                                <td class="text-nowrap">{{ pcPortable.nom }}</td>
+                                                <td class="text-nowrap">
+                                                    {% if pcPortable.ip != null %}
+                                                        {{ pcPortable.ip }}
+                                                    {% else %}
+                                                        <span class="badge text-bg-danger">N/A</span>
+                                                    {% endif %}
+                                                </td>
+                                                <td class="text-nowrap">
+                                                    {% if pcPortable.marque != null %}
+                                                        {{ pcPortable.marque }}
+                                                    {% else %}
+                                                        <span class="badge text-bg-danger">N/A</span>
+                                                    {% endif %}
+                                                </td>
+                                                <td class="text-nowrap">
+                                                    {% if pcPortable.modele != null %}
+                                                        {{ pcPortable.modele }}
+                                                    {% else %}
+                                                        <span class="badge text-bg-danger">N/A</span>
+                                                    {% endif %}
+                                                </td>
+                                                <td class="text-nowrap">
+                                                    {% if pcPortable.utilisateur_nom != null or pcPortable.utilisateur_prenom != null %}
+                                                        {{ pcPortable.utilisateur_nom }} {{ pcPortable.utilisateur_prenom }}
+                                                    {% else %}
+                                                        <span class="badge text-bg-danger">N/A</span>
+                                                    {% endif %}
+                                                </td>
+                                                <td class="text-nowrap">
+                                                    {% if pcPortable.processeur != null %}
+                                                        {{ pcPortable.processeur }}
+                                                    {% else %}
+                                                        <span class="badge text-bg-danger">N/A</span>
+                                                    {% endif %}
+                                                </td>
+                                                <td class="text-nowrap">
+                                                    {% if pcPortable.memoire != null %}
+                                                        {{ pcPortable.memoire }} Go
+                                                    {% else %}
+                                                        <span class="badge text-bg-danger">N/A</span>
+                                                    {% endif %}
+                                                </td>
+                                                <td class="text-nowrap">
+                                                    {% if pcPortable.stockage_nombre != null %}
+                                                        {{ pcPortable.stockage_nombre }} {% if pcPortable.stockage_nom != null %} {{ pcPortable.stockage_nom }} {% endif %}
+                                                    {% else %}
+                                                        <span class="badge text-bg-danger">N/A</span>
+                                                    {% endif %}
+                                                </td>
+                                                <td class="text-nowrap">
+                                                    {% if pcPortable.os != null %}
+                                                        {{ pcPortable.os }}
+                                                    {% else %}
+                                                        <span class="badge text-bg-danger">N/A</span>
+                                                    {% endif %}
+                                                </td>
+                                                <td class="text-nowrap">
+                                                    {% if pcPortable.numero_serie != null %}
+                                                        {{ pcPortable.numero_serie }}
+                                                    {% else %}
+                                                        <span class="badge text-bg-danger">N/A</span>
+                                                    {% endif %}
+                                                </td>
+                                                <td class="text-nowrap">
+                                                    {{ pcPortable.emplacement_nom }}
+                                                </td>
+
+                                                <td class="text-nowrap">
+                                                    {{ pcPortable.etat_nom }}
+                                                </td>
+                                                <td class="text-nowrap">
+                                                    {% if pcPortable.commentaire != null %}
+                                                        {{ pcPortable.commentaire }}
+                                                    {% else %}
+                                                        <span class="badge text-bg-danger">N/A</span>
+                                                    {% endif %}
+                                                </td>
+                                                <td class="text-nowrap">
+                                                    {% if pcPortable.date_achat != null %}
+                                                        {{ pcPortable.date_achat }}
+                                                    {% else %}
+                                                        <span class="badge text-bg-danger">N/A</span>
+                                                    {% endif %}
+                                                </td>
+                                                <td class="text-nowrap">
+                                                    {% if pcPortable.date_garantie != null %}
+                                                        {{ pcPortable.date_garantie }}
+                                                    {% else %}
+                                                        <span class="badge text-bg-danger">N/A</span>
+                                                    {% endif %}
+                                                </td>
+                                                <td class="text-nowrap">
+                                                    <a href="{{ path('admin.pc_portable.edit', {id: pcPortable.id}) }}" class="btn btn-primary btn-sm">
+                                                        <span class="bi bi-pencil-square"></span>
+                                                    </a>
+
+                                                    <form method="post" action="{{ path('admin.pc_portable.delete', {id: pcPortable.id}) }}" style="display: inline-block" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer le PC Portable : \'{{ pcPortable.nom }}\' ?')">
+                                                        <input type="hidden" name="_method" value="DELETE">
+                                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ pcPortable.id) }}">
+                                                        <button class="btn btn-danger btn-sm">
+                                                            <span class="bi bi-trash-fill"></span>
+                                                        </button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    {% else %}
+                                        <tr class="align-middle text-center">
+                                            <td colspan="12">Aucun PC Portable n'a été trouvé.</td>
+                                        </tr>
+                                    {% endif %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends 'gui/base.html.twig' %}
+
+{% block title %}Éditer le PC Fixe | Inventaire{% endblock %}
+
+{% block body %}
+    <div class="d-flex mb-4 mt-3">
+        <span class="fa-stack me-2 ms-n1">
+            <i class="fas fa-circle fa-stack text-300"></i>
+            <i class="fa-inverse fa-stack-1x text-danger fas fa-computer"></i>
+        </span>
+        <div class="col">
+            <h5 class="mb-0 text-danger position-relative">
+                <span class="bg-200 dark__bg-1100 pe-3">PC Fixes</span>
+                <span class="border position-absolute top-50 translate-middle-y w-100 start-0 z-n1"></span>
+            </h5>
+            <p class="mb-0">Cette page vous permet d'éditer un PC Fixe.</p>
+        </div>
+    </div>
+    <div class="row g-0">
+        <div class="col-lg-12 ps-lg-2">
+            {% for message in app.flashes('error') %}
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>Erreur :</strong> {{ message }}
+                    <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+            <div class="sticky-sidebar">
+                <div class="card mb-3">
+                    <div class="card-header d-flex flex-between-center">
+                        <h5 class="mb-0">Éditer un PC Fixe</h5>
+                        <a class="btn btn-falcon-default btn-sm" href="{{ path('admin.pc_fixe.show') }}">
+                            Retour
+                        </a>
+                    </div>
+                    <div class="card-body bg-light">
+                        {{ form_start(pcFixeForm) }}
+                            {{ form_row(pcFixeForm.nom) }}
+                            {{ form_row(pcFixeForm.ip) }}
+                            {{ form_row(pcFixeForm.marque) }}
+                            {{ form_row(pcFixeForm.modele) }}
+                            {{ form_row(pcFixeForm.utilisateur, {'placeholder': 'Choisir un utilisateur'}) }}
+                            {{ form_row(pcFixeForm.processeur) }}
+                            {{ form_row(pcFixeForm.memoire) }}
+                            {{ form_row(pcFixeForm.stockage_nombre) }}
+                            {{ form_row(pcFixeForm.stockage, {'placeholder': 'Choisir un type de stockage'}) }}
+                            {{ form_row(pcFixeForm.os) }}
+                            {{ form_row(pcFixeForm.numero_serie) }}
+                            {{ form_row(pcFixeForm.emplacement, {'placeholder': 'Choisir un emplacement'}) }}
+                            {{ form_row(pcFixeForm.etat, {'placeholder': 'Choisir un état'}) }}
+                            {{ form_row(pcFixeForm.date_achat) }}
+                            {{ form_row(pcFixeForm.date_garantie) }}
+                            {{ form_row(pcFixeForm.commentaire) }}
+                            <div class="d-flex justify-content-end">
+                                <button class="btn btn-primary me-1 mb-1" type="submit">Éditer</button>
+                            </div>
+                        {{ form_end(pcFixeForm) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

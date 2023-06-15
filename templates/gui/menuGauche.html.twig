@@ -79,14 +79,14 @@
                             </a>
                             <ul class="nav collapse {% if menu_active == 'pc_fixe' or menu_active == 'pc_portable' %}show{% endif %}" id="pc">
                                 <li class="nav-item">
-                                    <a class="nav-link {% if menu_active == 'pc_fixe' %}active{% endif %}" href="">
+                                    <a class="nav-link {% if menu_active == 'pc_fixe' %}active{% endif %}" href="{{ path('admin.pc_fixe.show') }}">
                                         <div class="d-flex align-items-center">
                                             <span class="nav-link-text ps-1">Fixes</span>
                                         </div>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link {% if menu_active == 'pc_portable' %}active{% endif %}" href="">
+                                    <a class="nav-link {% if menu_active == 'pc_portable' %}active{% endif %}" href="{{ path('admin.pc_portable.show') }}">
                                         <div class="d-flex align-items-center">
                                             <span class="nav-link-text ps-1">Portables</span>
                                         </div>
@@ -116,7 +116,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {% if menu_active == 'tablette' %}active{% endif %}" href="">
+                            <a class="nav-link {% if menu_active == 'tablette' %}active{% endif %}" href="{{ path('admin.tablette.show') }}">
                                 <div class="d-flex align-items-center">
                                     <span class="nav-link-text ps-1">Tablettes</span>
                                 </div>

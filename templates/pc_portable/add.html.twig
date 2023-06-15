@@ -1,0 +1,68 @@
+{% extends 'gui/base.html.twig' %}
+
+{% block title %}Ajouter un PC Portable | Inventaire{% endblock %}
+{% block stylesheets %}
+    <link href="{{ asset('assets/vendors/flatpickr/flatpickr.min.css') }}" rel="stylesheet" />
+{% endblock %}
+
+{% block body %}
+    <div class="d-flex mb-4 mt-3">
+        <span class="fa-stack me-2 ms-n1">
+            <i class="fas fa-circle fa-stack text-300"></i>
+            <i class="fa-inverse fa-stack-1x text-danger fas fa-laptop"></i>
+        </span>
+        <div class="col">
+            <h5 class="mb-0 text-danger position-relative">
+                <span class="bg-200 dark__bg-1100 pe-3">PC Portables</span>
+                <span class="border position-absolute top-50 translate-middle-y w-100 start-0 z-n1"></span>
+            </h5>
+            <p class="mb-0">Cette page vous permet d'ajouter un PC Portable.</p>
+        </div>
+    </div>
+    <div class="row g-0">
+        <div class="col-lg-12 ps-lg-2">
+            {% for message in app.flashes('error') %}
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>Erreur :</strong> {{ message }}
+                    <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+            <div class="sticky-sidebar">
+                <div class="card mb-3">
+                    <div class="card-header d-flex flex-between-center">
+                        <h5 class="mb-0">Ajouter un PC Portable</h5>
+                        <a class="btn btn-falcon-default btn-sm" href="{{ path('admin.pc_portable.show') }}">
+                            Retour
+                        </a>
+                    </div>
+                    <div class="card-body bg-light">
+                        {{ form_start(pcPortableForm) }}
+                            {{ form_row(pcPortableForm.nom) }}
+                            {{ form_row(pcPortableForm.ip) }}
+                            {{ form_row(pcPortableForm.marque) }}
+                            {{ form_row(pcPortableForm.modele) }}
+                            {{ form_row(pcPortableForm.utilisateur, {'placeholder': 'Choisir un utilisateur'}) }}
+                            {{ form_row(pcPortableForm.processeur) }}
+                            {{ form_row(pcPortableForm.memoire) }}
+                            {{ form_row(pcPortableForm.stockage_nombre) }}
+                            {{ form_row(pcPortableForm.stockage, {'placeholder': 'Choisir un type de stockage'}) }}
+                            {{ form_row(pcPortableForm.os) }}
+                            {{ form_row(pcPortableForm.numero_serie) }}
+                            {{ form_row(pcPortableForm.emplacement, {'placeholder': 'Choisir un emplacement'}) }}
+                            {{ form_row(pcPortableForm.etat, {'placeholder': 'Choisir un état'}) }}
+                            {{ form_row(pcPortableForm.date_achat) }}
+                            {{ form_row(pcPortableForm.date_garantie) }}
+                            {{ form_row(pcPortableForm.commentaire) }}
+                            <div class="d-flex justify-content-end">
+                                <button class="btn btn-primary me-1 mb-1" type="submit">Créer</button>
+                            </div>
+                        {{ form_end(pcPortableForm) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('assets/js/flatpickr.js') }}"></script>
+{% endblock %}
