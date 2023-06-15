@@ -24,6 +24,7 @@ class Telephone
     private ?string $modele = null;
 
     #[ORM\ManyToOne(inversedBy: 'telephones')]
+    #[ORM\JoinColumn(name: 'utilisateur_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
     private ?Utilisateur $utilisateur = null;
 
     #[ORM\ManyToOne]

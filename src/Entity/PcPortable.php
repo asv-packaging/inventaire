@@ -24,6 +24,7 @@ class PcPortable
     private ?string $modele = null;
 
     #[ORM\ManyToOne(inversedBy: 'pcPortables')]
+    #[ORM\JoinColumn(name: 'utilisateur_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
     private ?Utilisateur $utilisateur = null;
 
     #[ORM\ManyToOne]
@@ -49,7 +50,8 @@ class PcPortable
     #[ORM\Column(nullable: true)]
     private ?int $stockage_nombre = null;
 
-    #[ORM\ManyToOne]
+    #[ORM\ManyToOne(inversedBy: 'pcPortables')]
+    #[ORM\JoinColumn(name: 'stockage_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
     private ?Stockage $stockage = null;
 
     #[ORM\Column(length: 255, nullable: true)]

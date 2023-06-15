@@ -24,19 +24,19 @@ class Utilisateur
     #[ORM\Column(length: 255)]
     private ?string $email = null;
 
-    #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: Ecran::class)]
+    #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: Ecran::class, cascade: ['persist'])]
     private Collection $ecrans;
 
-    #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: Telephone::class)]
+    #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: Telephone::class, cascade: ['persist'])]
     private Collection $telephones;
 
-    #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: Tablette::class)]
+    #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: Tablette::class, cascade: ['persist'])]
     private Collection $tablettes;
 
-    #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: PcFixe::class)]
+    #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: PcFixe::class, cascade: ['persist'])]
     private Collection $pcFixes;
 
-    #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: PcPortable::class)]
+    #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: PcPortable::class, cascade: ['persist'])]
     private Collection $pcPortables;
 
     public function __construct()

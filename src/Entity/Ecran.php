@@ -24,6 +24,7 @@ class Ecran
     private ?string $modele = null;
 
     #[ORM\ManyToOne(inversedBy: 'ecrans')]
+    #[ORM\JoinColumn(name: 'utilisateur_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
     private ?Utilisateur $utilisateur = null;
 
     #[ORM\ManyToOne]
