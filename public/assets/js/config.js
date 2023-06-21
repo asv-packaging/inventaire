@@ -7,7 +7,7 @@
 /* -------------------------------------------------------------------------- */
 var CONFIG = {
   isNavbarVerticalCollapsed: false,
-  theme: 'light',
+  theme: 'dark',
   isRTL: false,
   isFluid: false,
   navbarStyle: 'transparent',

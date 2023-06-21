@@ -22,9 +22,11 @@ class EcranController extends AbstractController
     public function index(ManagerRegistry $registry): Response
     {
         $ecrans = $registry->getManager()->getRepository(Ecran::class)->createQueryBuilder('e')
-            ->select('e.id, e.nom, e.marque, e.modele, e.numero_serie, e.date_achat, e.date_garantie, e.commentaire, utilisateur.nom as utilisateur_nom, utilisateur.prenom as utilisateur_prenom, emplacement.nom as emplacement_nom, etat.nom as etat_nom')
+            ->select('e.id, e.nom, e.marque, e.modele, e.numero_serie, e.date_installation, e.date_achat, e.date_garantie, e.commentaire, utilisateur.nom as utilisateur_nom, utilisateur.prenom as utilisateur_prenom, emplacement.nom as emplacement_nom, etat.nom as etat_nom, fournisseur.nom as fournisseur_nom, entreprise.nom as entreprise_nom')
             ->leftJoin('e.utilisateur', 'utilisateur')
             ->leftJoin('e.emplacement', 'emplacement')
+            ->leftJoin('e.fournisseur', 'fournisseur')
+            ->leftJoin('e.entreprise', 'entreprise')
             ->leftJoin('e.etat', 'etat')
             ->orderBy('e.id', 'DESC')
             ->getQuery()

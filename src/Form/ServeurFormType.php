@@ -9,6 +9,7 @@ use App\Entity\Stockage;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -82,10 +83,11 @@ class ServeurFormType extends AbstractType
                 ],
                 'required' => false,
             ])
-            ->add('physique', CheckboxType::class, [
-                'label' => 'Serveur physique',
-                'attr' => [
-                    'placeholder' => 'Serveur physique'
+            ->add('physique', ChoiceType::class, [
+                'label' => 'Type',
+                'choices' => [
+                    'Physique' => true,
+                    'Virtuel' => false,
                 ],
                 'required' => false,
             ])
@@ -118,18 +120,30 @@ class ServeurFormType extends AbstractType
                 'class' => Emplacement::class,
                 'choice_label' => 'nom',
                 'required' => true,
+                'attr' => [
+                    'class' => 'js-choice',
+                    'data-options' => '{"removeItemButton":true,"placeholder":true}',
+                ]
             ])
             ->add('etat', EntityType::class, [
                 'label' => 'État',
                 'class' => Etat::class,
                 'choice_label' => 'nom',
                 'required' => true,
+                'attr' => [
+                    'class' => 'js-choice',
+                    'data-options' => '{"removeItemButton":true,"placeholder":true}',
+                ]
             ])
             ->add('stockage', EntityType::class, [
                 'label' => 'Type de stockage',
                 'class' => Stockage::class,
                 'choice_label' => 'nom',
                 'required' => false,
+                'attr' => [
+                    'class' => 'js-choice',
+                    'data-options' => '{"removeItemButton":true,"placeholder":true}',
+                ]
             ])
         ;
     }

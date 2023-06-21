@@ -16,6 +16,9 @@ class Emplacement
     #[ORM\Column(length: 255)]
     private ?string $nom = null;
 
+    #[ORM\OneToMany(mappedBy: 'emplacement', targetEntity: TelephoneFixe::class, cascade: ['persist'])]
+    private $telephoneFixes;
+
     public function getId(): ?int
     {
         return $this->id;

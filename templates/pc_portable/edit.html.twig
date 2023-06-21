@@ -1,6 +1,10 @@
 {% extends 'gui/base.html.twig' %}
 
 {% block title %}Éditer le PC Portable | Inventaire{% endblock %}
+{% block stylesheets %}
+    <link href="{{ asset('assets/vendors/flatpickr/flatpickr.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/vendors/choices/choices.min.css') }}" rel="stylesheet" />
+{% endblock %}
 
 {% block body %}
     <div class="d-flex mb-4 mt-3">
@@ -59,4 +63,8 @@
             </div>
         </div>
     </div>
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('assets/js/flatpickr.js') }}"></script>
+    <script src="{{ asset('assets/vendors/choices/choices.min.js') }}"></script>
 {% endblock %}

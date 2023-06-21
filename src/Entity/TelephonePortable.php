@@ -7,15 +7,15 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: TelephoneRepository::class)]
-class Telephone
+class TelephonePortable
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $nom = null;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $ligne = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $marque = null;
@@ -23,7 +23,7 @@ class Telephone
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $modele = null;
 
-    #[ORM\ManyToOne(inversedBy: 'telephones')]
+    #[ORM\ManyToOne(inversedBy: 'telephonePortables')]
     #[ORM\JoinColumn(name: 'utilisateur_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
     private ?Utilisateur $utilisateur = null;
 
@@ -49,19 +49,30 @@ class Telephone
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $commentaire = null;
 
+    #[ORM\ManyToOne(inversedBy: 'telephonePortables')]
+    #[ORM\JoinColumn(name: 'fournisseur_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
+    private ?Fournisseur $fournisseur = null;
+
+    #[ORM\ManyToOne(inversedBy: 'telephonePortables')]
+    #[ORM\JoinColumn(name: 'entreprise_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
+    private ?Entreprise $entreprise = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $date_installation = null;
+
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getNom(): ?string
+    public function getLigne(): ?string
     {
-        return $this->nom;
+        return $this->ligne;
     }
 
-    public function setNom(string $nom): static
+    public function setLigne(?string $ligne): static
     {
-        $this->nom = $nom;
+        $this->ligne = $ligne;
 
         return $this;
     }
@@ -182,6 +193,42 @@ class Telephone
     public function setCommentaire(?string $commentaire): static
     {
         $this->commentaire = $commentaire;
+
+        return $this;
+    }
+
+    public function getFournisseur(): ?Fournisseur
+    {
+        return $this->fournisseur;
+    }
+
+    public function setFournisseur(?Fournisseur $fournisseur): static
+    {
+        $this->fournisseur = $fournisseur;
+
+        return $this;
+    }
+
+    public function getEntreprise(): ?Entreprise
+    {
+        return $this->entreprise;
+    }
+
+    public function setEntreprise(?Entreprise $entreprise): static
+    {
+        $this->entreprise = $entreprise;
+
+        return $this;
+    }
+
+    public function getDateInstallation(): ?string
+    {
+        return $this->date_installation;
+    }
+
+    public function setDateInstallation(?string $date_installation): static
+    {
+        $this->date_installation = $date_installation;
 
         return $this;
     }

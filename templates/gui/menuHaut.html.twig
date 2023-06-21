@@ -22,6 +22,68 @@
             </div>
         </li>
         <li class="nav-item dropdown">
+            <a class="nav-link {# notification-indicator notification-indicator-danger #} px-0 fa-icon-wait" id="navbarDropdownNotification" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-hide-on-body-scroll="data-hide-on-body-scroll">
+                <span class="fas fa-bell {# fa-shake #}" data-fa-transform="shrink-6" style="font-size: 34px;"></span>
+{#                <span class="notification-indicator-number #}{# fa-shake #}{#">1</span>#}
+            </a>
+            <div class="dropdown-menu dropdown-caret dropdown-caret dropdown-menu-end dropdown-menu-card dropdown-menu-notification dropdown-caret-bg" aria-labelledby="navbarDropdownNotification">
+                <div class="card card-notification shadow-none">
+                    <div class="card-header">
+                        <div class="row justify-content-between align-items-center">
+                            <div class="col-auto">
+                                <h6 class="card-header-title mb-0">Notifications</h6>
+                            </div>
+                            <div class="col-auto ps-0 ps-sm-3">
+                                <a class="card-link fw-normal" href="#">Marquer comme lu</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="scrollbar-overlay" style="max-height:19rem">
+                        <div class="list-group list-group-flush fw-normal fs--1">
+                            <div class="list-group-title border-bottom">NON LU</div>
+                            <div class="list-group-item">
+                                <a class="notification notification-flush notification-unread" href="#!">
+{#                                    <div class="notification-avatar">#}
+{#                                        <div class="avatar avatar-2xl me-3">#}
+{#                                            <div class="avatar-name rounded-circle"><span>AB</span></div>#}
+{#                                        </div>#}
+{#                                    </div>#}
+                                    <div class="notification-body">
+                                        <p class="mb-1">La date de fin de garantie du <strong>PC-728</strong> arrive bientôt a expiration.</p>
+                                        <span class="notification-time">
+                                            <span class="me-2 fas fa-triangle-exclamation text-danger"></span>
+                                            il y a 1 jour
+                                        </span>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="list-group-title border-bottom">LU</div>
+                            <div class="list-group-item">
+                                <a class="notification notification-flush" href="#!">
+{#                                    <div class="notification-avatar">#}
+{#                                        <div class="avatar avatar-2xl me-3">#}
+{#                                            <div class="avatar-name rounded-circle"><span>AB</span></div>#}
+{#                                        </div>#}
+{#                                    </div>#}
+                                    <div class="notification-body">
+                                        <p class="mb-1">La <strong>date de fin de garantie</strong> du <strong>PC-727</strong> est <strong>arrivé a expiration</strong>.</p>
+                                        <span class="notification-time">
+                                            <span class="me-2 fas fa-triangle-exclamation text-danger"></span>
+                                            il y a 5 jours
+                                        </span>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer text-center border-top">
+                        <a class="card-link d-block" href="#">Toutes les notifications</a>
+                    </div>
+                </div>
+            </div>
+
+        </li>
+        <li class="nav-item dropdown">
             <a class="nav-link pe-0 ps-2" id="navbarDropdownUser" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <div class="avatar avatar-xl">
                     <img class="rounded-circle" src="{{ asset('assets/img/avatar/defaut.png') }}" alt="" />

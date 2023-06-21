@@ -3,6 +3,7 @@
 {% block title %}Ajouter un PC Fixe | Inventaire{% endblock %}
 {% block stylesheets %}
     <link href="{{ asset('assets/vendors/flatpickr/flatpickr.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/vendors/choices/choices.min.css') }}" rel="stylesheet" />
 {% endblock %}
 
 {% block body %}
@@ -46,7 +47,7 @@
                             {{ form_row(pcFixeForm.memoire) }}
                             {{ form_row(pcFixeForm.stockage_nombre) }}
                             {{ form_row(pcFixeForm.stockage, {'placeholder': 'Choisir un type de stockage'}) }}
-                            {{ form_row(pcFixeForm.os) }}
+                            {{ form_row(pcFixeForm.systeme_exploitation, {'placeholder': 'Choisir un système d\'exploitation'}) }}
                             {{ form_row(pcFixeForm.numero_serie) }}
                             {{ form_row(pcFixeForm.emplacement, {'placeholder': 'Choisir un emplacement'}) }}
                             {{ form_row(pcFixeForm.etat, {'placeholder': 'Choisir un état'}) }}
@@ -65,4 +66,5 @@
 {% endblock %}
 {% block javascripts %}
     <script src="{{ asset('assets/js/flatpickr.js') }}"></script>
+    <script src="{{ asset('assets/vendors/choices/choices.min.js') }}"></script>
 {% endblock %}

@@ -114,22 +114,36 @@ class PcPortableFormType extends AbstractType
                     return $utilisateur->getNom() . ' ' . $utilisateur->getPrenom();
                 },
                 'required' => false,
+                'attr' => [
+                    'class' => 'js-choice',
+                    'data-options' => '{"removeItemButton":true,"placeholder":true}',
+                ]
             ])
             ->add('emplacement', EntityType::class, [
                 'label' => 'Emplacement',
                 'class' => Emplacement::class,
                 'choice_label' => 'nom',
                 'required' => true,
+                'attr' => [
+                    'class' => 'js-choice',
+                    'data-options' => '{"removeItemButton":true,"placeholder":true}',
+                ]
             ])
             ->add('etat', EntityType::class, [
                 'label' => 'Etat',
                 'class' => Etat::class,
                 'choice_label' => 'nom',
                 'required' => true,
+                'attr' => [
+                    'class' => 'js-choice',
+                    'data-options' => '{"removeItemButton":true,"placeholder":true}',
+                ]
             ])
             ->add('stockage', EntityType::class, [
                 'label' => 'Type de stockage',
                 'attr' => [
+                    'class' => 'js-choice',
+                    'data-options' => '{"removeItemButton":true,"placeholder":true}',
                     'placeholder' => 'Type de stockage'
                 ],
                 'class' => Stockage::class,

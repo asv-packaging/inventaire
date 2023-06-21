@@ -27,8 +27,8 @@ class Utilisateur
     #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: Ecran::class, cascade: ['persist'])]
     private Collection $ecrans;
 
-    #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: Telephone::class, cascade: ['persist'])]
-    private Collection $telephones;
+    #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: TelephonePortable::class, cascade: ['persist'])]
+    private Collection $telephonePortables;
 
     #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: Tablette::class, cascade: ['persist'])]
     private Collection $tablettes;
@@ -39,13 +39,21 @@ class Utilisateur
     #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: PcPortable::class, cascade: ['persist'])]
     private Collection $pcPortables;
 
+    #[ORM\ManyToOne(inversedBy: 'utilisateurs')]
+    #[ORM\JoinColumn(name: 'entreprise_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
+    private ?Entreprise $entreprise = null;
+
+    #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: TelephoneFixe::class)]
+    private Collection $telephoneFixes;
+
     public function __construct()
     {
         $this->ecrans = new ArrayCollection();
-        $this->telephones = new ArrayCollection();
+        $this->telephonePortables = new ArrayCollection();
         $this->tablettes = new ArrayCollection();
         $this->pcFixes = new ArrayCollection();
         $this->pcPortables = new ArrayCollection();
+        $this->telephoneFixes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -120,29 +128,29 @@ class Utilisateur
     }
 
     /**
-     * @return Collection<int, Telephone>
+     * @return Collection<int, TelephonePortable>
      */
-    public function getTelephones(): Collection
+    public function getTelephonePortables(): Collection
     {
-        return $this->telephones;
+        return $this->telephonePortables;
     }
 
-    public function addTelephone(Telephone $telephone): static
+    public function addTelephonePortable(TelephonePortable $telephonePortable): static
     {
-        if (!$this->telephones->contains($telephone)) {
-            $this->telephones->add($telephone);
-            $telephone->setUtilisateur($this);
+        if (!$this->telephonePortables->contains($telephonePortable)) {
+            $this->telephonePortables->add($telephonePortable);
+            $telephonePortable->setUtilisateur($this);
         }
 
         return $this;
     }
 
-    public function removeTelephone(Telephone $telephone): static
+    public function removeTelephonePortable(TelephonePortable $telephonePortable): static
     {
-        if ($this->telephones->removeElement($telephone)) {
+        if ($this->telephonePortables->removeElement($telephonePortable)) {
             // set the owning side to null (unless already changed)
-            if ($telephone->getUtilisateur() === $this) {
-                $telephone->setUtilisateur(null);
+            if ($telephonePortable->getUtilisateur() === $this) {
+                $telephonePortable->setUtilisateur(null);
             }
         }
 
@@ -233,6 +241,48 @@ class Utilisateur
             // set the owning side to null (unless already changed)
             if ($pcPortable->getUtilisateur() === $this) {
                 $pcPortable->setUtilisateur(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getEntreprise(): ?Entreprise
+    {
+        return $this->entreprise;
+    }
+
+    public function setEntreprise(?Entreprise $entreprise): static
+    {
+        $this->entreprise = $entreprise;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, TelephoneFixe>
+     */
+    public function getTelephoneFixes(): Collection
+    {
+        return $this->telephoneFixes;
+    }
+
+    public function addTelephoneFix(TelephoneFixe $telephoneFix): static
+    {
+        if (!$this->telephoneFixes->contains($telephoneFix)) {
+            $this->telephoneFixes->add($telephoneFix);
+            $telephoneFix->setUtilisateur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTelephoneFix(TelephoneFixe $telephoneFix): static
+    {
+        if ($this->telephoneFixes->removeElement($telephoneFix)) {
+            // set the owning side to null (unless already changed)
+            if ($telephoneFix->getUtilisateur() === $this) {
+                $telephoneFix->setUtilisateur(null);
             }
         }
 

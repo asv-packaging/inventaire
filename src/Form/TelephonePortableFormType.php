@@ -3,7 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Etat;
-use App\Entity\Telephone;
+use App\Entity\TelephonePortable;
 use App\Entity\Utilisateur;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -12,7 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class TelephoneFormType extends AbstractType
+class TelephonePortableFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -90,12 +90,20 @@ class TelephoneFormType extends AbstractType
                     return $utilisateur->getNom() . ' ' . $utilisateur->getPrenom();
                 },
                 'required' => false,
+                'attr' => [
+                    'class' => 'js-choice',
+                    'data-options' => '{"removeItemButton":true,"placeholder":true}',
+                ]
             ])
             ->add('etat', EntityType::class, [
                 'label' => 'État',
                 'class' => Etat::class,
                 'choice_label' => 'nom',
                 'required' => true,
+                'attr' => [
+                    'class' => 'js-choice',
+                    'data-options' => '{"removeItemButton":true,"placeholder":true}',
+                ]
             ])
         ;
     }
@@ -103,7 +111,7 @@ class TelephoneFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Telephone::class,
+            'data_class' => TelephonePortable::class,
         ]);
     }
 }

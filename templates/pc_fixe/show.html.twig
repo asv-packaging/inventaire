@@ -46,13 +46,16 @@
                                         <th class="align-middle text-center">Processeur</th>
                                         <th class="align-middle text-center">Mémoire</th>
                                         <th class="align-middle text-center">Stockage</th>
-                                        <th class="align-middle text-center">OS</th>
+                                        <th class="align-middle text-center">Type de stockage</th>
+                                        <th class="align-middle text-center">Système d'exploitation</th>
                                         <th class="align-middle text-center">Numéro de série</th>
                                         <th class="align-middle text-center">Emplacement</th>
+                                        <th class="align-middle text-center">Site</th>
                                         <th class="align-middle text-center">État</th>
-                                        <th class="align-middle text-center">Commentaire</th>
+                                        <th class="align-middle text-center">Date d'installation</th>
                                         <th class="align-middle text-center">Date d'achat</th>
                                         <th class="align-middle text-center">Date de garantie</th>
+                                        <th class="align-middle text-center">Commentaire</th>
                                         <th class="align-middle text-center">Action</th>
                                     </tr>
                                 </thead>
@@ -106,14 +109,21 @@
                                                 </td>
                                                 <td class="text-nowrap">
                                                     {% if pcFixe.stockage_nombre != null %}
-                                                        {{ pcFixe.stockage_nombre }} {% if pcFixe.stockage_nom != null %} {{ pcFixe.stockage_nom }} {% endif %}
+                                                        {{ pcFixe.stockage_nombre }} Go
                                                     {% else %}
                                                         <span class="badge text-bg-danger">N/A</span>
                                                     {% endif %}
                                                 </td>
                                                 <td class="text-nowrap">
-                                                    {% if pcFixe.os != null %}
-                                                        {{ pcFixe.os }}
+                                                    {% if pcFixe.stockage_nom != null %}
+                                                        {{ pcFixe.stockage_nom }}
+                                                    {% else %}
+                                                        <span class="badge text-bg-danger">N/A</span>
+                                                    {% endif %}
+                                                </td>
+                                                <td class="text-nowrap">
+                                                    {% if pcFixe.systeme_exploitation_nom != null %}
+                                                        {{ pcFixe.systeme_exploitation_nom }}
                                                     {% else %}
                                                         <span class="badge text-bg-danger">N/A</span>
                                                     {% endif %}
@@ -128,13 +138,15 @@
                                                 <td class="text-nowrap">
                                                     {{ pcFixe.emplacement_nom }}
                                                 </td>
-
+                                                <td class="text-nowrap">
+                                                    {{ pcFixe.site_nom }}
+                                                </td>
                                                 <td class="text-nowrap">
                                                     {{ pcFixe.etat_nom }}
                                                 </td>
                                                 <td class="text-nowrap">
-                                                    {% if pcFixe.commentaire != null %}
-                                                        {{ pcFixe.commentaire }}
+                                                    {% if pcFixe.date_installation != null %}
+                                                        {{ pcFixe.date_installation }}
                                                     {% else %}
                                                         <span class="badge text-bg-danger">N/A</span>
                                                     {% endif %}
@@ -149,6 +161,13 @@
                                                 <td class="text-nowrap">
                                                     {% if pcFixe.date_garantie != null %}
                                                         {{ pcFixe.date_garantie }}
+                                                    {% else %}
+                                                        <span class="badge text-bg-danger">N/A</span>
+                                                    {% endif %}
+                                                </td>
+                                                <td class="text-nowrap">
+                                                    {% if pcFixe.commentaire != null %}
+                                                        {{ pcFixe.commentaire }}
                                                     {% else %}
                                                         <span class="badge text-bg-danger">N/A</span>
                                                     {% endif %}

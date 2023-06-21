@@ -16,7 +16,7 @@ class StockageFormType extends AbstractType
             ->add('nom', TextType::class, [
                 'label' => 'Nom du type de stockage',
                 'attr' => [
-                    'placeholder' => 'Mo/Go/To',
+                    'placeholder' => 'HDD, SSD, ...',
                 ]
             ])
         ;

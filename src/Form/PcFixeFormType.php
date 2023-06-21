@@ -6,6 +6,7 @@ use App\Entity\Emplacement;
 use App\Entity\Etat;
 use App\Entity\PcFixe;
 use App\Entity\Stockage;
+use App\Entity\SystemeExploitation;
 use App\Entity\Utilisateur;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -76,10 +77,13 @@ class PcFixeFormType extends AbstractType
                 ],
                 'required' => false,
             ])
-            ->add('os', TextType::class, [
+            ->add('systeme_exploitation', EntityType::class, [
                 'label' => 'Système d\'exploitation',
+                'class' => SystemeExploitation::class,
+                'choice_label' => 'nom',
                 'attr' => [
-                    'placeholder' => 'Système d\'exploitation'
+                    'class' => 'js-choice',
+                    'data-options' => '{"removeItemButton":true,"placeholder":true}',
                 ],
                 'required' => false,
             ])
@@ -114,23 +118,37 @@ class PcFixeFormType extends AbstractType
                     return $utilisateur->getNom() . ' ' . $utilisateur->getPrenom();
                 },
                 'required' => false,
+                'attr' => [
+                    'class' => 'js-choice',
+                    'data-options' => '{"removeItemButton":true,"placeholder":true}',
+                ]
             ])
             ->add('emplacement', EntityType::class, [
                 'label' => 'Emplacement',
                 'class' => Emplacement::class,
                 'choice_label' => 'nom',
                 'required' => true,
+                'attr' => [
+                    'class' => 'js-choice',
+                    'data-options' => '{"removeItemButton":true,"placeholder":true}',
+                ]
             ])
             ->add('etat', EntityType::class, [
-                'label' => 'Etat',
+                'label' => 'État',
                 'class' => Etat::class,
                 'choice_label' => 'nom',
                 'required' => true,
+                'attr' => [
+                    'class' => 'js-choice',
+                    'data-options' => '{"removeItemButton":true,"placeholder":true}',
+                ]
             ])
             ->add('stockage', EntityType::class, [
                 'label' => 'Type de stockage',
                 'attr' => [
-                    'placeholder' => 'Type de stockage'
+                    'placeholder' => 'Type de stockage',
+                    'class' => 'js-choice',
+                    'data-options' => '{"removeItemButton":true,"placeholder":true}',
                 ],
                 'class' => Stockage::class,
                 'choice_label' => 'nom',

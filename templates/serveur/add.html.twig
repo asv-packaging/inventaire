@@ -3,6 +3,7 @@
 {% block title %}Ajouter un serveur | Inventaire{% endblock %}
 {% block stylesheets %}
     <link href="{{ asset('assets/vendors/flatpickr/flatpickr.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/vendors/choices/choices.min.css') }}" rel="stylesheet" />
 {% endblock %}
 
 {% block body %}
@@ -46,7 +47,7 @@
                             {{ form_row(serveurForm.stockage_nombre) }}
                             {{ form_row(serveurForm.stockage, {'placeholder': 'Choisir un type de stockage'}) }}
                             {{ form_row(serveurForm.os) }}
-                            {{ form_row(serveurForm.physique) }}
+                            {{ form_row(serveurForm.physique, {'placeholder': 'Choisir un type'}) }}
                             {{ form_row(serveurForm.numero_serie) }}
                             {{ form_row(serveurForm.emplacement, {'placeholder': 'Choisir un emplacement'}) }}
                             {{ form_row(serveurForm.etat, {'placeholder': 'Choisir un état'}) }}
@@ -65,4 +66,5 @@
 {% endblock %}
 {% block javascripts %}
     <script src="{{ asset('assets/js/flatpickr.js') }}"></script>
+    <script src="{{ asset('assets/vendors/choices/choices.min.js') }}"></script>
 {% endblock %}

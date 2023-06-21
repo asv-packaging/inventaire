@@ -55,7 +55,7 @@ class PcPortable
     private ?Stockage $stockage = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $os = null;
+    private ?string $stockage_type = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $date_achat = null;
@@ -65,6 +65,21 @@ class PcPortable
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $commentaire = null;
+
+    #[ORM\ManyToOne(inversedBy: 'pcPortables')]
+    #[ORM\JoinColumn(name: 'fournisseur_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
+    private ?Fournisseur $fournisseur = null;
+
+    #[ORM\ManyToOne(inversedBy: 'pcPortables')]
+    #[ORM\JoinColumn(name: 'systeme_exploitation_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
+    private ?SystemeExploitation $systeme_exploitation = null;
+
+    #[ORM\ManyToOne(inversedBy: 'pcPortables')]
+    #[ORM\JoinColumn(name: 'entreprise_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
+    private ?Entreprise $entreprise = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $date_installation = null;
 
     public function getId(): ?int
     {
@@ -215,18 +230,6 @@ class PcPortable
         return $this;
     }
 
-    public function getOs(): ?string
-    {
-        return $this->os;
-    }
-
-    public function setOs(?string $os): static
-    {
-        $this->os = $os;
-
-        return $this;
-    }
-
     public function getDateAchat(): ?string
     {
         return $this->date_achat;
@@ -259,6 +262,66 @@ class PcPortable
     public function setCommentaire(?string $commentaire): static
     {
         $this->commentaire = $commentaire;
+
+        return $this;
+    }
+
+    public function getFournisseur(): ?Fournisseur
+    {
+        return $this->fournisseur;
+    }
+
+    public function setFournisseur(?Fournisseur $fournisseur): static
+    {
+        $this->fournisseur = $fournisseur;
+
+        return $this;
+    }
+
+    public function getSystemeExploitation(): ?SystemeExploitation
+    {
+        return $this->systeme_exploitation;
+    }
+
+    public function setSystemeExploitation(?SystemeExploitation $systeme_exploitation): static
+    {
+        $this->systeme_exploitation = $systeme_exploitation;
+
+        return $this;
+    }
+
+    public function getEntreprise(): ?Entreprise
+    {
+        return $this->entreprise;
+    }
+
+    public function setEntreprise(?Entreprise $entreprise): static
+    {
+        $this->entreprise = $entreprise;
+
+        return $this;
+    }
+
+    public function getDateInstallation(): ?string
+    {
+        return $this->date_installation;
+    }
+
+    public function setDateInstallation(?string $date_installation): static
+    {
+        $this->date_installation = $date_installation;
+
+        return $this;
+    }
+
+    public function getStockageType(): ?string
+    {
+        return $this->stockage_type;
+    }
+
+    public function setStockageType(?string $stockage_type): static
+    {
+        $this->stockage_type = $stockage_type;
 
         return $this;
     }

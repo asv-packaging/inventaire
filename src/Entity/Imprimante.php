@@ -2,12 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\EcranRepository;
+use App\Repository\ImprimanteRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: EcranRepository::class)]
-class Ecran
+#[ORM\Entity(repositoryClass: ImprimanteRepository::class)]
+class Imprimante
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -23,9 +23,11 @@ class Ecran
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $modele = null;
 
-    #[ORM\ManyToOne(inversedBy: 'ecrans')]
-    #[ORM\JoinColumn(name: 'utilisateur_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
-    private ?Utilisateur $utilisateur = null;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $ip = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $numero_serie = null;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
@@ -35,8 +37,15 @@ class Ecran
     #[ORM\JoinColumn(nullable: false)]
     private ?Etat $etat = null;
 
+    #[ORM\Column]
+    private ?bool $contrat = null;
+
+    #[ORM\ManyToOne(inversedBy: 'imprimantes')]
+    #[ORM\JoinColumn(name: 'fournisseur_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
+    private ?Fournisseur $fournisseur = null;
+
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $numero_serie = null;
+    private ?string $date_installation = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $date_achat = null;
@@ -47,16 +56,9 @@ class Ecran
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $commentaire = null;
 
-    #[ORM\ManyToOne(inversedBy: 'ecrans')]
-    #[ORM\JoinColumn(name: 'fournisseur_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
-    private ?Fournisseur $fournisseur = null;
-
-    #[ORM\ManyToOne(inversedBy: 'ecrans')]
+    #[ORM\ManyToOne(inversedBy: 'imprimantes')]
     #[ORM\JoinColumn(name: 'entreprise_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
     private ?Entreprise $entreprise = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $date_installation = null;
 
     public function getId(): ?int
     {
@@ -99,14 +101,26 @@ class Ecran
         return $this;
     }
 
-    public function getUtilisateur(): ?Utilisateur
+    public function getIp(): ?string
     {
-        return $this->utilisateur;
+        return $this->ip;
     }
 
-    public function setUtilisateur(?Utilisateur $utilisateur): static
+    public function setIp(?string $ip): static
     {
-        $this->utilisateur = $utilisateur;
+        $this->ip = $ip;
+
+        return $this;
+    }
+
+    public function getNumeroSerie(): ?string
+    {
+        return $this->numero_serie;
+    }
+
+    public function setNumeroSerie(?string $numero_serie): static
+    {
+        $this->numero_serie = $numero_serie;
 
         return $this;
     }
@@ -135,14 +149,38 @@ class Ecran
         return $this;
     }
 
-    public function getNumeroSerie(): ?string
+    public function isContrat(): ?bool
     {
-        return $this->numero_serie;
+        return $this->contrat;
     }
 
-    public function setNumeroSerie(?string $numero_serie): static
+    public function setContrat(bool $contrat): static
     {
-        $this->numero_serie = $numero_serie;
+        $this->contrat = $contrat;
+
+        return $this;
+    }
+
+    public function getFournisseur(): ?Fournisseur
+    {
+        return $this->fournisseur;
+    }
+
+    public function setFournisseur(?Fournisseur $fournisseur): static
+    {
+        $this->fournisseur = $fournisseur;
+
+        return $this;
+    }
+
+    public function getDateInstallation(): ?string
+    {
+        return $this->date_installation;
+    }
+
+    public function setDateInstallation(?string $date_installation): static
+    {
+        $this->date_installation = $date_installation;
 
         return $this;
     }
@@ -183,18 +221,6 @@ class Ecran
         return $this;
     }
 
-    public function getFournisseur(): ?Fournisseur
-    {
-        return $this->fournisseur;
-    }
-
-    public function setFournisseur(?Fournisseur $fournisseur): static
-    {
-        $this->fournisseur = $fournisseur;
-
-        return $this;
-    }
-
     public function getEntreprise(): ?Entreprise
     {
         return $this->entreprise;
@@ -203,18 +229,6 @@ class Ecran
     public function setEntreprise(?Entreprise $entreprise): static
     {
         $this->entreprise = $entreprise;
-
-        return $this;
-    }
-
-    public function getDateInstallation(): ?string
-    {
-        return $this->date_installation;
-    }
-
-    public function setDateInstallation(?string $date_installation): static
-    {
-        $this->date_installation = $date_installation;
 
         return $this;
     }

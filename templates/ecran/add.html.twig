@@ -3,6 +3,8 @@
 {% block title %}Ajouter un écran | Inventaire{% endblock %}
 {% block stylesheets %}
     <link href="{{ asset('assets/vendors/flatpickr/flatpickr.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/vendors/select2/select2.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/vendors/select2-bootstrap-5-theme/select2-bootstrap-5-theme.min.css') }}" rel="stylesheet" />
 {% endblock %}
 
 {% block body %}
@@ -40,12 +42,15 @@
                             {{ form_row(ecranForm.nom) }}
                             {{ form_row(ecranForm.marque) }}
                             {{ form_row(ecranForm.modele) }}
-                            {{ form_row(ecranForm.utilisateur, {'placeholder': 'Choisir un utilisateur'}) }}
-                            {{ form_row(ecranForm.emplacement, {'placeholder': 'Choisir un emplacement'}) }}
+                            {{ form_row(ecranForm.utilisateur) }}
+                            {{ form_row(ecranForm.emplacement) }}
+                            {{ form_row(ecranForm.fournisseur) }}
+                            {{ form_row(ecranForm.entreprise) }}
                             {{ form_row(ecranForm.numero_serie) }}
+                            {{ form_row(ecranForm.date_installation) }}
                             {{ form_row(ecranForm.date_achat) }}
                             {{ form_row(ecranForm.date_garantie) }}
-                            {{ form_row(ecranForm.etat, {'placeholder': 'Choisir un état'}) }}
+                            {{ form_row(ecranForm.etat) }}
                             {{ form_row(ecranForm.commentaire) }}
                             <div class="d-flex justify-content-end">
                                 <button class="btn btn-primary me-1 mb-1" type="submit">Créer</button>
@@ -58,5 +63,6 @@
     </div>
 {% endblock %}
 {% block javascripts %}
+    <script src="{{ asset('assets/vendors/select2/select2.min.js') }}"></script>
     <script src="{{ asset('assets/js/flatpickr.js') }}"></script>
 {% endblock %}

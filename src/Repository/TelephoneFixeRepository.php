@@ -2,26 +2,26 @@
 
 namespace App\Repository;
 
-use App\Entity\TelephonePortable;
+use App\Entity\TelephoneFixe;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<TelephonePortable>
+ * @extends ServiceEntityRepository<TelephoneFixe>
  *
- * @method TelephonePortable|null find($id, $lockMode = null, $lockVersion = null)
- * @method TelephonePortable|null findOneBy(array $criteria, array $orderBy = null)
- * @method TelephonePortable[]    findAll()
- * @method TelephonePortable[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method TelephoneFixe|null find($id, $lockMode = null, $lockVersion = null)
+ * @method TelephoneFixe|null findOneBy(array $criteria, array $orderBy = null)
+ * @method TelephoneFixe[]    findAll()
+ * @method TelephoneFixe[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class TelephoneRepository extends ServiceEntityRepository
+class TelephoneFixeRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, TelephonePortable::class);
+        parent::__construct($registry, TelephoneFixe::class);
     }
 
-    public function save(TelephonePortable $entity, bool $flush = false): void
+    public function save(TelephoneFixe $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -30,7 +30,7 @@ class TelephoneRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(TelephonePortable $entity, bool $flush = false): void
+    public function remove(TelephoneFixe $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 
@@ -40,7 +40,7 @@ class TelephoneRepository extends ServiceEntityRepository
     }
 
 //    /**
-//     * @return Telephone[] Returns an array of Telephone objects
+//     * @return TelephoneFixe[] Returns an array of TelephoneFixe objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -54,7 +54,7 @@ class TelephoneRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Telephone
+//    public function findOneBySomeField($value): ?TelephoneFixe
 //    {
 //        return $this->createQueryBuilder('t')
 //            ->andWhere('t.exampleField = :val')

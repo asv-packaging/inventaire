@@ -50,6 +50,17 @@ class Tablette
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $commentaire = null;
 
+    #[ORM\ManyToOne(inversedBy: 'tablettes')]
+    #[ORM\JoinColumn(name: 'fournisseur_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
+    private ?Fournisseur $fournisseur = null;
+
+    #[ORM\ManyToOne(inversedBy: 'tablettes')]
+    #[ORM\JoinColumn(name: 'entreprise_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
+    private ?Entreprise $entreprise = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $date_installation = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -183,6 +194,42 @@ class Tablette
     public function setCommentaire(?string $commentaire): static
     {
         $this->commentaire = $commentaire;
+
+        return $this;
+    }
+
+    public function getFournisseur(): ?Fournisseur
+    {
+        return $this->fournisseur;
+    }
+
+    public function setFournisseur(?Fournisseur $fournisseur): static
+    {
+        $this->fournisseur = $fournisseur;
+
+        return $this;
+    }
+
+    public function getEntreprise(): ?Entreprise
+    {
+        return $this->entreprise;
+    }
+
+    public function setEntreprise(?Entreprise $entreprise): static
+    {
+        $this->entreprise = $entreprise;
+
+        return $this;
+    }
+
+    public function getDateInstallation(): ?string
+    {
+        return $this->date_installation;
+    }
+
+    public function setDateInstallation(?string $date_installation): static
+    {
+        $this->date_installation = $date_installation;
 
         return $this;
     }

@@ -50,9 +50,6 @@ class Serveur
     #[ORM\JoinColumn(name: 'stockage_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
     private ?Stockage $stockage = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $os = null;
-
     #[ORM\Column]
     private ?bool $physique = null;
 
@@ -64,6 +61,21 @@ class Serveur
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $commentaire = null;
+
+    #[ORM\ManyToOne(inversedBy: 'serveurs')]
+    #[ORM\JoinColumn(name: 'fournisseur_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
+    private ?Fournisseur $fournisseur = null;
+
+    #[ORM\ManyToOne(inversedBy: 'serveurs')]
+    #[ORM\JoinColumn(name: 'systeme_exploitation_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
+    private ?SystemeExploitation $systeme_exploitation = null;
+
+    #[ORM\ManyToOne(inversedBy: 'serveurs')]
+    #[ORM\JoinColumn(name: 'entreprise_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
+    private ?Entreprise $entreprise = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $date_contrat = null;
 
     public function getId(): ?int
     {
@@ -202,18 +214,6 @@ class Serveur
         return $this;
     }
 
-    public function getOs(): ?string
-    {
-        return $this->os;
-    }
-
-    public function setOs(?string $os): static
-    {
-        $this->os = $os;
-
-        return $this;
-    }
-
     public function isPhysique(): ?bool
     {
         return $this->physique;
@@ -258,6 +258,54 @@ class Serveur
     public function setCommentaire(?string $commentaire): static
     {
         $this->commentaire = $commentaire;
+
+        return $this;
+    }
+
+    public function getFournisseur(): ?Fournisseur
+    {
+        return $this->fournisseur;
+    }
+
+    public function setFournisseur(?Fournisseur $fournisseur): static
+    {
+        $this->fournisseur = $fournisseur;
+
+        return $this;
+    }
+
+    public function getSystemeExploitation(): ?SystemeExploitation
+    {
+        return $this->systeme_exploitation;
+    }
+
+    public function setSystemeExploitation(?SystemeExploitation $systeme_exploitation): static
+    {
+        $this->systeme_exploitation = $systeme_exploitation;
+
+        return $this;
+    }
+
+    public function getEntreprise(): ?Entreprise
+    {
+        return $this->entreprise;
+    }
+
+    public function setEntreprise(?Entreprise $entreprise): static
+    {
+        $this->entreprise = $entreprise;
+
+        return $this;
+    }
+
+    public function getDateContrat(): ?string
+    {
+        return $this->date_contrat;
+    }
+
+    public function setDateContrat(?string $date_contrat): static
+    {
+        $this->date_contrat = $date_contrat;
 
         return $this;
     }
