@@ -33,9 +33,20 @@
                         </a>
                     </div>
                     <div class="card-body bg-light">
-                        <div class="table-responsive scrollbar">
-                            <table class="table overflow-hidden">
-                                <thead>
+                        <div id="table_pcportables" data-list='{"valueNames":["nom","ip","marque","modele","utilisateur","processeur","memoire","stockage","stockage_type","os","numero_serie","emplacement","site","fournisseur","etat","date_installation","date_achat","date_garantie","commentaire"],"page":20,"pagination":true}'>
+                            <div class="row justify-content-end g-0">
+                                <div class="col-auto col-sm-5 mb-3">
+                                    <div class="input-group">
+                                        <input class="form-control form-control-sm shadow-none search" type="search" placeholder="Rechercher..." aria-label="search" pattern=".*" />
+                                        <div class="input-group-text bg-transparent">
+                                            <span class="fa fa-search fs--1 text-600"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="table-responsive scrollbar">
+                                <table class="table overflow-hidden mb-2">
+                                    <thead class="bg-200 text-900">
                                     <tr>
                                         <th class="align-middle text-center">#</th>
                                         <th class="align-middle text-center">Nom</th>
@@ -46,109 +57,140 @@
                                         <th class="align-middle text-center">Processeur</th>
                                         <th class="align-middle text-center">Mémoire</th>
                                         <th class="align-middle text-center">Stockage</th>
-                                        <th class="align-middle text-center">OS</th>
+                                        <th class="align-middle text-center">Type de disque dur</th>
+                                        <th class="align-middle text-center">Système d'exploitation</th>
                                         <th class="align-middle text-center">Numéro de série</th>
                                         <th class="align-middle text-center">Emplacement</th>
+                                        <th class="align-middle text-center">Site</th>
+                                        <th class="align-middle text-center">Fournisseur</th>
                                         <th class="align-middle text-center">État</th>
-                                        <th class="align-middle text-center">Commentaire</th>
+                                        <th class="align-middle text-center">Date d'installation</th>
                                         <th class="align-middle text-center">Date d'achat</th>
                                         <th class="align-middle text-center">Date de garantie</th>
+                                        <th class="align-middle text-center">Commentaire</th>
                                         <th class="align-middle text-center">Action</th>
                                     </tr>
-                                </thead>
-                                <tbody>
+                                    </thead>
+                                    <tbody class="list">
                                     {% if pcPortables | length != 0 %}
                                         {% for pcPortable in pcPortables %}
                                             <tr class="align-middle text-center">
-                                                <td class="text-nowrap">{{ pcPortable.id }}</td>
-                                                <td class="text-nowrap">{{ pcPortable.nom }}</td>
-                                                <td class="text-nowrap">
+                                                <td class="text-nowrap">{{ loop.revindex }}</td>
+                                                <td class="text-nowrap nom">{{ pcPortable.nom }}</td>
+                                                <td class="text-nowrap ip">
                                                     {% if pcPortable.ip != null %}
                                                         {{ pcPortable.ip }}
                                                     {% else %}
                                                         <span class="badge text-bg-danger">N/A</span>
                                                     {% endif %}
                                                 </td>
-                                                <td class="text-nowrap">
+                                                <td class="text-nowrap marque">
                                                     {% if pcPortable.marque != null %}
                                                         {{ pcPortable.marque }}
                                                     {% else %}
                                                         <span class="badge text-bg-danger">N/A</span>
                                                     {% endif %}
                                                 </td>
-                                                <td class="text-nowrap">
+                                                <td class="text-nowrap modele">
                                                     {% if pcPortable.modele != null %}
                                                         {{ pcPortable.modele }}
                                                     {% else %}
                                                         <span class="badge text-bg-danger">N/A</span>
                                                     {% endif %}
                                                 </td>
-                                                <td class="text-nowrap">
+                                                <td class="text-nowrap utilisateur">
                                                     {% if pcPortable.utilisateur_nom != null or pcPortable.utilisateur_prenom != null %}
                                                         {{ pcPortable.utilisateur_nom }} {{ pcPortable.utilisateur_prenom }}
                                                     {% else %}
                                                         <span class="badge text-bg-danger">N/A</span>
                                                     {% endif %}
                                                 </td>
-                                                <td class="text-nowrap">
+                                                <td class="text-nowrap processeur">
                                                     {% if pcPortable.processeur != null %}
                                                         {{ pcPortable.processeur }}
                                                     {% else %}
                                                         <span class="badge text-bg-danger">N/A</span>
                                                     {% endif %}
                                                 </td>
-                                                <td class="text-nowrap">
+                                                <td class="text-nowrap memoire">
                                                     {% if pcPortable.memoire != null %}
                                                         {{ pcPortable.memoire }} Go
                                                     {% else %}
                                                         <span class="badge text-bg-danger">N/A</span>
                                                     {% endif %}
                                                 </td>
-                                                <td class="text-nowrap">
+                                                <td class="text-nowrap stockage">
                                                     {% if pcPortable.stockage_nombre != null %}
                                                         {{ pcPortable.stockage_nombre }} {% if pcPortable.stockage_nom != null %} {{ pcPortable.stockage_nom }} {% endif %}
                                                     {% else %}
                                                         <span class="badge text-bg-danger">N/A</span>
                                                     {% endif %}
                                                 </td>
-                                                <td class="text-nowrap">
-                                                    {% if pcPortable.os != null %}
-                                                        {{ pcPortable.os }}
+                                                <td class="text-nowrap stockage_type">
+                                                    {% if pcPortable.stockage_type != null %}
+                                                        {{ pcPortable.stockage_type }}
                                                     {% else %}
                                                         <span class="badge text-bg-danger">N/A</span>
                                                     {% endif %}
                                                 </td>
-                                                <td class="text-nowrap">
+                                                <td class="text-nowrap os">
+                                                    {% if pcPortable.systeme_exploitation_nom != null %}
+                                                        {{ pcPortable.systeme_exploitation_nom }}
+                                                    {% else %}
+                                                        <span class="badge text-bg-danger">N/A</span>
+                                                    {% endif %}
+                                                </td>
+                                                <td class="text-nowrap numero_serie">
                                                     {% if pcPortable.numero_serie != null %}
                                                         {{ pcPortable.numero_serie }}
                                                     {% else %}
                                                         <span class="badge text-bg-danger">N/A</span>
                                                     {% endif %}
                                                 </td>
-                                                <td class="text-nowrap">
+                                                <td class="text-nowrap emplacement">
                                                     {{ pcPortable.emplacement_nom }}
                                                 </td>
-
-                                                <td class="text-nowrap">
-                                                    {{ pcPortable.etat_nom }}
-                                                </td>
-                                                <td class="text-nowrap">
-                                                    {% if pcPortable.commentaire != null %}
-                                                        {{ pcPortable.commentaire }}
+                                                <td class="text-nowrap site">
+                                                    {% if pcPortable.entreprise_nom != null %}
+                                                        {{ pcPortable.entreprise_nom }}
                                                     {% else %}
                                                         <span class="badge text-bg-danger">N/A</span>
                                                     {% endif %}
                                                 </td>
-                                                <td class="text-nowrap">
+                                                <td class="text-nowrap fournisseur">
+                                                    {% if pcPortable.fournisseur_nom != null %}
+                                                        {{ pcPortable.fournisseur_nom }}
+                                                    {% else %}
+                                                        <span class="badge text-bg-danger">N/A</span>
+                                                    {% endif %}
+                                                </td>
+                                                <td class="text-nowrap etat">
+                                                    {{ pcPortable.etat_nom }}
+                                                </td>
+                                                <td class="text-nowrap date_installation">
+                                                    {% if pcPortable.date_installation != null %}
+                                                        {{ pcPortable.date_installation }}
+                                                    {% else %}
+                                                        <span class="badge text-bg-danger">N/A</span>
+                                                    {% endif %}
+                                                </td>
+                                                <td class="text-nowrap date_achat">
                                                     {% if pcPortable.date_achat != null %}
                                                         {{ pcPortable.date_achat }}
                                                     {% else %}
                                                         <span class="badge text-bg-danger">N/A</span>
                                                     {% endif %}
                                                 </td>
-                                                <td class="text-nowrap">
+                                                <td class="text-nowrap date_garantie">
                                                     {% if pcPortable.date_garantie != null %}
                                                         {{ pcPortable.date_garantie }}
+                                                    {% else %}
+                                                        <span class="badge text-bg-danger">N/A</span>
+                                                    {% endif %}
+                                                </td>
+                                                <td class="text-nowrap commentaire">
+                                                    {% if pcPortable.commentaire != null %}
+                                                        {{ pcPortable.commentaire }}
                                                     {% else %}
                                                         <span class="badge text-bg-danger">N/A</span>
                                                     {% endif %}
@@ -158,7 +200,7 @@
                                                         <span class="bi bi-pencil-square"></span>
                                                     </a>
 
-                                                    <form method="post" action="{{ path('admin.pc_portable.delete', {id: pcPortable.id}) }}" style="display: inline-block" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer le PC Portable : \'{{ pcPortable.nom }}\' ?')">
+                                                    <form method="post" action="{{ path('admin.pc_portable.delete', {id: pcPortable.id}) }}" style="display: inline-block" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer le PC Fixe : \'{{ pcPortable.nom }}\' ?')">
                                                         <input type="hidden" name="_method" value="DELETE">
                                                         <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ pcPortable.id) }}">
                                                         <button class="btn btn-danger btn-sm">
@@ -170,11 +212,21 @@
                                         {% endfor %}
                                     {% else %}
                                         <tr class="align-middle text-center">
-                                            <td colspan="12">Aucun PC Portable n'a été trouvé.</td>
+                                            <td colspan="12">Aucun PC Fixe n'a été trouvé.</td>
                                         </tr>
                                     {% endif %}
-                                </tbody>
-                            </table>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="d-flex justify-content-center mt-3">
+                                <button class="btn btn-sm btn-falcon-default me-1" type="button" title="Précédent" data-list-pagination="prev">
+                                    <span class="fas fa-chevron-left"></span>
+                                </button>
+                                <ul class="pagination mb-0"></ul>
+                                <button class="btn btn-sm btn-falcon-default ms-1" type="button" title="Suivant" data-list-pagination="next">
+                                    <span class="fas fa-chevron-right"></span>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>

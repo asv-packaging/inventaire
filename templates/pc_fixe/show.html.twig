@@ -33,167 +33,200 @@
                         </a>
                     </div>
                     <div class="card-body bg-light">
-                        <div class="table-responsive scrollbar">
-                            <table class="table overflow-hidden">
-                                <thead>
-                                    <tr>
-                                        <th class="align-middle text-center">#</th>
-                                        <th class="align-middle text-center">Nom</th>
-                                        <th class="align-middle text-center">IP</th>
-                                        <th class="align-middle text-center">Marque</th>
-                                        <th class="align-middle text-center">Modèle</th>
-                                        <th class="align-middle text-center">Utilisateur</th>
-                                        <th class="align-middle text-center">Processeur</th>
-                                        <th class="align-middle text-center">Mémoire</th>
-                                        <th class="align-middle text-center">Stockage</th>
-                                        <th class="align-middle text-center">Type de stockage</th>
-                                        <th class="align-middle text-center">Système d'exploitation</th>
-                                        <th class="align-middle text-center">Numéro de série</th>
-                                        <th class="align-middle text-center">Emplacement</th>
-                                        <th class="align-middle text-center">Site</th>
-                                        <th class="align-middle text-center">État</th>
-                                        <th class="align-middle text-center">Date d'installation</th>
-                                        <th class="align-middle text-center">Date d'achat</th>
-                                        <th class="align-middle text-center">Date de garantie</th>
-                                        <th class="align-middle text-center">Commentaire</th>
-                                        <th class="align-middle text-center">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% if pcFixes | length != 0 %}
-                                        {% for pcFixe in pcFixes %}
-                                            <tr class="align-middle text-center">
-                                                <td class="text-nowrap">{{ pcFixe.id }}</td>
-                                                <td class="text-nowrap">{{ pcFixe.nom }}</td>
-                                                <td class="text-nowrap">
-                                                    {% if pcFixe.ip != null %}
-                                                        {{ pcFixe.ip }}
-                                                    {% else %}
-                                                        <span class="badge text-bg-danger">N/A</span>
-                                                    {% endif %}
-                                                </td>
-                                                <td class="text-nowrap">
-                                                    {% if pcFixe.marque != null %}
-                                                        {{ pcFixe.marque }}
-                                                    {% else %}
-                                                        <span class="badge text-bg-danger">N/A</span>
-                                                    {% endif %}
-                                                </td>
-                                                <td class="text-nowrap">
-                                                    {% if pcFixe.modele != null %}
-                                                        {{ pcFixe.modele }}
-                                                    {% else %}
-                                                        <span class="badge text-bg-danger">N/A</span>
-                                                    {% endif %}
-                                                </td>
-                                                <td class="text-nowrap">
-                                                    {% if pcFixe.utilisateur_nom != null or pcFixe.utilisateur_prenom != null %}
-                                                        {{ pcFixe.utilisateur_nom }} {{ pcFixe.utilisateur_prenom }}
-                                                    {% else %}
-                                                        <span class="badge text-bg-danger">N/A</span>
-                                                    {% endif %}
-                                                </td>
-                                                <td class="text-nowrap">
-                                                    {% if pcFixe.processeur != null %}
-                                                        {{ pcFixe.processeur }}
-                                                    {% else %}
-                                                        <span class="badge text-bg-danger">N/A</span>
-                                                    {% endif %}
-                                                </td>
-                                                <td class="text-nowrap">
-                                                    {% if pcFixe.memoire != null %}
-                                                        {{ pcFixe.memoire }} Go
-                                                    {% else %}
-                                                        <span class="badge text-bg-danger">N/A</span>
-                                                    {% endif %}
-                                                </td>
-                                                <td class="text-nowrap">
-                                                    {% if pcFixe.stockage_nombre != null %}
-                                                        {{ pcFixe.stockage_nombre }} Go
-                                                    {% else %}
-                                                        <span class="badge text-bg-danger">N/A</span>
-                                                    {% endif %}
-                                                </td>
-                                                <td class="text-nowrap">
-                                                    {% if pcFixe.stockage_nom != null %}
-                                                        {{ pcFixe.stockage_nom }}
-                                                    {% else %}
-                                                        <span class="badge text-bg-danger">N/A</span>
-                                                    {% endif %}
-                                                </td>
-                                                <td class="text-nowrap">
-                                                    {% if pcFixe.systeme_exploitation_nom != null %}
-                                                        {{ pcFixe.systeme_exploitation_nom }}
-                                                    {% else %}
-                                                        <span class="badge text-bg-danger">N/A</span>
-                                                    {% endif %}
-                                                </td>
-                                                <td class="text-nowrap">
-                                                    {% if pcFixe.numero_serie != null %}
-                                                        {{ pcFixe.numero_serie }}
-                                                    {% else %}
-                                                        <span class="badge text-bg-danger">N/A</span>
-                                                    {% endif %}
-                                                </td>
-                                                <td class="text-nowrap">
-                                                    {{ pcFixe.emplacement_nom }}
-                                                </td>
-                                                <td class="text-nowrap">
-                                                    {{ pcFixe.site_nom }}
-                                                </td>
-                                                <td class="text-nowrap">
-                                                    {{ pcFixe.etat_nom }}
-                                                </td>
-                                                <td class="text-nowrap">
-                                                    {% if pcFixe.date_installation != null %}
-                                                        {{ pcFixe.date_installation }}
-                                                    {% else %}
-                                                        <span class="badge text-bg-danger">N/A</span>
-                                                    {% endif %}
-                                                </td>
-                                                <td class="text-nowrap">
-                                                    {% if pcFixe.date_achat != null %}
-                                                        {{ pcFixe.date_achat }}
-                                                    {% else %}
-                                                        <span class="badge text-bg-danger">N/A</span>
-                                                    {% endif %}
-                                                </td>
-                                                <td class="text-nowrap">
-                                                    {% if pcFixe.date_garantie != null %}
-                                                        {{ pcFixe.date_garantie }}
-                                                    {% else %}
-                                                        <span class="badge text-bg-danger">N/A</span>
-                                                    {% endif %}
-                                                </td>
-                                                <td class="text-nowrap">
-                                                    {% if pcFixe.commentaire != null %}
-                                                        {{ pcFixe.commentaire }}
-                                                    {% else %}
-                                                        <span class="badge text-bg-danger">N/A</span>
-                                                    {% endif %}
-                                                </td>
-                                                <td class="text-nowrap">
-                                                    <a href="{{ path('admin.pc_fixe.edit', {id: pcFixe.id}) }}" class="btn btn-primary btn-sm">
-                                                        <span class="bi bi-pencil-square"></span>
-                                                    </a>
-
-                                                    <form method="post" action="{{ path('admin.pc_fixe.delete', {id: pcFixe.id}) }}" style="display: inline-block" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer le PC Fixe : \'{{ pcFixe.nom }}\' ?')">
-                                                        <input type="hidden" name="_method" value="DELETE">
-                                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ pcFixe.id) }}">
-                                                        <button class="btn btn-danger btn-sm">
-                                                            <span class="bi bi-trash-fill"></span>
-                                                        </button>
-                                                    </form>
-                                                </td>
-                                            </tr>
-                                        {% endfor %}
-                                    {% else %}
-                                        <tr class="align-middle text-center">
-                                            <td colspan="12">Aucun PC Fixe n'a été trouvé.</td>
+                        <div id="table_pcfixes" data-list='{"valueNames":["nom","ip","marque","modele","utilisateur","processeur","memoire","stockage","stockage_type","os","numero_serie","emplacement","site","fournisseur","etat","date_installation","date_achat","date_garantie","commentaire"],"page":20,"pagination":true}'>
+                            <div class="row justify-content-end g-0">
+                                <div class="col-auto col-sm-5 mb-3">
+                                    <div class="input-group">
+                                        <input class="form-control form-control-sm shadow-none search" type="search" placeholder="Rechercher..." aria-label="search" pattern=".*" />
+                                        <div class="input-group-text bg-transparent">
+                                            <span class="fa fa-search fs--1 text-600"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="table-responsive scrollbar">
+                                <table class="table overflow-hidden mb-2">
+                                    <thead class="bg-200 text-900">
+                                        <tr>
+                                            <th class="align-middle text-center">#</th>
+                                            <th class="align-middle text-center">Nom</th>
+                                            <th class="align-middle text-center">IP</th>
+                                            <th class="align-middle text-center">Marque</th>
+                                            <th class="align-middle text-center">Modèle</th>
+                                            <th class="align-middle text-center">Utilisateur</th>
+                                            <th class="align-middle text-center">Processeur</th>
+                                            <th class="align-middle text-center">Mémoire</th>
+                                            <th class="align-middle text-center">Stockage</th>
+                                            <th class="align-middle text-center">Type de stockage</th>
+                                            <th class="align-middle text-center">Système d'exploitation</th>
+                                            <th class="align-middle text-center">Numéro de série</th>
+                                            <th class="align-middle text-center">Emplacement</th>
+                                            <th class="align-middle text-center">Site</th>
+                                            <th class="align-middle text-center">Fournisseur</th>
+                                            <th class="align-middle text-center">État</th>
+                                            <th class="align-middle text-center">Date d'installation</th>
+                                            <th class="align-middle text-center">Date d'achat</th>
+                                            <th class="align-middle text-center">Date de garantie</th>
+                                            <th class="align-middle text-center">Commentaire</th>
+                                            <th class="align-middle text-center">Action</th>
                                         </tr>
-                                    {% endif %}
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody class="list">
+                                        {% if pcFixes | length != 0 %}
+                                            {% for pcFixe in pcFixes %}
+                                                <tr class="align-middle text-center">
+                                                    <td class="text-nowrap">{{ loop.revindex }}</td>
+                                                    <td class="text-nowrap nom">{{ pcFixe.nom }}</td>
+                                                    <td class="text-nowrap ip">
+                                                        {% if pcFixe.ip != null %}
+                                                            {{ pcFixe.ip }}
+                                                        {% else %}
+                                                            <span class="badge text-bg-danger">N/A</span>
+                                                        {% endif %}
+                                                    </td>
+                                                    <td class="text-nowrap marque">
+                                                        {% if pcFixe.marque != null %}
+                                                            {{ pcFixe.marque }}
+                                                        {% else %}
+                                                            <span class="badge text-bg-danger">N/A</span>
+                                                        {% endif %}
+                                                    </td>
+                                                    <td class="text-nowrap modele">
+                                                        {% if pcFixe.modele != null %}
+                                                            {{ pcFixe.modele }}
+                                                        {% else %}
+                                                            <span class="badge text-bg-danger">N/A</span>
+                                                        {% endif %}
+                                                    </td>
+                                                    <td class="text-nowrap utilisateur">
+                                                        {% if pcFixe.utilisateur_nom != null or pcFixe.utilisateur_prenom != null %}
+                                                            {{ pcFixe.utilisateur_nom }} {{ pcFixe.utilisateur_prenom }}
+                                                        {% else %}
+                                                            <span class="badge text-bg-danger">N/A</span>
+                                                        {% endif %}
+                                                    </td>
+                                                    <td class="text-nowrap processeur">
+                                                        {% if pcFixe.processeur != null %}
+                                                            {{ pcFixe.processeur }}
+                                                        {% else %}
+                                                            <span class="badge text-bg-danger">N/A</span>
+                                                        {% endif %}
+                                                    </td>
+                                                    <td class="text-nowrap memoire">
+                                                        {% if pcFixe.memoire != null %}
+                                                            {{ pcFixe.memoire }} Go
+                                                        {% else %}
+                                                            <span class="badge text-bg-danger">N/A</span>
+                                                        {% endif %}
+                                                    </td>
+                                                    <td class="text-nowrap stockage">
+                                                        {% if pcFixe.stockage_nombre != null %}
+                                                            {{ pcFixe.stockage_nombre }} {% if pcFixe.stockage_nom != null %} {{ pcFixe.stockage_nom }} {% endif %}
+                                                        {% else %}
+                                                            <span class="badge text-bg-danger">N/A</span>
+                                                        {% endif %}
+                                                    </td>
+                                                    <td class="text-nowrap stockage_type">
+                                                        {% if pcFixe.stockage_type != null %}
+                                                            {{ pcFixe.stockage_type }}
+                                                        {% else %}
+                                                            <span class="badge text-bg-danger">N/A</span>
+                                                        {% endif %}
+                                                    </td>
+                                                    <td class="text-nowrap os">
+                                                        {% if pcFixe.systeme_exploitation_nom != null %}
+                                                            {{ pcFixe.systeme_exploitation_nom }}
+                                                        {% else %}
+                                                            <span class="badge text-bg-danger">N/A</span>
+                                                        {% endif %}
+                                                    </td>
+                                                    <td class="text-nowrap numero_serie">
+                                                        {% if pcFixe.numero_serie != null %}
+                                                            {{ pcFixe.numero_serie }}
+                                                        {% else %}
+                                                            <span class="badge text-bg-danger">N/A</span>
+                                                        {% endif %}
+                                                    </td>
+                                                    <td class="text-nowrap emplacement">
+                                                        {{ pcFixe.emplacement_nom }}
+                                                    </td>
+                                                    <td class="text-nowrap site">
+                                                        {% if pcFixe.entreprise_nom != null %}
+                                                            {{ pcFixe.entreprise_nom }}
+                                                        {% else %}
+                                                            <span class="badge text-bg-danger">N/A</span>
+                                                        {% endif %}
+                                                    </td>
+                                                    <td class="text-nowrap fournisseur">
+                                                        {% if pcFixe.fournisseur_nom != null %}
+                                                            {{ pcFixe.fournisseur_nom }}
+                                                        {% else %}
+                                                            <span class="badge text-bg-danger">N/A</span>
+                                                        {% endif %}
+                                                    </td>
+                                                    <td class="text-nowrap etat">
+                                                        {{ pcFixe.etat_nom }}
+                                                    </td>
+                                                    <td class="text-nowrap date_installation">
+                                                        {% if pcFixe.date_installation != null %}
+                                                            {{ pcFixe.date_installation }}
+                                                        {% else %}
+                                                            <span class="badge text-bg-danger">N/A</span>
+                                                        {% endif %}
+                                                    </td>
+                                                    <td class="text-nowrap date_achat">
+                                                        {% if pcFixe.date_achat != null %}
+                                                            {{ pcFixe.date_achat }}
+                                                        {% else %}
+                                                            <span class="badge text-bg-danger">N/A</span>
+                                                        {% endif %}
+                                                    </td>
+                                                    <td class="text-nowrap date_garantie">
+                                                        {% if pcFixe.date_garantie != null %}
+                                                            {{ pcFixe.date_garantie }}
+                                                        {% else %}
+                                                            <span class="badge text-bg-danger">N/A</span>
+                                                        {% endif %}
+                                                    </td>
+                                                    <td class="text-nowrap commentaire">
+                                                        {% if pcFixe.commentaire != null %}
+                                                            {{ pcFixe.commentaire }}
+                                                        {% else %}
+                                                            <span class="badge text-bg-danger">N/A</span>
+                                                        {% endif %}
+                                                    </td>
+                                                    <td class="text-nowrap">
+                                                        <a href="{{ path('admin.pc_fixe.edit', {id: pcFixe.id}) }}" class="btn btn-primary btn-sm">
+                                                            <span class="bi bi-pencil-square"></span>
+                                                        </a>
+
+                                                        <form method="post" action="{{ path('admin.pc_fixe.delete', {id: pcFixe.id}) }}" style="display: inline-block" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer le PC Fixe : \'{{ pcFixe.nom }}\' ?')">
+                                                            <input type="hidden" name="_method" value="DELETE">
+                                                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ pcFixe.id) }}">
+                                                            <button class="btn btn-danger btn-sm">
+                                                                <span class="bi bi-trash-fill"></span>
+                                                            </button>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                        {% else %}
+                                            <tr class="align-middle text-center">
+                                                <td colspan="12">Aucun PC Fixe n'a été trouvé.</td>
+                                            </tr>
+                                        {% endif %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="d-flex justify-content-center mt-3">
+                                <button class="btn btn-sm btn-falcon-default me-1" type="button" title="Précédent" data-list-pagination="prev">
+                                    <span class="fas fa-chevron-left"></span>
+                                </button>
+                                <ul class="pagination mb-0"></ul>
+                                <button class="btn btn-sm btn-falcon-default ms-1" type="button" title="Suivant" data-list-pagination="next">
+                                    <span class="fas fa-chevron-right"></span>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>

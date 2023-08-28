@@ -21,11 +21,14 @@ class PcPortableController extends AbstractController
     public function index(ManagerRegistry $registry): Response
     {
         $pcPortables = $registry->getManager()->getRepository(PcPortable::class)->createQueryBuilder('pc_portable')
-            ->select('pc_portable.id, pc_portable.nom, pc_portable.marque, pc_portable.modele, emplacement.nom as emplacement_nom, etat.nom as etat_nom, utilisateur.nom as utilisateur_nom, utilisateur.prenom as utilisateur_prenom, pc_portable.numero_serie, pc_portable.ip, pc_portable.processeur, pc_portable.memoire, pc_portable.stockage_nombre, stockage.nom as stockage_nom, pc_portable.os, pc_portable.date_achat, pc_portable.date_garantie, pc_portable.commentaire')
+            ->select('pc_portable.id, pc_portable.nom, pc_portable.marque, pc_portable.modele, emplacement.nom as emplacement_nom, etat.nom as etat_nom, utilisateur.nom as utilisateur_nom, utilisateur.prenom as utilisateur_prenom, systeme_exploitation.nom as systeme_exploitation_nom, fournisseur.nom as fournisseur_nom, entreprise.nom as entreprise_nom, pc_portable.numero_serie, pc_portable.ip, pc_portable.processeur, pc_portable.memoire, pc_portable.stockage_nombre, stockage.nom as stockage_nom, pc_portable.stockage_type, pc_portable.date_installation, pc_portable.date_achat, pc_portable.date_garantie, pc_portable.commentaire')
             ->leftJoin('pc_portable.utilisateur', 'utilisateur')
             ->leftJoin('pc_portable.emplacement', 'emplacement')
             ->leftJoin('pc_portable.etat', 'etat')
             ->leftJoin('pc_portable.stockage', 'stockage')
+            ->leftJoin('pc_portable.systeme_exploitation', 'systeme_exploitation')
+            ->leftJoin('pc_portable.fournisseur', 'fournisseur')
+            ->leftJoin('pc_portable.entreprise', 'entreprise')
             ->orderBy('pc_portable.id', 'DESC')
             ->getQuery()
             ->getResult();

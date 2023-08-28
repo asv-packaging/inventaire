@@ -21,10 +21,13 @@ class ServeurController extends AbstractController
     public function index(ManagerRegistry $registry): Response
     {
         $serveurs = $registry->getManager()->getRepository(Serveur::class)->createQueryBuilder('s')
-            ->select('s.id, s.nom, s.marque, s.modele, emplacement.nom as emplacement_nom, etat.nom as etat_nom, s.numero_serie, s.ip, s.processeur, s.memoire, s.stockage_nombre, stockage.nom as stockage_nom, s.os, s.physique, s.date_achat, s.date_garantie, s.commentaire')
+            ->select('s.id, s.nom, s.marque, s.modele, emplacement.nom as emplacement_nom, etat.nom as etat_nom, entreprise.nom as entreprise_nom, fournisseur.nom as fournisseur_nom, s.numero_serie, s.ip, s.processeur, s.memoire, s.stockage_nombre, stockage.nom as stockage_nom, s.stockage_type, systeme_exploitation.nom as systeme_exploitation_nom, s.physique, s.date_contrat, s.date_achat, s.date_garantie, s.commentaire')
             ->leftJoin('s.stockage', 'stockage')
             ->leftJoin('s.emplacement', 'emplacement')
             ->leftJoin('s.etat', 'etat')
+            ->leftJoin('s.systeme_exploitation', 'systeme_exploitation')
+            ->leftJoin('s.entreprise', 'entreprise')
+            ->leftJoin('s.fournisseur', 'fournisseur')
             ->orderBy('s.id', 'DESC')
             ->getQuery()
             ->getResult();

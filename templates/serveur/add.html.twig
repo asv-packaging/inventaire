@@ -3,7 +3,8 @@
 {% block title %}Ajouter un serveur | Inventaire{% endblock %}
 {% block stylesheets %}
     <link href="{{ asset('assets/vendors/flatpickr/flatpickr.min.css') }}" rel="stylesheet" />
-    <link href="{{ asset('assets/vendors/choices/choices.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/vendors/select2/select2.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/vendors/select2-bootstrap-5-theme/select2-bootstrap-5-theme.min.css') }}" rel="stylesheet" />
 {% endblock %}
 
 {% block body %}
@@ -38,24 +39,34 @@
                     </div>
                     <div class="card-body bg-light">
                         {{ form_start(serveurForm) }}
-                            {{ form_row(serveurForm.nom) }}
-                            {{ form_row(serveurForm.ip) }}
-                            {{ form_row(serveurForm.marque) }}
-                            {{ form_row(serveurForm.modele) }}
-                            {{ form_row(serveurForm.processeur) }}
-                            {{ form_row(serveurForm.memoire) }}
-                            {{ form_row(serveurForm.stockage_nombre) }}
-                            {{ form_row(serveurForm.stockage, {'placeholder': 'Choisir un type de stockage'}) }}
-                            {{ form_row(serveurForm.os) }}
-                            {{ form_row(serveurForm.physique, {'placeholder': 'Choisir un type'}) }}
-                            {{ form_row(serveurForm.numero_serie) }}
-                            {{ form_row(serveurForm.emplacement, {'placeholder': 'Choisir un emplacement'}) }}
-                            {{ form_row(serveurForm.etat, {'placeholder': 'Choisir un état'}) }}
-                            {{ form_row(serveurForm.date_achat) }}
-                            {{ form_row(serveurForm.date_garantie) }}
-                            {{ form_row(serveurForm.commentaire) }}
-                            <div class="d-flex justify-content-end">
-                                <button class="btn btn-primary me-1 mb-1" type="submit">Créer</button>
+                            <div class="row">
+                                {{ form_row(serveurForm.nom) }}
+                                {{ form_row(serveurForm.ip) }}
+                                {{ form_row(serveurForm.marque) }}
+                                {{ form_row(serveurForm.modele) }}
+                                {{ form_row(serveurForm.processeur) }}
+                                {{ form_row(serveurForm.memoire) }}
+                                {{ form_row(serveurForm.stockage_nombre) }}
+                                <div class="col-lg-6">
+                                    {{ form_row(serveurForm.stockage) }}
+                                </div>
+                                <div class="col-lg-6">
+                                    {{ form_row(serveurForm.stockage_type) }}
+                                </div>
+                                {{ form_row(serveurForm.systeme_exploitation) }}
+                                {{ form_row(serveurForm.physique) }}
+                                {{ form_row(serveurForm.numero_serie) }}
+                                {{ form_row(serveurForm.emplacement) }}
+                                {{ form_row(serveurForm.entreprise) }}
+                                {{ form_row(serveurForm.fournisseur) }}
+                                {{ form_row(serveurForm.etat) }}
+                                {{ form_row(serveurForm.date_contrat) }}
+                                {{ form_row(serveurForm.date_achat) }}
+                                {{ form_row(serveurForm.date_garantie) }}
+                                {{ form_row(serveurForm.commentaire) }}
+                                <div class="d-flex justify-content-end">
+                                    <button class="btn btn-primary me-1 mb-1" type="submit">Créer</button>
+                                </div>
                             </div>
                         {{ form_end(serveurForm) }}
                     </div>
@@ -65,6 +76,6 @@
     </div>
 {% endblock %}
 {% block javascripts %}
+    <script src="{{ asset('assets/vendors/select2/select2.min.js') }}"></script>
     <script src="{{ asset('assets/js/flatpickr.js') }}"></script>
-    <script src="{{ asset('assets/vendors/choices/choices.min.js') }}"></script>
 {% endblock %}

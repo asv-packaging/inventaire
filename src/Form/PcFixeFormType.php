@@ -3,13 +3,16 @@
 namespace App\Form;
 
 use App\Entity\Emplacement;
+use App\Entity\Entreprise;
 use App\Entity\Etat;
+use App\Entity\Fournisseur;
 use App\Entity\PcFixe;
 use App\Entity\Stockage;
 use App\Entity\SystemeExploitation;
 use App\Entity\Utilisateur;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -64,7 +67,7 @@ class PcFixeFormType extends AbstractType
                 'required' => false,
             ])
             ->add('memoire', IntegerType::class, [
-                'label' => 'Mémoire (en Go)',
+                'label' => 'Mémoire',
                 'attr' => [
                     'placeholder' => 'Mémoire (en Go)'
                 ],
@@ -77,13 +80,33 @@ class PcFixeFormType extends AbstractType
                 ],
                 'required' => false,
             ])
+            ->add('stockage_type', ChoiceType::class, [
+                'label' => 'Type de disque dur',
+                'placeholder' => 'Choisir un type de disque dur',
+                'choices' => [
+                    'HDD' => 'HDD',
+                    'SSD' => 'SSD',
+                ],
+                'attr' => [
+                    'class' => 'selectpicker',
+                ],
+                'required' => false,
+            ])
             ->add('systeme_exploitation', EntityType::class, [
                 'label' => 'Système d\'exploitation',
                 'class' => SystemeExploitation::class,
                 'choice_label' => 'nom',
+                'placeholder' => 'Choisir un système d\'exploitation',
                 'attr' => [
-                    'class' => 'js-choice',
-                    'data-options' => '{"removeItemButton":true,"placeholder":true}',
+                    'class' => 'selectpicker',
+                ],
+                'required' => false,
+            ])
+            ->add('date_installation', TextType::class, [
+                'label' => 'Date d\'installation',
+                'attr' => [
+                    'class' => 'datetimepicker',
+                    'placeholder' => 'Date d\'installation'
                 ],
                 'required' => false,
             ])
@@ -117,41 +140,60 @@ class PcFixeFormType extends AbstractType
                 'choice_label' => function(Utilisateur $utilisateur) {
                     return $utilisateur->getNom() . ' ' . $utilisateur->getPrenom();
                 },
+                'placeholder' => 'Choisir un utilisateur',
                 'required' => false,
                 'attr' => [
-                    'class' => 'js-choice',
-                    'data-options' => '{"removeItemButton":true,"placeholder":true}',
+                    'class' => 'selectpicker',
                 ]
             ])
             ->add('emplacement', EntityType::class, [
                 'label' => 'Emplacement',
                 'class' => Emplacement::class,
                 'choice_label' => 'nom',
+                'placeholder' => 'Choisir un emplacement',
                 'required' => true,
                 'attr' => [
-                    'class' => 'js-choice',
-                    'data-options' => '{"removeItemButton":true,"placeholder":true}',
+                    'class' => 'selectpicker',
                 ]
             ])
             ->add('etat', EntityType::class, [
                 'label' => 'État',
                 'class' => Etat::class,
                 'choice_label' => 'nom',
+                'placeholder' => 'Choisir un état',
                 'required' => true,
                 'attr' => [
-                    'class' => 'js-choice',
-                    'data-options' => '{"removeItemButton":true,"placeholder":true}',
+                    'class' => 'selectpicker',
                 ]
             ])
             ->add('stockage', EntityType::class, [
                 'label' => 'Type de stockage',
-                'attr' => [
-                    'placeholder' => 'Type de stockage',
-                    'class' => 'js-choice',
-                    'data-options' => '{"removeItemButton":true,"placeholder":true}',
-                ],
                 'class' => Stockage::class,
                 'choice_label' => 'nom',
+                'placeholder' => 'Choisir un type de stockage',
+                'attr' => [
+                    'class' => 'selectpicker',
+                ],
+                'required' => false,
+            ])
+            ->add('entreprise', EntityType::class, [
+                'label' => 'Site',
+                'class' => Entreprise::class,
+                'choice_label' => 'nom',
+                'placeholder' => 'Choisir un site',
+                'attr' => [
+                    'class' => 'selectpicker',
+                ],
+                'required' => false,
+            ])
+            ->add('fournisseur', EntityType::class, [
+                'label' => 'Fournisseur',
+                'class' => Fournisseur::class,
+                'choice_label' => 'nom',
+                'placeholder' => 'Choisir un fournisseur',
+                'attr' => [
+                    'class' => 'selectpicker',
+                ],
                 'required' => false,
             ])
         ;

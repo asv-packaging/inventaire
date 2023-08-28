@@ -9,6 +9,8 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Process\Exception\ProcessTimedOutException;
+use Symfony\Component\Process\Process;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/admin/pc/fixes', name: 'admin.pc_fixe.')]
@@ -21,7 +23,7 @@ class PcFixeController extends AbstractController
     public function index(ManagerRegistry $registry): Response
     {
         $pcFixes = $registry->getManager()->getRepository(PcFixe::class)->createQueryBuilder('pc_fixe')
-            ->select('pc_fixe.id, pc_fixe.nom, pc_fixe.marque, pc_fixe.modele, emplacement.nom as emplacement_nom, etat.nom as etat_nom, utilisateur.nom as utilisateur_nom, utilisateur.prenom as utilisateur_prenom, systeme_exploitation.nom as systeme_exploitation_nom, fournisseur.nom as fournisseur_nom, entreprise.nom as entreprise_nom, pc_fixe.numero_serie, pc_fixe.ip, pc_fixe.processeur, pc_fixe.memoire, pc_fixe.stockage_nombre, stockage.nom as stockage_nom, pc_fixe.date_installation, pc_fixe.date_achat, pc_fixe.date_garantie, pc_fixe.commentaire')
+            ->select('pc_fixe.id, pc_fixe.nom, pc_fixe.marque, pc_fixe.modele, emplacement.nom as emplacement_nom, etat.nom as etat_nom, utilisateur.nom as utilisateur_nom, utilisateur.prenom as utilisateur_prenom, systeme_exploitation.nom as systeme_exploitation_nom, fournisseur.nom as fournisseur_nom, entreprise.nom as entreprise_nom, pc_fixe.numero_serie, pc_fixe.ip, pc_fixe.processeur, pc_fixe.memoire, pc_fixe.stockage_nombre, stockage.nom as stockage_nom, pc_fixe.stockage_type, pc_fixe.date_installation, pc_fixe.date_achat, pc_fixe.date_garantie, pc_fixe.commentaire')
             ->leftJoin('pc_fixe.utilisateur', 'utilisateur')
             ->leftJoin('pc_fixe.emplacement', 'emplacement')
             ->leftJoin('pc_fixe.etat', 'etat')

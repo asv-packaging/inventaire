@@ -77,6 +77,9 @@ class Serveur
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $date_contrat = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $stockage_type = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -306,6 +309,18 @@ class Serveur
     public function setDateContrat(?string $date_contrat): static
     {
         $this->date_contrat = $date_contrat;
+
+        return $this;
+    }
+
+    public function getStockageType(): ?string
+    {
+        return $this->stockage_type;
+    }
+
+    public function setStockageType(?string $stockage_type): static
+    {
+        $this->stockage_type = $stockage_type;
 
         return $this;
     }

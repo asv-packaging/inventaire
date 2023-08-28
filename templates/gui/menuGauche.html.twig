@@ -56,7 +56,7 @@
                             <span class="nav-link-text ps-1">Gestion</span>
                         </div>
                     </a>
-                    <ul class="nav collapse {% if menu_active == 'ecran' or menu_active == 'serveur' or menu_active == 'tablette' or menu_active == 'telephone' or menu_active == 'pc_fixe' or menu_active == 'pc_portable' %}show{% endif %}" id="gestion">
+                    <ul class="nav collapse {% if menu_active == 'ecran' or menu_active == 'serveur' or menu_active == 'tablette' or menu_active == 'pc_fixe' or menu_active == 'pc_portable' or menu_active == 'telephone_portable' or menu_active == 'telephone_fixe' %}show{% endif %}" id="gestion">
                         <li class="nav-item">
                             <a class="nav-link {% if menu_active == 'ecran' %}active{% endif %}" href="{{ path('admin.ecran.show') }}">
                                 <div class="d-flex align-items-center">
@@ -109,7 +109,7 @@
                             </a>
                             <ul class="nav collapse {% if menu_active == 'telephone_fixe' or menu_active == 'telephone_portable' %}show{% endif %}" id="telephones">
                                 <li class="nav-item">
-                                    <a class="nav-link {% if menu_active == 'telephone_fixe' %}active{% endif %}" href="{{ path('admin.telephone_portable.show') }}">
+                                    <a class="nav-link {% if menu_active == 'telephone_fixe' %}active{% endif %}" href="{{ path('admin.telephone_fixe.show') }}">
                                         <div class="d-flex align-items-center">
                                             <span class="nav-link-text ps-1">Fixes</span>
                                         </div>
@@ -137,13 +137,6 @@
                     </a>
                     <ul class="nav collapse {% if menu_active == 'entreprise' or menu_active == 'emplacement' or menu_active == 'etat' or menu_active == 'fournisseur' or menu_active == 'os' or menu_active == 'stockage' or menu_active == 'utilisateur' %}show{% endif %}" id="parametres">
                         <li class="nav-item">
-                            <a class="nav-link {% if menu_active == 'entreprise' %}active{% endif %}" href="{{ path('admin.emplacement.show') }}">
-                                <div class="d-flex align-items-center">
-                                    <span class="nav-link-text ps-1">Sites</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link {% if menu_active == 'emplacement' %}active{% endif %}" href="{{ path('admin.emplacement.show') }}">
                                 <div class="d-flex align-items-center">
                                     <span class="nav-link-text ps-1">Emplacements</span>
@@ -161,6 +154,13 @@
                             <a class="nav-link {% if menu_active == 'fournisseur' %}active{% endif %}" href="{{ path('admin.etat.show') }}">
                                 <div class="d-flex align-items-center">
                                     <span class="nav-link-text ps-1">Fournisseurs</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if menu_active == 'entreprise' %}active{% endif %}" href="{{ path('admin.emplacement.show') }}">
+                                <div class="d-flex align-items-center">
+                                    <span class="nav-link-text ps-1">Sites</span>
                                 </div>
                             </a>
                         </li>

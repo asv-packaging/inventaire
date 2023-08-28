@@ -6,28 +6,25 @@ use App\Entity\Emplacement;
 use App\Entity\Entreprise;
 use App\Entity\Etat;
 use App\Entity\Fournisseur;
-use App\Entity\PcPortable;
-use App\Entity\Stockage;
-use App\Entity\SystemeExploitation;
+use App\Entity\TelephoneFixe;
 use App\Entity\Utilisateur;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class PcPortableFormType extends AbstractType
+class TelephoneFixeFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('nom', TextType::class, [
-                'label' => 'Nom du PC Portable',
+            ->add('ligne', TextType::class, [
+                'label' => 'Ligne du téléphone',
                 'attr' => [
-                    'placeholder' => 'Nom du PC Portable'
+                    'placeholder' => 'Ligne du téléphone'
                 ],
                 'required' => true,
             ])
@@ -45,13 +42,6 @@ class PcPortableFormType extends AbstractType
                 ],
                 'required' => false,
             ])
-            ->add('numero_serie', TextType::class, [
-                'label' => 'Numéro de série',
-                'attr' => [
-                    'placeholder' => 'Numéro de série'
-                ],
-                'required' => false,
-            ])
             ->add('ip', TextType::class, [
                 'label' => 'Adresse IP',
                 'attr' => [
@@ -59,71 +49,48 @@ class PcPortableFormType extends AbstractType
                 ],
                 'required' => false,
             ])
-            ->add('processeur', TextType::class, [
-                'label' => 'Nom du processeur',
+            ->add('type', ChoiceType::class, [
+                'label' => 'Type de téléphone <span style="color: red">*</span>',
+                'label_html' => true,
+                'placeholder' => 'Choisir le type de téléphone',
                 'attr' => [
-                    'placeholder' => 'Nom du processeur'
+                    'class' => 'selectpicker'
                 ],
-                'required' => false,
-            ])
-            ->add('memoire', IntegerType::class, [
-                'label' => 'Mémoire',
-                'attr' => [
-                    'placeholder' => 'Mémoire (en Go)'
-                ],
-                'required' => false,
-            ])
-            ->add('stockage_nombre', IntegerType::class, [
-                'label' => 'Stockage',
-                'attr' => [
-                    'placeholder' => 'Stockage'
-                ],
-                'required' => false,
-            ])
-            ->add('stockage_type', ChoiceType::class, [
-                'label' => 'Type de disque dur',
-                'placeholder' => 'Choisir un type de disque dur',
                 'choices' => [
-                    'HDD' => 'HDD',
-                    'SSD' => 'SSD',
+                    'Fixe' => 'Fixe',
+                    'DECT' => 'DECT',
                 ],
-                'attr' => [
-                    'class' => 'selectpicker',
-                ],
-                'required' => false,
+                'required' => true,
             ])
-            ->add('systeme_exploitation', EntityType::class, [
-                'label' => 'Système d\'exploitation',
-                'class' => SystemeExploitation::class,
-                'choice_label' => 'nom',
-                'placeholder' => 'Choisir un système d\'exploitation',
+            ->add('numero_serie', TextType::class, [
+                'label' => 'Numéro de série',
                 'attr' => [
-                    'class' => 'selectpicker',
+                    'placeholder' => 'Numéro de série'
                 ],
                 'required' => false,
             ])
             ->add('date_installation', TextType::class, [
-                'label' => 'Date d\'installation',
                 'attr' => [
+                    'placeholder' => 'Date d\'installation',
                     'class' => 'datetimepicker',
-                    'placeholder' => 'Date d\'installation'
                 ],
+                'label' => 'Date d\'installation',
                 'required' => false,
             ])
             ->add('date_achat', TextType::class, [
-                'label' => 'Date d\'achat',
                 'attr' => [
+                    'placeholder' => 'Date d\'achat',
                     'class' => 'datetimepicker',
-                    'placeholder' => 'Date d\'achat'
                 ],
+                'label' => 'Date d\'achat',
                 'required' => false,
             ])
             ->add('date_garantie', TextType::class, [
-                'label' => 'Date de fin de garantie',
                 'attr' => [
+                    'placeholder' => 'Date de garantie',
                     'class' => 'datetimepicker',
-                    'placeholder' => 'Date de fin de garantie'
                 ],
+                'label' => 'Date de garantie',
                 'required' => false,
             ])
             ->add('commentaire', TextareaType::class, [
@@ -135,66 +102,54 @@ class PcPortableFormType extends AbstractType
                 'required' => false,
             ])
             ->add('utilisateur', EntityType::class, [
-                'label' => 'Utilisateur',
                 'class' => Utilisateur::class,
                 'choice_label' => function(Utilisateur $utilisateur) {
                     return $utilisateur->getNom() . ' ' . $utilisateur->getPrenom();
                 },
-                'placeholder' => 'Choisir un utilisateur',
                 'required' => false,
+                'placeholder' => 'Choisir un utilisateur',
+                'attr' => [
+                    'class' => 'selectpicker',
+                ]
+            ])
+            ->add('fournisseur', EntityType::class, [
+                'class' => Fournisseur::class,
+                'choice_label' => 'nom',
+                'required' => false,
+                'placeholder' => 'Choisir un fournisseur',
                 'attr' => [
                     'class' => 'selectpicker',
                 ]
             ])
             ->add('emplacement', EntityType::class, [
-                'label' => 'Emplacement',
                 'class' => Emplacement::class,
                 'choice_label' => 'nom',
+                'required' => false,
                 'placeholder' => 'Choisir un emplacement',
-                'required' => true,
                 'attr' => [
                     'class' => 'selectpicker',
                 ]
             ])
             ->add('etat', EntityType::class, [
-                'label' => 'État',
                 'class' => Etat::class,
                 'choice_label' => 'nom',
-                'placeholder' => 'Choisir un état',
                 'required' => true,
+                'label' => 'État <span style="color: red">*</span>',
+                'label_html' => true,
+                'placeholder' => 'Choisir un état',
                 'attr' => [
                     'class' => 'selectpicker',
                 ]
             ])
-            ->add('stockage', EntityType::class, [
-                'label' => 'Type de stockage',
-                'class' => Stockage::class,
-                'choice_label' => 'nom',
-                'placeholder' => 'Choisir un type de stockage',
-                'attr' => [
-                    'class' => 'selectpicker',
-                ],
-                'required' => false,
-            ])
             ->add('entreprise', EntityType::class, [
-                'label' => 'Site',
                 'class' => Entreprise::class,
                 'choice_label' => 'nom',
+                'required' => true,
+                'label' => 'Site',
                 'placeholder' => 'Choisir un site',
                 'attr' => [
                     'class' => 'selectpicker',
-                ],
-                'required' => false,
-            ])
-            ->add('fournisseur', EntityType::class, [
-                'label' => 'Fournisseur',
-                'class' => Fournisseur::class,
-                'choice_label' => 'nom',
-                'placeholder' => 'Choisir un fournisseur',
-                'attr' => [
-                    'class' => 'selectpicker',
-                ],
-                'required' => false,
+                ]
             ])
         ;
     }
@@ -202,7 +157,7 @@ class PcPortableFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => PcPortable::class,
+            'data_class' => TelephoneFixe::class,
         ]);
     }
 }
