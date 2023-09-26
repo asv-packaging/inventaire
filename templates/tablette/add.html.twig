@@ -3,7 +3,8 @@
 {% block title %}Ajouter une tablette | Inventaire{% endblock %}
 {% block stylesheets %}
     <link href="{{ asset('assets/vendors/flatpickr/flatpickr.min.css') }}" rel="stylesheet" />
-    <link href="{{ asset('assets/vendors/choices/choices.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/vendors/select2/select2.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/vendors/select2-bootstrap-5-theme/select2-bootstrap-5-theme.min.css') }}" rel="stylesheet" />
 {% endblock %}
 
 {% block body %}
@@ -42,13 +43,19 @@
                             {{ form_row(tabletteForm.ip) }}
                             {{ form_row(tabletteForm.marque) }}
                             {{ form_row(tabletteForm.modele) }}
-                            {{ form_row(tabletteForm.utilisateur, {'placeholder': 'Choisir un utilisateur'}) }}
-                            {{ form_row(tabletteForm.emplacement, {'placeholder': 'Choisir un emplacement'}) }}
+                            {{ form_row(tabletteForm.utilisateur) }}
                             {{ form_row(tabletteForm.numero_serie) }}
-                            {{ form_row(tabletteForm.etat, {'placeholder': 'Choisir un état'}) }}
+                            {{ form_row(tabletteForm.emplacement) }}
+                            {{ form_row(tabletteForm.entreprise) }}
+                            {{ form_row(tabletteForm.etat) }}
+                            {{ form_row(tabletteForm.date_installation) }}
                             {{ form_row(tabletteForm.date_achat) }}
                             {{ form_row(tabletteForm.date_garantie) }}
                             {{ form_row(tabletteForm.commentaire) }}
+                            <label class="fw-medium">
+                                <a style="color: red">*</a>
+                                Champs obligatoires
+                            </label>
                             <div class="d-flex justify-content-end">
                                 <button class="btn btn-primary me-1 mb-1" type="submit">Créer</button>
                             </div>
@@ -60,6 +67,6 @@
     </div>
 {% endblock %}
 {% block javascripts %}
+    <script src="{{ asset('assets/vendors/select2/select2.min.js') }}"></script>
     <script src="{{ asset('assets/js/flatpickr.js') }}"></script>
-    <script src="{{ asset('assets/vendors/choices/choices.min.js') }}"></script>
 {% endblock %}

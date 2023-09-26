@@ -56,11 +56,25 @@
                             <span class="nav-link-text ps-1">Gestion</span>
                         </div>
                     </a>
-                    <ul class="nav collapse {% if menu_active == 'ecran' or menu_active == 'serveur' or menu_active == 'tablette' or menu_active == 'pc_fixe' or menu_active == 'pc_portable' or menu_active == 'telephone_portable' or menu_active == 'telephone_fixe' %}show{% endif %}" id="gestion">
+                    <ul class="nav collapse {% if menu_active == 'ecran' or menu_active == 'imprimante' or menu_active == 'onduleur' or menu_active == 'serveur' or menu_active == 'tablette' or menu_active == 'pc_fixe' or menu_active == 'pc_portable' or menu_active == 'telephone_portable' or menu_active == 'telephone_fixe' %}show{% endif %}" id="gestion">
                         <li class="nav-item">
                             <a class="nav-link {% if menu_active == 'ecran' %}active{% endif %}" href="{{ path('admin.ecran.show') }}">
                                 <div class="d-flex align-items-center">
                                     <span class="nav-link-text ps-1">Écrans</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if menu_active == 'imprimante' %}active{% endif %}" href="{{ path('admin.imprimante.show') }}">
+                                <div class="d-flex align-items-center">
+                                    <span class="nav-link-text ps-1">Imprimantes</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if menu_active == 'onduleur' %}active{% endif %}" href="{{ path('admin.onduleur.show') }}">
+                                <div class="d-flex align-items-center">
+                                    <span class="nav-link-text ps-1">Onduleurs</span>
                                 </div>
                             </a>
                         </li>

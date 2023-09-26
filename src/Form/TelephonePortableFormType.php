@@ -20,7 +20,8 @@ class TelephonePortableFormType extends AbstractType
     {
         $builder
             ->add('ligne', TextType::class, [
-                'label' => 'Ligne du téléphone',
+                'label' => 'Ligne du téléphone <span style="color: red">*</span>',
+                'label_html' => true,
                 'attr' => [
                     'placeholder' => 'Ligne du téléphone'
                 ],
@@ -105,7 +106,8 @@ class TelephonePortableFormType extends AbstractType
                 ]
             ])
             ->add('etat', EntityType::class, [
-                'label' => 'État',
+                'label' => 'État <span style="color: red">*</span>',
+                'label_html' => true,
                 'class' => Etat::class,
                 'choice_label' => 'nom',
                 'required' => true,

@@ -64,10 +64,10 @@
                                             <th class="align-middle text-center">Site</th>
                                             <th class="align-middle text-center">Fournisseur</th>
                                             <th class="align-middle text-center">État</th>
-                                            <th class="align-middle text-center">Commentaire</th>
                                             <th class="align-middle text-center">Date de contrat</th>
                                             <th class="align-middle text-center">Date d'achat</th>
                                             <th class="align-middle text-center">Date de garantie</th>
+                                            <th class="align-middle text-center">Commentaire</th>
                                             <th class="align-middle text-center">Action</th>
                                         </tr>
                                     </thead>
@@ -167,14 +167,7 @@
                                                     <td class="text-nowrap etat">
                                                         {{ serveur.etat_nom }}
                                                     </td>
-                                                    <td class="text-nowrap commentaire">
-                                                        {% if serveur.commentaire != null %}
-                                                            {{ serveur.commentaire }}
-                                                        {% else %}
-                                                            <span class="badge text-bg-danger">N/A</span>
-                                                        {% endif %}
-                                                    </td>
-                                                    <td class="text-nowrap commentaire">
+                                                    <td class="text-nowrap date_contrat">
                                                         {% if serveur.date_contrat != null %}
                                                             {{ serveur.date_contrat }}
                                                         {% else %}
@@ -191,6 +184,13 @@
                                                     <td class="text-nowrap date_garantie">
                                                         {% if serveur.date_garantie != null %}
                                                             {{ serveur.date_garantie }}
+                                                        {% else %}
+                                                            <span class="badge text-bg-danger">N/A</span>
+                                                        {% endif %}
+                                                    </td>
+                                                    <td class="text-nowrap commentaire">
+                                                        {% if serveur.commentaire != null %}
+                                                            {{ serveur.commentaire }}
                                                         {% else %}
                                                             <span class="badge text-bg-danger">N/A</span>
                                                         {% endif %}

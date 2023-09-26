@@ -25,7 +25,8 @@ class PcFixeFormType extends AbstractType
     {
         $builder
             ->add('nom', TextType::class, [
-                'label' => 'Nom du PC Fixe',
+                'label' => 'Nom du PC Fixe <span style="color: red">*</span>',
+                'label_html' => true,
                 'attr' => [
                     'placeholder' => 'Nom du PC Fixe'
                 ],
@@ -147,7 +148,8 @@ class PcFixeFormType extends AbstractType
                 ]
             ])
             ->add('emplacement', EntityType::class, [
-                'label' => 'Emplacement',
+                'label' => 'Emplacement <span style="color: red">*</span>',
+                'label_html' => true,
                 'class' => Emplacement::class,
                 'choice_label' => 'nom',
                 'placeholder' => 'Choisir un emplacement',
@@ -157,7 +159,8 @@ class PcFixeFormType extends AbstractType
                 ]
             ])
             ->add('etat', EntityType::class, [
-                'label' => 'État',
+                'label' => 'État <span style="color: red">*</span>',
+                'label_html' => true,
                 'class' => Etat::class,
                 'choice_label' => 'nom',
                 'placeholder' => 'Choisir un état',

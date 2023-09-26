@@ -25,7 +25,8 @@ class ServeurFormType extends AbstractType
     {
         $builder
             ->add('nom', TextType::class, [
-                'label' => 'Nom du serveur',
+                'label' => 'Nom du serveur <span style="color: red">*</span>',
+                'label_html' => true,
                 'attr' => [
                     'placeholder' => 'Nom du serveur'
                 ]
@@ -90,7 +91,8 @@ class ServeurFormType extends AbstractType
                 'required' => false,
             ])
             ->add('physique', ChoiceType::class, [
-                'label' => 'Type',
+                'label' => 'Type <span style="color: red">*</span>',
+                'label_html' => true,
                 'placeholder' => 'Choisir un type',
                 'choices' => [
                     'Physique' => true,
@@ -134,7 +136,8 @@ class ServeurFormType extends AbstractType
                 'required' => false,
             ])
             ->add('emplacement', EntityType::class, [
-                'label' => 'Emplacement',
+                'label' => 'Emplacement <span style="color: red">*</span>',
+                'label_html' => true,
                 'class' => Emplacement::class,
                 'choice_label' => 'nom',
                 'required' => true,
@@ -144,7 +147,8 @@ class ServeurFormType extends AbstractType
                 ]
             ])
             ->add('etat', EntityType::class, [
-                'label' => 'État',
+                'label' => 'État <span style="color: red">*</span>',
+                'label_html' => true,
                 'class' => Etat::class,
                 'choice_label' => 'nom',
                 'required' => true,

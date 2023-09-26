@@ -2,35 +2,35 @@
 
 namespace App\Form;
 
-use App\Entity\Ecran;
 use App\Entity\Emplacement;
 use App\Entity\Entreprise;
 use App\Entity\Etat;
 use App\Entity\Fournisseur;
-use App\Entity\Utilisateur;
+use App\Entity\Onduleur;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\NotBlank;
 
-class EcranFormType extends AbstractType
+class OnduleurFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('nom', TextType::class, [
-                'label' => 'Nom de l\'écran <span style="color: red">*</span>',
+                'label' => 'Nom de l\'onduleur <span style="color: red">*</span>',
                 'label_html' => true,
                 'attr' => [
-                    'placeholder' => 'Nom de l\'écran'
+                    'placeholder' => 'Nom de l\'onduleur'
                 ],
                 'required' => true,
             ])
             ->add('marque', TextType::class, [
-                'label' => 'Marque',
+                'label' => 'Nom de la marque',
                 'attr' => [
                     'placeholder' => 'Nom de la marque'
                 ],
@@ -50,46 +50,55 @@ class EcranFormType extends AbstractType
                 ],
                 'required' => false,
             ])
-            ->add('date_installation', TextType::class, [
+            ->add('capacite', IntegerType::class, [
+                'label' => 'Capacité en Watt',
                 'attr' => [
-                    'placeholder' => 'Date d\'installation',
-                    'class' => 'datetimepicker',
+                    'placeholder' => 'Capacité en Watt',
+                    'min' => 1
                 ],
+                'required' => false,
+            ])
+            ->add('type_prise', ChoiceType::class, [
+                'label' => 'Type de prise',
+                'placeholder' => 'Choisir un type de prise',
+                'attr' => [
+                    'class' => 'selectpicker'
+                ],
+                'choices' => [
+                    'FR' => 'FR',
+                    'DIN' => 'DIN',
+                    'EIC' => 'EIC',
+                ]
+            ])
+            ->add('date_installation', TextType::class, [
                 'label' => 'Date d\'installation',
+                'attr' => [
+                    'class' => 'datetimepicker',
+                    'placeholder' => 'Date d\'installation'
+                ],
                 'required' => false,
             ])
             ->add('date_achat', TextType::class, [
-                'attr' => [
-                    'placeholder' => 'Date d\'achat',
-                    'class' => 'datetimepicker',
-                ],
                 'label' => 'Date d\'achat',
+                'attr' => [
+                    'class' => 'datetimepicker',
+                    'placeholder' => 'Date d\'achat'
+                ],
                 'required' => false,
             ])
             ->add('date_garantie', TextType::class, [
+                'label' => 'Date de garantie',
                 'attr' => [
-                    'placeholder' => 'Date de fin de garantie',
                     'class' => 'datetimepicker',
+                    'placeholder' => 'Date de garantie'
                 ],
-                'label' => 'Date de fin de garantie',
                 'required' => false,
             ])
             ->add('commentaire', TextareaType::class, [
                 'label' => 'Commentaire',
                 'attr' => [
                     'placeholder' => 'Commentaire',
-                    'rows' => '7',
-                ],
-                'required' => false,
-            ])
-            ->add('utilisateur', EntityType::class, [
-                'class' => Utilisateur::class,
-                'choice_label' => function(Utilisateur $utilisateur) {
-                    return $utilisateur->getNom() . ' ' . $utilisateur->getPrenom();
-                },
-                'placeholder' => 'Choisir un utilisateur',
-                'attr' => [
-                    'class' => 'selectpicker',
+                    'rows' => '7'
                 ],
                 'required' => false,
             ])
@@ -100,7 +109,7 @@ class EcranFormType extends AbstractType
                 'choice_label' => 'nom',
                 'placeholder' => 'Choisir un emplacement',
                 'attr' => [
-                    'class' => 'selectpicker',
+                    'class' => 'selectpicker'
                 ],
                 'required' => true,
             ])
@@ -111,7 +120,7 @@ class EcranFormType extends AbstractType
                 'choice_label' => 'nom',
                 'placeholder' => 'Choisir un état',
                 'attr' => [
-                    'class' => 'selectpicker',
+                    'class' => 'selectpicker'
                 ],
                 'required' => true,
             ])
@@ -121,7 +130,7 @@ class EcranFormType extends AbstractType
                 'choice_label' => 'nom',
                 'placeholder' => 'Choisir un fournisseur',
                 'attr' => [
-                    'class' => 'selectpicker',
+                    'class' => 'selectpicker'
                 ],
                 'required' => false,
             ])
@@ -131,7 +140,7 @@ class EcranFormType extends AbstractType
                 'choice_label' => 'nom',
                 'placeholder' => 'Choisir un site',
                 'attr' => [
-                    'class' => 'selectpicker',
+                    'class' => 'selectpicker'
                 ],
                 'required' => false,
             ])
@@ -141,7 +150,7 @@ class EcranFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Ecran::class,
+            'data_class' => Onduleur::class,
         ]);
     }
 }

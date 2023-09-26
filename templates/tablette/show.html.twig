@@ -33,123 +33,160 @@
                         </a>
                     </div>
                     <div class="card-body bg-light">
-                        <div class="table-responsive scrollbar">
-                            <table class="table overflow-hidden">
-                                <thead>
-                                    <tr>
-                                        <th class="align-middle text-center">#</th>
-                                        <th class="align-middle text-center">Nom</th>
-                                        <th class="align-middle text-center">IP</th>
-                                        <th class="align-middle text-center">Marque</th>
-                                        <th class="align-middle text-center">Modèle</th>
-                                        <th class="align-middle text-center">Utilisateur</th>
-                                        <th class="align-middle text-center">Emplacement</th>
-                                        <th class="align-middle text-center">Numéro de série</th>
-                                        <th class="align-middle text-center">État</th>
-                                        <th class="align-middle text-center">Commentaire</th>
-                                        <th class="align-middle text-center">Date d'achat</th>
-                                        <th class="align-middle text-center">Date de garantie</th>
-                                        <th class="align-middle text-center">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% if tablettes | length != 0 %}
-                                        {% for tablette in tablettes %}
-                                            <tr class="align-middle text-center">
-                                                <td class="text-nowrap">{{ tablette.id }}</td>
-                                                <td class="text-nowrap">{{ tablette.nom }}</td>
-                                                <td class="text-nowrap">
-                                                    {% if tablette.ip != null %}
-                                                        {{ tablette.ip }}
-                                                    {% else %}
-                                                        <span class="badge text-bg-danger">N/A</span>
-                                                    {% endif %}
-                                                </td>
-                                                <td class="text-nowrap">
-                                                    {% if tablette.marque != null %}
-                                                        {{ tablette.marque }}
-                                                    {% else %}
-                                                        <span class="badge text-bg-danger">N/A</span>
-                                                    {% endif %}
-                                                </td>
-                                                <td class="text-nowrap">
-                                                    {% if tablette.modele != null %}
-                                                        {{ tablette.modele }}
-                                                    {% else %}
-                                                        <span class="badge text-bg-danger">N/A</span>
-                                                    {% endif %}
-                                                </td>
-                                                <td class="text-nowrap">
-                                                    {% if tablette.utilisateur_nom != null or tablette.utilisateur_prenom != null %}
-                                                        {{ tablette.utilisateur_nom }} {{ tablette.utilisateur_prenom }}
-                                                    {% else %}
-                                                        <span class="badge text-bg-danger">N/A</span>
-                                                    {% endif %}
-                                                </td>
-                                                <td class="text-nowrap">
-                                                    {% if tablette.emplacement_nom != null %}
-                                                        {{ tablette.emplacement_nom }}
-                                                    {% else %}
-                                                        <span class="badge text-bg-danger">N/A</span>
-                                                    {% endif %}
-                                                </td>
-                                                <td class="text-nowrap">
-                                                    {% if tablette.numero_serie != null %}
-                                                        {{ tablette.numero_serie }}
-                                                    {% else %}
-                                                        <span class="badge text-bg-danger">N/A</span>
-                                                    {% endif %}
-                                                </td>
-                                                <td class="text-nowrap">
-                                                    {% if tablette.etat_nom != null %}
-                                                        {{ tablette.etat_nom }}
-                                                    {% else %}
-                                                        <span class="badge text-bg-danger">N/A</span>
-                                                    {% endif %}
-                                                </td>
-                                                <td class="text-nowrap">
-                                                    {% if tablette.commentaire != null %}
-                                                        {{ tablette.commentaire }}
-                                                    {% else %}
-                                                        <span class="badge text-bg-danger">N/A</span>
-                                                    {% endif %}
-                                                </td>
-                                                <td class="text-nowrap">
-                                                    {% if tablette.date_achat != null %}
-                                                        {{ tablette.date_achat }}
-                                                    {% else %}
-                                                        <span class="badge text-bg-danger">N/A</span>
-                                                    {% endif %}
-                                                </td>
-                                                <td class="text-nowrap">
-                                                    {% if tablette.date_garantie != null %}
-                                                        {{ tablette.date_garantie }}
-                                                    {% else %}
-                                                        <span class="badge text-bg-danger">N/A</span>
-                                                    {% endif %}
-                                                </td>
-                                                <td class="text-nowrap">
-                                                    <a href="{{ path('admin.tablette.edit', {id: tablette.id}) }}" class="btn btn-primary btn-sm">
-                                                        <span class="bi bi-pencil-square"></span>
-                                                    </a>
-
-                                                    <form method="post" action="{{ path('admin.tablette.delete', {id: tablette.id}) }}" style="display: inline-block" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer le téléphone : \'{{ tablette.nom }}\' ?')">
-                                                        <input type="hidden" name="_method" value="DELETE">
-                                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ tablette.id) }}">
-                                                        <button class="btn btn-danger btn-sm">
-                                                            <span class="bi bi-trash-fill"></span>
-                                                        </button>
-                                                    </form>
-                                                </td>
-                                            </tr>
-                                        {% endfor %}
-                                    {% else %}
-                                        <tr class="align-middle text-center">
-                                            <td colspan="12">Aucune tablette n'a été trouvée.</td>
+                        <div id="table_onduleur" data-list='{"valueNames":["nom","ip","marque","modele","utilisateur","emplacement","numero_serie","site","fournisseur","etat","date_installation","date_achat","date_garantie","commentaire"],"page":20,"pagination":true}'>
+                            <div class="row justify-content-end g-0">
+                                <div class="col-auto col-sm-5 mb-3">
+                                    <div class="input-group">
+                                        <input class="form-control form-control-sm shadow-none search" type="search" placeholder="Rechercher..." aria-label="search" pattern="-*" />
+                                        <div class="input-group-text bg-transparent">
+                                            <span class="fa fa-search fs--1 text-600"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="table-responsive scrollbar">
+                                <table class="table overflow-hidden">
+                                    <thead>
+                                        <tr>
+                                            <th class="align-middle text-center">#</th>
+                                            <th class="align-middle text-center">Nom</th>
+                                            <th class="align-middle text-center">IP</th>
+                                            <th class="align-middle text-center">Marque</th>
+                                            <th class="align-middle text-center">Modèle</th>
+                                            <th class="align-middle text-center">Utilisateur</th>
+                                            <th class="align-middle text-center">Numéro de série</th>
+                                            <th class="align-middle text-center">Emplacement</th>
+                                            <th class="align-middle text-center">Site</th>
+                                            <th class="align-middle text-center">État</th>
+                                            <th class="align-middle text-center">Commentaire</th>
+                                            <th class="align-middle text-center">Date d'installation</th>
+                                            <th class="align-middle text-center">Date d'achat</th>
+                                            <th class="align-middle text-center">Date de garantie</th>
+                                            <th class="align-middle text-center">Action</th>
                                         </tr>
-                                    {% endif %}
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody class="list">
+                                        {% if tablettes | length != 0 %}
+                                            {% for tablette in tablettes %}
+                                                <tr class="align-middle text-center">
+                                                    <td class="text-nowrap">{{ loop.revindex }}</td>
+                                                    <td class="text-nowrap nom">{{ tablette.nom }}</td>
+                                                    <td class="text-nowrap ip">
+                                                        {% if tablette.ip != null %}
+                                                            {{ tablette.ip }}
+                                                        {% else %}
+                                                            <span class="badge text-bg-danger">N/A</span>
+                                                        {% endif %}
+                                                    </td>
+                                                    <td class="text-nowrap marque">
+                                                        {% if tablette.marque != null %}
+                                                            {{ tablette.marque }}
+                                                        {% else %}
+                                                            <span class="badge text-bg-danger">N/A</span>
+                                                        {% endif %}
+                                                    </td>
+                                                    <td class="text-nowrap modele">
+                                                        {% if tablette.modele != null %}
+                                                            {{ tablette.modele }}
+                                                        {% else %}
+                                                            <span class="badge text-bg-danger">N/A</span>
+                                                        {% endif %}
+                                                    </td>
+                                                    <td class="text-nowrap utilisateur">
+                                                        {% if tablette.utilisateur_nom != null or tablette.utilisateur_prenom != null %}
+                                                            {{ tablette.utilisateur_nom }} {{ tablette.utilisateur_prenom }}
+                                                        {% else %}
+                                                            <span class="badge text-bg-danger">N/A</span>
+                                                        {% endif %}
+                                                    </td>
+                                                    <td class="text-nowrap numero_serie">
+                                                        {% if tablette.numero_serie != null %}
+                                                            {{ tablette.numero_serie }}
+                                                        {% else %}
+                                                            <span class="badge text-bg-danger">N/A</span>
+                                                        {% endif %}
+                                                    </td>
+                                                    <td class="text-nowrap emplacement">
+                                                        {% if tablette.emplacement_nom != null %}
+                                                            {{ tablette.emplacement_nom }}
+                                                        {% else %}
+                                                            <span class="badge text-bg-danger">N/A</span>
+                                                        {% endif %}
+                                                    </td>
+                                                    <td class="text-nowrap site">
+                                                        {% if tablette.entreprise_nom != null %}
+                                                            {{ tablette.entreprise_nom }}
+                                                        {% else %}
+                                                            <span class="badge text-bg-danger">N/A</span>
+                                                        {% endif %}
+                                                    </td>
+                                                    <td class="text-nowrap etat">
+                                                        {% if tablette.etat_nom != null %}
+                                                            {{ tablette.etat_nom }}
+                                                        {% else %}
+                                                            <span class="badge text-bg-danger">N/A</span>
+                                                        {% endif %}
+                                                    </td>
+                                                    <td class="text-nowrap commentaire">
+                                                        {% if tablette.commentaire != null %}
+                                                            {{ tablette.commentaire }}
+                                                        {% else %}
+                                                            <span class="badge text-bg-danger">N/A</span>
+                                                        {% endif %}
+                                                    </td>
+                                                    <td class="text-nowrap date_installation">
+                                                        {% if tablette.date_achat != null %}
+                                                            {{ tablette.date_achat }}
+                                                        {% else %}
+                                                            <span class="badge text-bg-danger">N/A</span>
+                                                        {% endif %}
+                                                    </td>
+                                                    <td class="text-nowrap date_achat">
+                                                        {% if tablette.date_achat != null %}
+                                                            {{ tablette.date_achat }}
+                                                        {% else %}
+                                                            <span class="badge text-bg-danger">N/A</span>
+                                                        {% endif %}
+                                                    </td>
+                                                    <td class="text-nowrap date_garantie">
+                                                        {% if tablette.date_garantie != null %}
+                                                            {{ tablette.date_garantie }}
+                                                        {% else %}
+                                                            <span class="badge text-bg-danger">N/A</span>
+                                                        {% endif %}
+                                                    </td>
+                                                    <td class="text-nowrap">
+                                                        <a href="{{ path('admin.tablette.edit', {id: tablette.id}) }}" class="btn btn-primary btn-sm">
+                                                            <span class="bi bi-pencil-square"></span>
+                                                        </a>
+
+                                                        <form method="post" action="{{ path('admin.tablette.delete', {id: tablette.id}) }}" style="display: inline-block" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer la tablette : \'{{ tablette.nom }}\' ?')">
+                                                            <input type="hidden" name="_method" value="DELETE">
+                                                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ tablette.id) }}">
+                                                            <button class="btn btn-danger btn-sm">
+                                                                <span class="bi bi-trash-fill"></span>
+                                                            </button>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                        {% else %}
+                                            <tr class="align-middle text-center">
+                                                <td colspan="12">Aucune tablette n'a été trouvée.</td>
+                                            </tr>
+                                        {% endif %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="d-flex justify-content-center mt-3">
+                                <button class="btn btn-sm btn-falcon-default me-1" type="button" title="Précédent" data-list-pagination="prev">
+                                    <span class="fas fa-chevron-left"></span>
+                                </button>
+                                <ul class="pagination mb-0"></ul>
+                                <button class="btn btn-sm btn-falcon-default ms-1" type="button" title="Suivant" data-list-pagination="next">
+                                    <span class="fas fa-chevron-right"></span>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>

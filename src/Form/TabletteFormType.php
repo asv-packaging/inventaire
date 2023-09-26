@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Emplacement;
+use App\Entity\Entreprise;
 use App\Entity\Etat;
 use App\Entity\Tablette;
 use App\Entity\Utilisateur;
@@ -19,7 +20,8 @@ class TabletteFormType extends AbstractType
     {
         $builder
             ->add('nom', TextType::class, [
-                'label' => 'Nom de la tablette',
+                'label' => 'Nom de la tablette <span style="color: red">*</span>',
+                'label_html' => true,
                 'attr' => [
                     'placeholder' => 'Nom de la tablette'
                 ],
@@ -53,6 +55,14 @@ class TabletteFormType extends AbstractType
                 ],
                 'required' => false,
             ])
+            ->add('date_installation', TextType::class, [
+                'label' => 'Date d\'installation',
+                'attr' => [
+                    'class' => 'datetimepicker',
+                    'placeholder' => 'Date d\'installation'
+                ],
+                'required' => false,
+            ])
             ->add('date_achat', TextType::class, [
                 'label' => 'Date d\'achat',
                 'attr' => [
@@ -78,32 +88,47 @@ class TabletteFormType extends AbstractType
                 'required' => false,
             ])
             ->add('utilisateur', EntityType::class, [
+                'label' => 'Utilisateur',
                 'class' => Utilisateur::class,
+                'placeholder' => 'Choisir un utilisateur',
                 'choice_label' => function(Utilisateur $utilisateur) {
                     return $utilisateur->getNom() . ' ' . $utilisateur->getPrenom();
                 },
                 'required' => false,
                 'attr' => [
-                    'class' => 'js-choice',
-                    'data-options' => '{"removeItemButton":true,"placeholder":true}',
+                    'class' => 'selectpicker'
                 ]
             ])
             ->add('emplacement', EntityType::class, [
+                'label' => 'Emplacement <span style="color: red">*</span>',
+                'label_html' => true,
                 'class' => Emplacement::class,
                 'choice_label' => 'nom',
                 'required' => true,
+                'placeholder' => 'Choisir un emplacement',
                 'attr' => [
-                    'class' => 'js-choice',
-                    'data-options' => '{"removeItemButton":true,"placeholder":true}',
+                    'class' => 'selectpicker'
                 ]
             ])
             ->add('etat', EntityType::class, [
+                'label' => 'État <span style="color: red">*</span>',
+                'label_html' => true,
                 'class' => Etat::class,
                 'choice_label' => 'nom',
                 'required' => true,
+                'placeholder' => 'Choisir un état',
                 'attr' => [
-                    'class' => 'js-choice',
-                    'data-options' => '{"removeItemButton":true,"placeholder":true}',
+                    'class' => 'selectpicker'
+                ]
+            ])
+            ->add('entreprise', EntityType::class, [
+                'label' => 'Site',
+                'class' => Entreprise::class,
+                'choice_label' => 'nom',
+                'required' => false,
+                'placeholder' => 'Choisir un site',
+                'attr' => [
+                    'class' => 'selectpicker'
                 ]
             ])
         ;

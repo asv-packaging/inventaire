@@ -47,11 +47,15 @@
                             {{ form_row(ecranForm.fournisseur) }}
                             {{ form_row(ecranForm.entreprise) }}
                             {{ form_row(ecranForm.numero_serie) }}
+                            {{ form_row(ecranForm.etat) }}
                             {{ form_row(ecranForm.date_installation) }}
                             {{ form_row(ecranForm.date_achat) }}
                             {{ form_row(ecranForm.date_garantie) }}
-                            {{ form_row(ecranForm.etat) }}
                             {{ form_row(ecranForm.commentaire) }}
+                            <label class="fw-medium">
+                                <a style="color: red">*</a>
+                                Champs obligatoires
+                            </label>
                             <div class="d-flex justify-content-end">
                                 <button class="btn btn-primary me-1 mb-1" type="submit">Éditer</button>
                             </div>

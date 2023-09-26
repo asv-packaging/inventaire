@@ -1,19 +1,19 @@
 {% extends 'gui/base.html.twig' %}
 
-{% block title %}Écrans | Inventaire{% endblock %}
+{% block title %}Onduleurs | Inventaire{% endblock %}
 
 {% block body %}
     <div class="d-flex mb-4 mt-3">
         <span class="fa-stack me-2 ms-n1">
             <i class="fas fa-circle fa-stack text-300"></i>
-            <i class="fa-inverse fa-stack-1x text-danger fas fa-display"></i>
+            <i class="fa-inverse fa-stack-1x text-danger fas fa-car-battery"></i>
         </span>
         <div class="col">
             <h5 class="mb-0 text-danger position-relative">
-                <span class="bg-200 dark__bg-1100 pe-3">Écrans</span>
+                <span class="bg-200 dark__bg-1100 pe-3">Onduleurs</span>
                 <span class="border position-absolute top-50 translate-middle-y w-100 start-0 z-n1"></span>
             </h5>
-            <p class="mb-0">Cette page vous permet de voir tous les écrans.</p>
+            <p class="mb-0">Cette page vous permet de voir tous les onduleurs.</p>
         </div>
     </div>
     <div class="row g-0">
@@ -27,17 +27,17 @@
             <div class="sticky-sidebar">
                 <div class="card mb-3">
                     <div class="card-header d-flex flex-between-center">
-                        <h5 class="mb-0">Tous les écrans</h5>
-                        <a class="btn btn-falcon-default btn-sm" href="{{ path('admin.ecran.add') }}">
+                        <h5 class="mb-0">Toutes les onduleurs</h5>
+                        <a class="btn btn-falcon-default btn-sm" href="{{ path('admin.onduleur.add') }}">
                             Ajouter
                         </a>
                     </div>
                     <div class="card-body bg-light">
-                        <div id="table_ecrans" data-list='{"valueNames":["nom","marque","modele","utilisateur","emplacement","site","fournisseur","numero_serie","date_installation","date_achat","date_garantie","etat","commentaire"],"page":20,"pagination":true}'>
+                        <div id="table_onduleur" data-list='{"valueNames":["nom","marque","modele","numero_serie","capacite","type_prise","emplacement","site","fournisseur","etat","date_installation","date_achat","date_garantie","commentaire"],"page":20,"pagination":true}'>
                             <div class="row justify-content-end g-0">
                                 <div class="col-auto col-sm-5 mb-3">
                                     <div class="input-group">
-                                        <input class="form-control form-control-sm shadow-none search" type="search" placeholder="Rechercher..." aria-label="search" pattern=".*" />
+                                        <input class="form-control form-control-sm shadow-none search" type="search" placeholder="Rechercher..." aria-label="search" pattern="-*" />
                                         <div class="input-group-text bg-transparent">
                                             <span class="fa fa-search fs--1 text-600"></span>
                                         </div>
@@ -49,14 +49,15 @@
                                     <thead class="bg-200 text-900">
                                         <tr>
                                             <th class="align-middle text-center">#</th>
-                                            <th class="align-middle text-center" data-sort="nom">Nom</th>
+                                            <th class="align-middle text-center">Nom</th>
                                             <th class="align-middle text-center">Marque</th>
                                             <th class="align-middle text-center">Modèle</th>
-                                            <th class="align-middle text-center">Utilisateur</th>
+                                            <th class="align-middle text-center">Numéro de série</th>
+                                            <th class="align-middle text-center">Capacité</th>
+                                            <th class="align-middle text-center">Type de prise</th>
                                             <th class="align-middle text-center">Emplacement</th>
                                             <th class="align-middle text-center">Site</th>
                                             <th class="align-middle text-center">Fournisseur</th>
-                                            <th class="align-middle text-center">Numéro de série</th>
                                             <th class="align-middle text-center">État</th>
                                             <th class="align-middle text-center">Date d'installation</th>
                                             <th class="align-middle text-center">Date d'achat</th>
@@ -66,103 +67,112 @@
                                         </tr>
                                     </thead>
                                     <tbody class="list">
-                                        {% if ecrans | length != 0 %}
-                                            {% for ecran in ecrans %}
+                                        {% if onduleurs | length != 0 %}
+                                            {% for onduleur in onduleurs %}
                                                 <tr class="align-middle text-center">
                                                     <td class="text-nowrap">{{ loop.revindex }}</td>
-                                                    <td class="text-nowrap nom">{{ ecran.nom }}</td>
+                                                    <td class="text-nowrap nom">
+                                                        {{ onduleur.nom }}
+                                                    </td>
                                                     <td class="text-nowrap marque">
-                                                        {% if ecran.marque != null %}
-                                                            {{ ecran.marque }}
+                                                        {% if onduleur.marque != null %}
+                                                            {{ onduleur.marque }}
                                                         {% else %}
                                                             <span class="badge text-bg-danger">N/A</span>
                                                         {% endif %}
                                                     </td>
                                                     <td class="text-nowrap modele">
-                                                        {% if ecran.modele != null %}
-                                                            {{ ecran.modele }}
-                                                        {% else %}
-                                                            <span class="badge text-bg-danger">N/A</span>
-                                                        {% endif %}
-                                                    </td>
-                                                    <td class="text-nowrap utilisateur">
-                                                        {% if ecran.utilisateur_nom != null or ecran.utilisateur_prenom != null %}
-                                                            {{ ecran.utilisateur_nom }} {{ ecran.utilisateur_prenom }}
-                                                        {% else %}
-                                                            <span class="badge text-bg-danger">N/A</span>
-                                                        {% endif %}
-                                                    </td>
-                                                    <td class="text-nowrap emplacement">
-                                                        {% if ecran.emplacement_nom != null %}
-                                                            {{ ecran.emplacement_nom }}
-                                                        {% else %}
-                                                            <span class="badge text-bg-danger">N/A</span>
-                                                        {% endif %}
-                                                    </td>
-                                                    <td class="text-nowrap site">
-                                                        {% if ecran.entreprise_nom != null %}
-                                                            {{ ecran.entreprise_nom }}
-                                                        {% else %}
-                                                            <span class="badge text-bg-danger">N/A</span>
-                                                        {% endif %}
-                                                    </td>
-                                                    <td class="text-nowrap fournisseur">
-                                                        {% if ecran.fournisseur_nom != null %}
-                                                            {{ ecran.fournisseur_nom }}
+                                                        {% if onduleur.modele != null %}
+                                                            {{ onduleur.modele }}
                                                         {% else %}
                                                             <span class="badge text-bg-danger">N/A</span>
                                                         {% endif %}
                                                     </td>
                                                     <td class="text-nowrap numero_serie">
-                                                        {% if ecran.numero_serie != null %}
-                                                            {{ ecran.numero_serie }}
+                                                        {% if onduleur.numero_serie != null %}
+                                                            {{ onduleur.numero_serie }}
                                                         {% else %}
                                                             <span class="badge text-bg-danger">N/A</span>
                                                         {% endif %}
                                                     </td>
-                                                    <td class="text-nowrap date_installation">
-                                                        {% if ecran.date_installation != null %}
-                                                            {{ ecran.date_installation }}
+                                                    <td class="text-nowrap capacite">
+                                                        {% if onduleur.capacite != null %}
+                                                            {{ onduleur.capacite }}W
                                                         {% else %}
                                                             <span class="badge text-bg-danger">N/A</span>
                                                         {% endif %}
                                                     </td>
-                                                    <td class="text-nowrap date_achat">
-                                                        {% if ecran.date_achat != null %}
-                                                            {{ ecran.date_achat }}
+                                                    <td class="text-nowrap type_prise">
+                                                        {% if onduleur.type_prise != null %}
+                                                            {{ onduleur.type_prise }}
                                                         {% else %}
                                                             <span class="badge text-bg-danger">N/A</span>
                                                         {% endif %}
                                                     </td>
-                                                    <td class="text-nowrap date_garantie">
-                                                        {% if ecran.date_garantie != null %}
-                                                            {{ ecran.date_garantie }}
+                                                    <td class="text-nowrap emplacement">
+                                                        {% if onduleur.emplacement_nom != null %}
+                                                            {{ onduleur.emplacement_nom }}
+                                                        {% else %}
+                                                            <span class="badge text-bg-danger">N/A</span>
+                                                        {% endif %}
+                                                    </td>
+                                                    <td class="text-nowrap site">
+                                                        {% if onduleur.entreprise_nom != null %}
+                                                            {{ onduleur.entreprise_nom }}
+                                                        {% else %}
+                                                            <span class="badge text-bg-danger">N/A</span>
+                                                        {% endif %}
+                                                    </td>
+                                                    <td class="text-nowrap fournisseur">
+                                                        {% if onduleur.fournisseur_nom != null %}
+                                                            {{ onduleur.fournisseur_nom }}
                                                         {% else %}
                                                             <span class="badge text-bg-danger">N/A</span>
                                                         {% endif %}
                                                     </td>
                                                     <td class="text-nowrap etat">
-                                                        {% if ecran.etat_nom != null %}
-                                                            {{ ecran.etat_nom }}
+                                                        {% if onduleur.etat_nom != null %}
+                                                            {{ onduleur.etat_nom }}
+                                                        {% else %}
+                                                            <span class="badge text-bg-danger">N/A</span>
+                                                        {% endif %}
+                                                    </td>
+                                                    <td class="text-nowrap date_installation">
+                                                        {% if onduleur.date_installation != null %}
+                                                            {{ onduleur.date_installation }}
+                                                        {% else %}
+                                                            <span class="badge text-bg-danger">N/A</span>
+                                                        {% endif %}
+                                                    </td>
+                                                    <td class="text-nowrap date_achat">
+                                                        {% if onduleur.date_achat != null %}
+                                                            {{ onduleur.date_achat }}
+                                                        {% else %}
+                                                            <span class="badge text-bg-danger">N/A</span>
+                                                        {% endif %}
+                                                    </td>
+                                                    <td class="text-nowrap date_garantie">
+                                                        {% if onduleur.date_garantie != null %}
+                                                            {{ onduleur.date_garantie }}
                                                         {% else %}
                                                             <span class="badge text-bg-danger">N/A</span>
                                                         {% endif %}
                                                     </td>
                                                     <td class="text-nowrap commentaire">
-                                                        {% if ecran.commentaire != null %}
-                                                            {{ ecran.commentaire }}
+                                                        {% if onduleur.commentaire != null %}
+                                                            {{ onduleur.commentaire }}
                                                         {% else %}
                                                             <span class="badge text-bg-danger">N/A</span>
                                                         {% endif %}
                                                     </td>
                                                     <td class="text-nowrap">
-                                                        <a href="{{ path('admin.ecran.edit', {id: ecran.id}) }}" class="btn btn-primary btn-sm">
+                                                        <a href="{{ path('admin.onduleur.edit', {id: onduleur.id}) }}" class="btn btn-primary btn-sm">
                                                             <span class="bi bi-pencil-square"></span>
                                                         </a>
 
-                                                        <form method="post" action="{{ path('admin.ecran.delete', {id: ecran.id}) }}" style="display: inline-block" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer l\'écran : \'{{ ecran.nom }}\' ?')">
+                                                        <form method="post" action="{{ path('admin.onduleur.delete', {id: onduleur.id}) }}" style="display: inline-block" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer l\'onduleur {{ onduleur.nom }} ?')">
                                                             <input type="hidden" name="_method" value="DELETE">
-                                                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ ecran.id) }}">
+                                                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ onduleur.id) }}">
                                                             <button class="btn btn-danger btn-sm">
                                                                 <span class="bi bi-trash-fill"></span>
                                                             </button>
@@ -172,7 +182,7 @@
                                             {% endfor %}
                                         {% else %}
                                             <tr class="align-middle text-center">
-                                                <td colspan="12">Aucun écran n'a été trouvé.</td>
+                                                <td colspan="12">Aucun onduleur n'a été trouvé.</td>
                                             </tr>
                                         {% endif %}
                                     </tbody>

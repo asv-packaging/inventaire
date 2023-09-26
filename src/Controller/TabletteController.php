@@ -21,9 +21,10 @@ class TabletteController extends AbstractController
     public function index(ManagerRegistry $registry): Response
     {
         $tablettes = $registry->getManager()->getRepository(Tablette::class)->createQueryBuilder('t')
-            ->select('t.id, t.nom, t.marque, t.modele, emplacement.nom as emplacement_nom, etat.nom as etat_nom, utilisateur.nom as utilisateur_nom, utilisateur.prenom as utilisateur_prenom, t.numero_serie, t.ip, t.date_achat, t.date_garantie, t.commentaire')
+            ->select('t.id, t.nom, t.marque, t.modele, emplacement.nom as emplacement_nom, entreprise.nom as entreprise_nom, etat.nom as etat_nom, utilisateur.nom as utilisateur_nom, utilisateur.prenom as utilisateur_prenom, t.numero_serie, t.ip, t.date_achat, t.date_garantie, t.commentaire')
             ->leftJoin('t.utilisateur', 'utilisateur')
             ->leftJoin('t.emplacement', 'emplacement')
+            ->leftJoin('t.entreprise', 'entreprise')
             ->leftJoin('t.etat', 'etat')
             ->orderBy('t.id', 'DESC')
             ->getQuery()
