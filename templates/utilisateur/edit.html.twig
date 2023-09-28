@@ -34,12 +34,17 @@
                     </div>
                     <div class="card-body bg-light">
                         {{ form_start(utilisateurForm) }}
-                        {{ form_row(utilisateurForm.nom) }}
-                        {{ form_row(utilisateurForm.prenom) }}
-                        {{ form_row(utilisateurForm.email) }}
-                        <div class="d-flex justify-content-end">
-                            <button class="btn btn-primary me-1 mb-1" type="submit">Éditer</button>
-                        </div>
+                            {{ form_row(utilisateurForm.nom) }}
+                            {{ form_row(utilisateurForm.prenom) }}
+                            {{ form_row(utilisateurForm.email) }}
+                            {{ form_row(utilisateurForm.entreprise) }}
+                            <label class="fw-medium">
+                                <a style="color: red">*</a>
+                                Champs obligatoires
+                            </label>
+                            <div class="d-flex justify-content-end">
+                                <button class="btn btn-primary me-1 mb-1" type="submit">Éditer</button>
+                            </div>
                         {{ form_end(utilisateurForm) }}
                     </div>
                 </div>

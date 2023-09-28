@@ -200,7 +200,7 @@
                                                             <span class="bi bi-pencil-square"></span>
                                                         </a>
 
-                                                        <form method="post" action="{{ path('admin.serveur.delete', {id: serveur.id}) }}" style="display: inline-block" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer le serveur : \'{{ serveur.nom }}\' ?')">
+                                                        <form method="post" action="{{ path('admin.serveur.delete', {id: serveur.id}) }}" style="display: inline-block" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer le serveur : {{ serveur.nom }} ?')">
                                                             <input type="hidden" name="_method" value="DELETE">
                                                             <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ serveur.id) }}">
                                                             <button class="btn btn-danger btn-sm">

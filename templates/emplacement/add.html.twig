@@ -34,10 +34,14 @@
                     </div>
                     <div class="card-body bg-light">
                         {{ form_start(emplacementForm) }}
-                        {{ form_row(emplacementForm.nom) }}
-                        <div class="d-flex justify-content-end">
-                            <button class="btn btn-primary me-1 mb-1" type="submit">Créer</button>
-                        </div>
+                            {{ form_row(emplacementForm.nom) }}
+                            <label class="fw-medium">
+                                <a style="color: red">*</a>
+                                Champs obligatoires
+                            </label>
+                            <div class="d-flex justify-content-end">
+                                <button class="btn btn-primary me-1 mb-1" type="submit">Créer</button>
+                            </div>
                         {{ form_end(emplacementForm) }}
                     </div>
                 </div>

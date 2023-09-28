@@ -6,6 +6,7 @@ use App\Entity\Utilisateur;
 use App\Form\UtilisateurFormType;
 use App\Repository\UtilisateurRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,9 +24,14 @@ class UtilisateurController extends AbstractController
     }
 
     #[Route('', name: 'show')]
-    public function index(): Response
+    public function index(ManagerRegistry $registry): Response
     {
-        $utilisateurs = $this->repository->findBy([], ['id' => 'DESC']);
+        $utilisateurs = $registry->getManager()->getRepository(Utilisateur::class)->createQueryBuilder('u')
+            ->select('u.id, u.nom, u.prenom, u.email, entreprise.nom as entreprise_nom')
+            ->leftJoin('u.entreprise', 'entreprise')
+            ->orderBy('u.id', 'DESC')
+            ->getQuery()
+            ->getResult();
 
         return $this->render('utilisateur/show.html.twig', [
             'utilisateurs' => $utilisateurs,

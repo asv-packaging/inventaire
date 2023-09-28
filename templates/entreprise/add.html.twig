@@ -1,19 +1,19 @@
 {% extends 'gui/base.html.twig' %}
 
-{% block title %}Ajouter un état | Inventaire{% endblock %}
+{% block title %}Ajouter un site | Inventaire{% endblock %}
 
 {% block body %}
     <div class="d-flex mb-4 mt-3">
         <span class="fa-stack me-2 ms-n1">
             <i class="fas fa-circle fa-stack text-300"></i>
-            <i class="fa-inverse fa-stack-1x text-danger fas fa-circle-info"></i>
+            <i class="fa-inverse fa-stack-1x text-danger fas fa-building"></i>
         </span>
         <div class="col">
             <h5 class="mb-0 text-danger position-relative">
-                <span class="bg-200 dark__bg-1100 pe-3">États</span>
+                <span class="bg-200 dark__bg-1100 pe-3">Sites</span>
                 <span class="border position-absolute top-50 translate-middle-y w-100 start-0 z-n1"></span>
             </h5>
-            <p class="mb-0">Cette page vous permet d'ajouter un état.</p>
+            <p class="mb-0">Cette page vous permet d'ajouter un site.</p>
         </div>
     </div>
     <div class="row g-0">
@@ -27,14 +27,14 @@
             <div class="sticky-sidebar">
                 <div class="card mb-3">
                     <div class="card-header d-flex flex-between-center">
-                        <h5 class="mb-0">Ajouter un état</h5>
-                        <a class="btn btn-falcon-default btn-sm" href="{{ path('admin.etat.show') }}">
+                        <h5 class="mb-0">Ajouter un site</h5>
+                        <a class="btn btn-falcon-default btn-sm" href="{{ path('admin.entreprise.show') }}">
                             Retour
                         </a>
                     </div>
                     <div class="card-body bg-light">
-                        {{ form_start(etatForm) }}
-                            {{ form_row(etatForm.nom) }}
+                        {{ form_start(entrepriseForm) }}
+                            {{ form_row(entrepriseForm.nom) }}
                             <label class="fw-medium">
                                 <a style="color: red">*</a>
                                 Champs obligatoires
@@ -42,7 +42,7 @@
                             <div class="d-flex justify-content-end">
                                 <button class="btn btn-primary me-1 mb-1" type="submit">Créer</button>
                             </div>
-                        {{ form_end(etatForm) }}
+                        {{ form_end(entrepriseForm) }}
                     </div>
                 </div>
             </div>

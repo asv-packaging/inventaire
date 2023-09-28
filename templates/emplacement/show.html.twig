@@ -33,43 +33,64 @@
                         </a>
                     </div>
                     <div class="card-body bg-light">
-                        <div class="table-responsive scrollbar">
-                            <table class="table overflow-hidden">
-                                <thead>
-                                    <tr>
-                                        <th class="align-middle text-center">#</th>
-                                        <th class="align-middle text-center">Nom</th>
-                                        <th class="align-middle text-center">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% if emplacements | length != 0 %}
-                                        {% for emplacement in emplacements %}
-                                            <tr class="align-middle text-center">
-                                                <td class="text-nowrap">{{ emplacement.id }}</td>
-                                                <td class="text-nowrap">{{ emplacement.nom }}</td>
-                                                <td class="text-nowrap">
-                                                    <a href="{{ path('admin.emplacement.edit', {id: emplacement.id}) }}" class="btn btn-primary btn-sm">
-                                                        <span class="bi bi-pencil-square"></span>
-                                                    </a>
-
-                                                    <form method="post" action="{{ path('admin.emplacement.delete', {id: emplacement.id}) }}" style="display: inline-block" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer l\'emplacement : \'{{ emplacement.nom }}\' ?')">
-                                                        <input type="hidden" name="_method" value="DELETE">
-                                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ emplacement.id) }}">
-                                                        <button class="btn btn-danger btn-sm">
-                                                            <span class="bi bi-trash-fill"></span>
-                                                        </button>
-                                                    </form>
-                                                </td>
-                                            </tr>
-                                        {% endfor %}
-                                    {% else %}
-                                        <tr class="align-middle text-center">
-                                            <td colspan="5">Aucun emplacement n'a été trouvé.</td>
+                        <div id="table_emplacement" data-list='{"valueNames":["nom"],"page":20,"pagination":true}'>
+                            <div class="row justify-content-end g-0">
+                                <div class="col-auto col-sm-5 mb-3">
+                                    <div class="input-group">
+                                        <input class="form-control form-control-sm shadow-none search" type="search" placeholder="Rechercher..." aria-label="search" pattern="-*" />
+                                        <div class="input-group-text bg-transparent">
+                                            <span class="fa fa-search fs--1 text-600"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="table-responsive scrollbar">
+                                <table class="table overflow-hidden">
+                                    <thead>
+                                        <tr>
+                                            <th class="align-middle text-center">#</th>
+                                            <th class="align-middle text-center">Nom</th>
+                                            <th class="align-middle text-center">Action</th>
                                         </tr>
-                                    {% endif %}
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody class="list">
+                                        {% if emplacements | length != 0 %}
+                                            {% for emplacement in emplacements %}
+                                                <tr class="align-middle text-center">
+                                                    <td class="text-nowrap">{{ loop.revindex }}</td>
+                                                    <td class="text-nowrap nom">{{ emplacement.nom }}</td>
+                                                    <td class="text-nowrap">
+                                                        <a href="{{ path('admin.emplacement.edit', {id: emplacement.id}) }}" class="btn btn-primary btn-sm">
+                                                            <span class="bi bi-pencil-square"></span>
+                                                        </a>
+
+                                                        <form method="post" action="{{ path('admin.emplacement.delete', {id: emplacement.id}) }}" style="display: inline-block" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer l\'emplacement : {{ emplacement.nom }} ?')">
+                                                            <input type="hidden" name="_method" value="DELETE">
+                                                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ emplacement.id) }}">
+                                                            <button class="btn btn-danger btn-sm">
+                                                                <span class="bi bi-trash-fill"></span>
+                                                            </button>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                        {% else %}
+                                            <tr class="align-middle text-center">
+                                                <td colspan="5">Aucun emplacement n'a été trouvé.</td>
+                                            </tr>
+                                        {% endif %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="d-flex justify-content-center mt-3">
+                                <button class="btn btn-sm btn-falcon-default me-1" type="button" title="Précédent" data-list-pagination="prev">
+                                    <span class="fas fa-chevron-left"></span>
+                                </button>
+                                <ul class="pagination mb-0"></ul>
+                                <button class="btn btn-sm btn-falcon-default ms-1" type="button" title="Suivant" data-list-pagination="next">
+                                    <span class="fas fa-chevron-right"></span>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>

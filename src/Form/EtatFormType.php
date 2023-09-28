@@ -14,7 +14,8 @@ class EtatFormType extends AbstractType
     {
         $builder
             ->add('nom', TextType::class, [
-                'label' => 'Nom de l\'état',
+                'label' => 'Nom de l\'état <span style="color: red">*</span>',
+                'label_html' => true,
                 'attr' => [
                     'placeholder' => 'Nom du l\'état',
                 ],

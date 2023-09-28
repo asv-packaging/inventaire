@@ -200,7 +200,7 @@
                                                             <span class="bi bi-pencil-square"></span>
                                                         </a>
 
-                                                        <form method="post" action="{{ path('admin.pc_fixe.delete', {id: pcFixe.id}) }}" style="display: inline-block" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer le PC Fixe : \'{{ pcFixe.nom }}\' ?')">
+                                                        <form method="post" action="{{ path('admin.pc_fixe.delete', {id: pcFixe.id}) }}" style="display: inline-block" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer le PC Fixe : {{ pcFixe.nom }} ?')">
                                                             <input type="hidden" name="_method" value="DELETE">
                                                             <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ pcFixe.id) }}">
                                                             <button class="btn btn-danger btn-sm">

@@ -26,7 +26,7 @@ class TelephoneFixeFormType extends AbstractType
                 'attr' => [
                     'placeholder' => 'Ligne du téléphone'
                 ],
-                'required' => true,
+                'required' => false,
             ])
             ->add('marque', TextType::class, [
                 'label' => 'Nom de la marque',

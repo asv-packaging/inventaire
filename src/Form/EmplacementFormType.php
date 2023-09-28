@@ -14,7 +14,8 @@ class EmplacementFormType extends AbstractType
     {
         $builder
             ->add('nom', TextType::class, [
-                'label' => 'Nom de l\'emplacement',
+                'label' => 'Nom de l\'emplacement <span style="color: red">*</span>',
+                'label_html' => true,
                 'attr' => [
                     'placeholder' => 'Nom de l\'emplacement',
                 ],

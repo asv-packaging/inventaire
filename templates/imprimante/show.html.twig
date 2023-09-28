@@ -174,7 +174,7 @@
                                                             <span class="bi bi-pencil-square"></span>
                                                         </a>
 
-                                                        <form method="post" action="{{ path('admin.imprimante.delete', {id: imprimante.id}) }}" style="display: inline-block" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer l\'imprimante {{ imprimante.nom }} ?')">
+                                                        <form method="post" action="{{ path('admin.imprimante.delete', {id: imprimante.id}) }}" style="display: inline-block" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer l\'imprimante : {{ imprimante.nom }} ?')">
                                                             <input type="hidden" name="_method" value="DELETE">
                                                             <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ imprimante.id) }}">
                                                             <button class="btn btn-danger btn-sm">
