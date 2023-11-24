@@ -52,6 +52,11 @@
                             {{ form_row(ecranForm.date_achat) }}
                             {{ form_row(ecranForm.date_garantie) }}
                             {{ form_row(ecranForm.commentaire) }}
+                            <center>
+                                <label class="form-label">QR Code</label><br>
+                                <img src="{{ qrCodes }}" alt="" id="qrCodeImage" /><br>
+                                <button class="btn btn-primary me-1 mb-1" id="printButton">Imprimer le QR Code</button>
+                            </center>
                             <label class="fw-medium">
                                 <a style="color: red">*</a>
                                 Champs obligatoires
@@ -69,4 +74,29 @@
 {% block javascripts %}
     <script src="{{ asset('assets/js/flatpickr.js') }}"></script>
     <script src="{{ asset('assets/vendors/select2/select2.min.js') }}"></script>
+    <script>
+        // Récupére une référence vers le bouton
+        const printButton = document.getElementById('printButton');
+
+        // Attache un gestionnaire d'événements au clic sur le bouton
+        printButton.addEventListener('click', function(event) {
+            event.preventDefault();
+
+            // Créer un objet d'impression
+            const printWindow = window.open('', '', 'width=600,height=600');
+
+            // Insére l'image dans la fenêtre d'impression
+            printWindow.document.open();
+            printWindow.document.write('<html><body>');
+            printWindow.document.write('<img src="' + qrCodeImage.src + '" />');
+            printWindow.document.write('</body></html>');
+            printWindow.document.close();
+
+            // Attends que l'image soit chargée, puis déclenche l'impression
+            printWindow.onload = function() {
+                printWindow.print();
+                printWindow.close();
+            };
+        });
+    </script>
 {% endblock %}

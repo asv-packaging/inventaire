@@ -6619,7 +6619,7 @@ html[data-bs-theme=dark] .tox .tox-dialog__footer .tox-button--secondary,
   --falcon-navbar-active-color: var(--falcon-navbar-light-active-color);
   --falcon-navbar-brand-padding-y: -0.046rem;
   --falcon-navbar-brand-margin-end: 1rem;
-  --falcon-navbar-brand-font-size: 1.728rem;
+  --falcon-navbar-brand-font-size: 22px;
   --falcon-navbar-brand-color: var(--falcon-navbar-light-brand-color);
   --falcon-navbar-brand-hover-color: var(--falcon-navbar-light-brand-color);
   --falcon-navbar-nav-link-padding-x: 0.5rem;

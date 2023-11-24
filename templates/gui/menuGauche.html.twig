@@ -1,4 +1,4 @@
-<nav class="navbar navbar-light navbar-vertical navbar-expand-xl">
+<nav class="navbar navbar-light navbar-vertical navbar-expand-xl navbar-card">
     <script>
         var navbarStyle = localStorage.getItem("navbarStyle");
         if (navbarStyle && navbarStyle !== 'transparent') {
@@ -15,6 +15,7 @@
         </div>
         <a class="navbar-brand" href="{{ path('admin.home') }}">
             <div class="d-flex align-items-center py-3">
+                <img class="me-1" src="{{ asset('assets/img/favicons/favicon-removebg.png') }}" alt="" width="40">
                 <span class="font-sans-serif">Inventaire</span>
             </div>
         </a>
@@ -35,18 +36,6 @@
                     </div>
                 </li>
                 <br>
-{#                <li class="nav-item">#}
-{#                    <div class="d-flex align-items-center">#}
-{#                        <a class="nav-link {% if menu_active == 'contact' %}active{% endif %}" href="" role="button">#}
-{#                            <div class="d-flex align-items-center">#}
-{#                                <span class="nav-link-icon">#}
-{#                                    <span class="fas fa-envelope"></span>#}
-{#                                </span>#}
-{#                                <span class="nav-link-text ps-1">Contact</span>#}
-{#                            </div>#}
-{#                        </a>#}
-{#                    </div>#}
-{#                </li>#}
                 <li class="nav-item">
                     <a class="nav-link dropdown-indicator" href="#gestion" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="gestion">
                         <div class="d-flex align-items-center">

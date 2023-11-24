@@ -6,10 +6,18 @@ use App\Entity\PcPortable;
 use App\Form\PcPortableFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
+use Endroid\QrCode\Color\Color;
+use Endroid\QrCode\Encoding\Encoding;
+use Endroid\QrCode\ErrorCorrectionLevel\ErrorCorrectionLevelLow;
+use Endroid\QrCode\Label\Font\NotoSans;
+use Endroid\QrCode\Label\Label;
+use Endroid\QrCode\QrCode;
+use Endroid\QrCode\Writer\PngWriter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 #[Route('/admin/pc/portables', name: 'admin.pc_portable.')]
 class PcPortableController extends AbstractController
@@ -65,8 +73,30 @@ class PcPortableController extends AbstractController
     }
 
     #[Route('/{id}', name: 'edit', methods: ['GET', 'POST'])]
-    public function edit(PcPortable $pcPortable, EntityManagerInterface $entityManager, Request $request): Response
+    public function edit(PcPortable $pcPortable, EntityManagerInterface $entityManager, Request $request, UrlGeneratorInterface $urlGenerator): Response
     {
+        $currentUrl = $urlGenerator->generate(
+            $request->attributes->get('_route'),
+            $request->attributes->get('_route_params'),
+            UrlGeneratorInterface::ABSOLUTE_URL
+        );
+
+        $writer = new PngWriter();
+        $qrCode = QrCode::create($currentUrl)
+            ->setEncoding(new Encoding('UTF-8'))
+            ->setErrorCorrectionLevel(new ErrorCorrectionLevelLow())
+            ->setSize(150)
+            ->setMargin(0)
+            ->setForegroundColor(new Color(0, 0, 0))
+            ->setBackgroundColor(new Color(255, 255, 255));
+        $label = Label::create('')->setFont(new NotoSans(12));
+
+        $qrCodes = $writer->write(
+            $qrCode,
+            null,
+            $label->setText($pcPortable->getNom())
+        )->getDataUri();
+
         $pcPortableForm = $this->createForm(PcPortableFormType::class, $pcPortable);
 
         $pcPortableForm->handleRequest($request);
@@ -84,6 +114,7 @@ class PcPortableController extends AbstractController
         return $this->render('pc_portable/edit.html.twig', [
             'pcPortableForm' => $pcPortableForm->createView(),
             'menu_active' => $this->menu_active,
+            'qrCodes' => $qrCodes,
         ]);
     }
 

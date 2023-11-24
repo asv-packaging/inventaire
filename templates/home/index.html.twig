@@ -3,5 +3,460 @@
 {% block title %}Accueil | Inventaire{% endblock %}
 
 {% block body %}
+    <div class="d-flex mb-4 mt-3">
+        <span class="fa-stack me-2 ms-n1">
+            <i class="fas fa-circle fa-stack text-300"></i>
+            <i class="fa-inverse fa-stack-1x text-danger fas fa-home"></i>
+        </span>
+        <div class="col">
+            <h5 class="mb-0 text-danger position-relative">
+                <span class="bg-200 dark__bg-1100 pe-3">Accueil</span>
+                <span class="border position-absolute top-50 translate-middle-y w-100 start-0 z-n1"></span>
+            </h5>
+            <p class="mb-0">Bienvenue sur l'accueil de l'inventaire ASV PACKAGING</p>
+        </div>
+    </div>
+    <div class="row g-0">
+        <div class="col-lg-6 pe-lg-2">
+            <div class="card mb-3">
+                <div class="card-header">
+                    <h5 class="mb-0">Statitiques du matériel</h5>
+                </div>
+                <div class="card-body bg-light">
+                    <div class="echart-doughnut-rounded-chart-materiel" style="min-height: 320px;" data-echart-responsive="true"></div>
+                </div>
+                <div class="card-footer table-responsive scrollbar">
+                    <table class="table overflow-hidden">
+                        <tbody>
+                        <tr>
+                            <td class="py-3">
+                                <div class="d-flex align-items-center">
+                                    <h6 class="text-600 mb-0 ms-2">
+                                        <a href="{{ path('admin.ecran.show') }}" target="_blank">Écrans</a>
+                                    </h6>
+                                </div>
+                            </td>
+                            <td class="py-3">
+                                <div class="d-flex align-items-center">
+                                    <span class="fas fa-circle fs-11 me-1 text-primary"></span>
+                                    <h6 class="fw-normal text-700 mb-0 me-5">{{ ecrans }}</h6>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-3">
+                                <div class="d-flex align-items-center">
+                                    <h6 class="text-600 mb-0 ms-2">
+                                        <a href="{{ path('admin.imprimante.show') }}" target="_blank">Imprimantes</a>
+                                    </h6>
+                                </div>
+                            </td>
+                            <td class="py-3">
+                                <div class="d-flex align-items-center">
+                                    <span class="fas fa-circle fs-11 me-1 text-success"></span>
+                                    <h6 class="fw-normal text-700 mb-0 me-5">{{ imprimantes }}</h6>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-3">
+                                <div class="d-flex align-items-center">
+                                    <h6 class="text-600 mb-0 ms-2">
+                                        <a href="{{ path('admin.onduleur.show') }}" target="_blank">Onduleurs</a>
+                                    </h6>
+                                </div>
+                            </td>
+                            <td class="py-3">
+                                <div class="d-flex align-items-center">
+                                    <span class="fas fa-circle fs-11 me-1 text-danger"></span>
+                                    <h6 class="fw-normal text-700 mb-0 me-5">{{ onduleurs }}</h6>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-3">
+                                <div class="d-flex align-items-center">
+                                    <h6 class="text-600 mb-0 ms-2">
+                                        <a href="{{ path('admin.pc_fixe.show') }}" target="_blank">PC Fixes</a>
+                                    </h6>
+                                </div>
+                            </td>
+                            <td class="py-3">
+                                <div class="d-flex align-items-center">
+                                    <span class="fas fa-circle fs-11 me-1 text-info"></span>
+                                    <h6 class="fw-normal text-700 mb-0 me-5">{{ pc_fixes }}</h6>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-3">
+                                <div class="d-flex align-items-center">
+                                    <h6 class="text-600 mb-0 ms-2">
+                                        <a href="{{ path('admin.pc_portable.show') }}" target="_blank">PC Portables</a>
+                                    </h6>
+                                </div>
+                            </td>
+                            <td class="py-3">
+                                <div class="d-flex align-items-center">
+                                    <span class="fas fa-circle fs-11 me-1 text-info"></span>
+                                    <h6 class="fw-normal text-700 mb-0 me-5">{{ pc_portable }}</h6>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-3">
+                                <div class="d-flex align-items-center">
+                                    <h6 class="text-600 mb-0 ms-2">
+                                        <a href="{{ path('admin.serveur.show') }}" target="_blank">Serveurs</a>
+                                    </h6>
+                                </div>
+                            </td>
+                            <td class="py-3">
+                                <div class="d-flex align-items-center">
+                                    <span class="fas fa-circle fs-11 me-1 text-secondary"></span>
+                                    <h6 class="fw-normal text-700 mb-0 me-5">{{ serveurs }}</h6>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-3">
+                                <div class="d-flex align-items-center">
+                                    <h6 class="text-600 mb-0 ms-2">
+                                        <a href="{{ path('admin.tablette.show') }}" target="_blank">Tablettes</a>
+                                    </h6>
+                                </div>
+                            </td>
+                            <td class="py-3">
+                                <div class="d-flex align-items-center">
+                                    <span class="fas fa-circle fs-11 me-1 text-dark"></span>
+                                    <h6 class="fw-normal text-700 mb-0 me-5">{{ tablettes }}</h6>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-3">
+                                <div class="d-flex align-items-center">
+                                    <h6 class="text-600 mb-0 ms-2">
+                                        <a href="{{ path('admin.telephone_fixe.show') }}" target="_blank">Téléphones fixes</a>
+                                    </h6>
+                                </div>
+                            </td>
+                            <td class="py-3">
+                                <div class="d-flex align-items-center">
+                                    <span class="fas fa-circle fs-11 me-1 text-warning"></span>
+                                    <h6 class="fw-normal text-700 mb-0 me-5">{{ telephone_fixes }}</h6>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-3">
+                                <div class="d-flex align-items-center">
+                                    <h6 class="text-600 mb-0 ms-2">
+                                        <a href="{{ path('admin.telephone_portable.show') }}" target="_blank">Téléphones portables</a>
+                                    </h6>
+                                </div>
+                            </td>
+                            <td class="py-3">
+                                <div class="d-flex align-items-center">
+                                    <span class="fas fa-circle fs-11 me-1 text-warning"></span>
+                                    <h6 class="fw-normal text-700 mb-0 me-5">{{ telephone_portables }}</h6>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 pe-lg-2">
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <h5 class="mb-0">Statistiques des paramètres</h5>
+                    </div>
+                    <div class="card-body bg-light">
+                        <div class="echart-doughnut-rounded-chart-parametre" style="min-height: 320px;" data-echart-responsive="true"></div>
+                    </div>
+                    <div class="card-footer table-responsive scrollbar">
+                        <table class="table overflow-hidden">
+                            <tbody>
+                            <tr>
+                                <td class="py-3">
+                                    <div class="d-flex align-items-center">
+                                        <h6 class="text-600 mb-0 ms-2">
+                                            <a href="{{ path('admin.emplacement.show') }}" target="_blank">Emplacements</a>
+                                        </h6>
+                                    </div>
+                                </td>
+                                <td class="py-3">
+                                    <div class="d-flex align-items-center">
+                                        <span class="fas fa-circle fs-11 me-1 text-primary"></span>
+                                        <h6 class="fw-normal text-700 mb-0 me-5">{{ emplacements }}</h6>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="py-3">
+                                    <div class="d-flex align-items-center">
+                                        <h6 class="text-600 mb-0 ms-2">
+                                            <a href="{{ path('admin.etat.show') }}" target="_blank">États</a>
+                                        </h6>
+                                    </div>
+                                </td>
+                                <td class="py-3">
+                                    <div class="d-flex align-items-center">
+                                        <span class="fas fa-circle fs-11 me-1 text-success"></span>
+                                        <h6 class="fw-normal text-700 mb-0 me-5">{{ etats }}</h6>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="py-3">
+                                    <div class="d-flex align-items-center">
+                                        <h6 class="text-600 mb-0 ms-2">
+                                            <a href="{{ path('admin.fournisseur.show') }}" target="_blank">Fournisseurs</a>
+                                        </h6>
+                                    </div>
+                                </td>
+                                <td class="py-3">
+                                    <div class="d-flex align-items-center">
+                                        <span class="fas fa-circle fs-11 me-1 text-danger"></span>
+                                        <h6 class="fw-normal text-700 mb-0 me-5">{{ onduleurs }}</h6>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="py-3">
+                                    <div class="d-flex align-items-center">
+                                        <h6 class="text-600 mb-0 ms-2">
+                                            <a href="{{ path('admin.entreprise.show') }}" target="_blank">Sites</a>
+                                        </h6>
+                                    </div>
+                                </td>
+                                <td class="py-3">
+                                    <div class="d-flex align-items-center">
+                                        <span class="fas fa-circle fs-11 me-1 text-info"></span>
+                                        <h6 class="fw-normal text-700 mb-0 me-5">{{ sites }}</h6>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="py-3">
+                                    <div class="d-flex align-items-center">
+                                        <h6 class="text-600 mb-0 ms-2">
+                                            <a href="{{ path('admin.systeme-exploitation.show') }}" target="_blank">Systèmes d'exploitation</a>
+                                        </h6>
+                                    </div>
+                                </td>
+                                <td class="py-3">
+                                    <div class="d-flex align-items-center">
+                                        <span class="fas fa-circle fs-11 me-1 text-warning"></span>
+                                        <h6 class="fw-normal text-700 mb-0 me-5">{{ systemes_exploitation }}</h6>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="py-3">
+                                    <div class="d-flex align-items-center">
+                                        <h6 class="text-600 mb-0 ms-2">
+                                            <a href="{{ path('admin.stockage.show') }}" target="_blank">Types de stockage</a>
+                                        </h6>
+                                    </div>
+                                </td>
+                                <td class="py-3">
+                                    <div class="d-flex align-items-center">
+                                        <span class="fas fa-circle fs-11 me-1 text-secondary"></span>
+                                        <h6 class="fw-normal text-700 mb-0 me-5">{{ stockage }}</h6>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="py-3">
+                                    <div class="d-flex align-items-center">
+                                        <h6 class="text-600 mb-0 ms-2">
+                                            <a href="{{ path('admin.utilisateur.show') }}" target="_blank">Utilisateurs</a>
+                                        </h6>
+                                    </div>
+                                </td>
+                                <td class="py-3">
+                                    <div class="d-flex align-items-center">
+                                        <span class="fas fa-circle fs-11 me-1 text-dark"></span>
+                                        <h6 class="fw-normal text-700 mb-0 me-5">{{ utilisateurs }}</h6>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('assets/js/echarts/echart-example.js') }}"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var materiel = {
+                chart: {
+                    options: {
+                        // Options du graphique ECharts
+                        legend: {orient: "vertical", left: "left", textStyle: {color: utils.getGrays()[600]}},
+                        series: [{
+                            type: "pie",
+                            radius: ["40%", "70%"],
+                            center: window.innerWidth < 530 ? ["65%", "55%"] : ["50%", "55%"],
+                            avoidLabelOverlap: !1,
+                            itemStyle: {borderRadius: 10, borderColor: utils.getGrays()[100], borderWidth: 2},
+                            label: {show: !1, position: "center"},
+                            labelLine: {show: !1},
+                            data:
+                                [
+                                    {
+                                        value: {{ ecrans }},
+                                        name: "Écrans",
+                                        itemStyle: {color: utils.getColor("primary")}
+                                    },
+                                    {
+                                        value: {{ imprimantes }},
+                                        name: "Imprimantes",
+                                        itemStyle: {color: utils.getColor("success")}
+                                    },
+                                    {
+                                        value: {{ onduleurs }},
+                                        name: "Onduleurs",
+                                        itemStyle: {color: utils.getColor("danger")}
+                                    },
+                                    {
+                                        value: {{ pc_fixes }},
+                                        name: "PC Fixes",
+                                        itemStyle: {color: utils.getColor("info")}
+                                    },
+                                    {
+                                        value: {{ pc_portable }},
+                                        name: "PC Portables",
+                                        itemStyle: {color: utils.getColor("info")}
+                                    },
+                                    {
+                                        value: {{ serveurs }},
+                                        name: "Serveurs",
+                                        itemStyle: {color: utils.getColor("secondary")}
+                                    },
+                                    {
+                                        value: {{ tablettes }},
+                                        name: "Tablettes",
+                                        itemStyle: {color: utils.getColor("dark")}
+                                    },
+                                    {
+                                        value: {{ telephone_fixes }},
+                                        name: "Téléphones fixes",
+                                        itemStyle: {color: utils.getColor("warning")}
+                                    },
+                                    {
+                                        value: {{ telephone_portables }},
+                                        name: "Téléphones portables",
+                                        itemStyle: {color: utils.getColor("warning")}
+                                    },
+                                ]
+                        }],
+                        tooltip: {
+                            trigger: "item",
+                            padding: [7, 10],
+                            backgroundColor: utils.getGrays()[100],
+                            borderColor: utils.getGrays()[300],
+                            textStyle: {color: utils.getColors().dark},
+                            borderWidth: 1,
+                            transitionDuration: 0,
+                            axisPointer: {type: "none"}
+                        }
+                    }
+                }
+            };
 
+            var parametre = {
+                chart: {
+                    options: {
+                        // Options du graphique ECharts
+                        legend: {orient: "vertical", left: "left", textStyle: {color: utils.getGrays()[600]}},
+                        series: [{
+                            type: "pie",
+                            radius: ["40%", "70%"],
+                            center: window.innerWidth < 530 ? ["65%", "55%"] : ["50%", "55%"],
+                            avoidLabelOverlap: !1,
+                            itemStyle: {borderRadius: 10, borderColor: utils.getGrays()[100], borderWidth: 2},
+                            label: {show: !1, position: "center"},
+                            labelLine: {show: !1},
+                            data:
+                                [
+                                    {
+                                        value: {{ emplacements }},
+                                        name: "Emplacements",
+                                        itemStyle: {color: utils.getColor("primary")}
+                                    },
+                                    {
+                                        value: {{ etats }},
+                                        name: "États",
+                                        itemStyle: {color: utils.getColor("success")}
+                                    },
+                                    {
+                                        value: {{ fournisseurs }},
+                                        name: "Fournisseurs",
+                                        itemStyle: {color: utils.getColor("danger")}
+                                    },
+                                    {
+                                        value: {{ sites }},
+                                        name: "Sites",
+                                        itemStyle: {color: utils.getColor("info")}
+                                    },
+                                    {
+                                        value: {{ systemes_exploitation }},
+                                        name: "Systèmes d'exploitation",
+                                        itemStyle: {color: utils.getColor("warning")}
+                                    },
+                                    {
+                                        value: {{ stockage }},
+                                        name: "Type de stockage",
+                                        itemStyle: {color: utils.getColor("secondary")}
+                                    },
+                                    {
+                                        value: {{ utilisateurs }},
+                                        name: "Utilisateurs",
+                                        itemStyle: {color: utils.getColor("dark")}
+                                    },
+                                ]
+                        }],
+                        tooltip: {
+                            trigger: "item",
+                            padding: [7, 10],
+                            backgroundColor: utils.getGrays()[100],
+                            borderColor: utils.getGrays()[300],
+                            textStyle: {color: utils.getColors().dark},
+                            borderWidth: 1,
+                            transitionDuration: 0,
+                            axisPointer: {type: "none"}
+                        }
+                    }
+                }
+            };
+
+            // Initialisation du graphique
+            var $doughnutRoundedChartMateriel = document.querySelector('.echart-doughnut-rounded-chart-materiel');
+            var $doughnutRoundedChartParametre = document.querySelector('.echart-doughnut-rounded-chart-parametre');
+
+            if ($doughnutRoundedChartMateriel && $doughnutRoundedChartParametre) {
+                var mat = window.echarts.init($doughnutRoundedChartMateriel)
+                var par = window.echarts.init($doughnutRoundedChartParametre)
+
+                // Fonction pour obtenir les options par défaut
+                var getDefaultOptions = function () {
+                    return {
+                        // Options par défaut du graphique ECharts
+                    };
+                };
+
+                // Configuration et définition des options du graphique
+                echartSetOption(mat, materiel.chart.options, getDefaultOptions);
+                echartSetOption(par, parametre.chart.options, getDefaultOptions);
+            }
+        });
+    </script>
+    <script src="{{ asset('assets/vendors/echarts/echarts.min.js') }}"></script>
 {% endblock %}
