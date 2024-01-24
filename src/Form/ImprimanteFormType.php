@@ -133,10 +133,10 @@ class ImprimanteFormType extends AbstractType
                 'required' => false,
             ])
             ->add('entreprise', EntityType::class, [
-                'label' => 'Entreprise',
+                'label' => 'Site',
                 'class' => Entreprise::class,
                 'choice_label' => 'nom',
-                'placeholder' => 'Choisir une entreprise',
+                'placeholder' => 'Choisir un site',
                 'attr' => [
                     'class' => 'selectpicker',
                 ],

@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\PcPortable;
 use App\Form\PcPortableFormType;
+use App\Repository\PcPortableRepository;
+use App\Service\ExcelExportService;
 use App\Service\NotificationService;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
@@ -15,8 +17,10 @@ use Endroid\QrCode\Label\Label;
 use Endroid\QrCode\QrCode;
 use Endroid\QrCode\Writer\PngWriter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
@@ -46,6 +50,72 @@ class PcPortableController extends AbstractController
             'pcPortables' => $pcPortables,
             'menu_active' => $this->menu_active,
         ]);
+    }
+
+    #[Route('/exporter', name: 'export')]
+    public function exportDataToExcel(ExcelExportService $excelExportService, PcPortableRepository $repository): Response
+    {
+        $pcPortables = $repository->findAll();
+
+        if(count($pcPortables) !== 0)
+        {
+            $headers = ['ID', 'Nom', 'IP', 'Marque', 'Modèle', 'Utilisateur', 'Processeur', 'Mémoire', 'Stockage', 'Type de stockage', 'Système d\'exploitation', 'Numéro de série', 'Emplacement', 'Site', 'Fournisseur', 'État', 'Date d\'installation', 'Date d\'achat', 'Date de garantie', 'Commentaire'];
+            $data = [];
+
+            foreach($pcPortables as $pcPortable)
+            {
+                $data[] = [
+                    $pcPortable->getId(),
+                    $pcPortable->getNom(),
+                    $pcPortable->getIp() ?? 'N/A',
+                    $pcPortable->getMarque() ?? 'N/A',
+                    $pcPortable->getModele() ?? 'N/A',
+                    $pcPortable->getUtilisateur() !== null ? $pcPortable->getUtilisateur()->getNom().' '.$pcPortable->getUtilisateur()->getPrenom() : 'N/A',
+                    $pcPortable->getProcesseur() ?? 'N/A',
+                    $pcPortable->getMemoire().' Go',
+                    $pcPortable->getStockage() !== null ? $pcPortable->getStockageNombre().' '.$pcPortable->getStockage()->getNom() : 'N/A',
+                    $pcPortable->getStockageType() ?? 'N/A',
+                    $pcPortable->getSystemeExploitation() !== null ? $pcPortable->getSystemeExploitation()->getNom() : 'N/A',
+                    $pcPortable->getNumeroSerie() ?? 'N/A',
+                    $pcPortable->getEmplacement()->getNom(),
+                    $pcPortable->getEntreprise() !== null ? $pcPortable->getEntreprise()->getNom() : 'N/A',
+                    $pcPortable->getFournisseur()->getNom(),
+                    $pcPortable->getEtat()->getNom(),
+                    $pcPortable->getDateInstallation() ?? 'N/A',
+                    $pcPortable->getDateAchat() ?? 'N/A',
+                    $pcPortable->getDateGarantie() ?? 'N/A',
+                    $pcPortable->getCommentaire() ?? 'N/A',
+                ];
+            }
+
+            // Chemin où sauvegarder le fichier Excel
+            $filePath = $this->getParameter('kernel.project_dir') . '/var/export_data_inventaire_pcPortables.xlsx';
+
+            // Utilise le service pour exporter les données
+            $excelExportService->exportToExcel($headers, $data, $filePath);
+
+            // Permet de télécharger le fichier
+            $response = new BinaryFileResponse($filePath);
+            $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'inventaire_pcPortables.xlsx');
+            $response->headers->set('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+
+            // Supprime le fichier après le téléchargement
+            register_shutdown_function(function () use ($filePath)
+            {
+                if (file_exists($filePath))
+                {
+                    unlink($filePath);
+                }
+            });
+
+            return $response;
+        }
+        else
+        {
+            $this->addFlash('danger', "Vous ne pouvez pas exporter les données car aucun PC Portable n'a été trouvé !");
+
+            return $this->redirectToRoute('admin.pc_portable.show');
+        }
     }
 
     #[Route('/ajouter', name: 'add')]

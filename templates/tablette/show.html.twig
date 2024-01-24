@@ -24,6 +24,12 @@
                     <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             {% endfor %}
+            {% for message in app.flashes('danger') %}
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>Erreur :</strong> {{ message }}
+                    <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
             <div class="sticky-sidebar">
                 <div class="card mb-3">
                     <div class="card-header d-flex flex-between-center">
@@ -41,6 +47,12 @@
                                         <div class="input-group-text bg-transparent">
                                             <span class="fa fa-search fs--1 text-600"></span>
                                         </div>
+                                        {% if tablettes | length != 0 %}
+                                            &nbsp;&nbsp;
+                                            <a class="btn btn-falcon-default btn-sm" href="{{ path('admin.tablette.export') }}">
+                                                Exporter
+                                            </a>
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>
@@ -57,11 +69,12 @@
                                             <th class="align-middle text-center">Numéro de série</th>
                                             <th class="align-middle text-center">Emplacement</th>
                                             <th class="align-middle text-center">Site</th>
+                                            <th class="align-middle text-center">Fournisseur</th>
                                             <th class="align-middle text-center">État</th>
-                                            <th class="align-middle text-center">Commentaire</th>
                                             <th class="align-middle text-center">Date d'installation</th>
                                             <th class="align-middle text-center">Date d'achat</th>
                                             <th class="align-middle text-center">Date de garantie</th>
+                                            <th class="align-middle text-center">Commentaire</th>
                                             <th class="align-middle text-center">Action</th>
                                         </tr>
                                     </thead>
@@ -120,16 +133,16 @@
                                                             <span class="badge text-bg-danger">N/A</span>
                                                         {% endif %}
                                                     </td>
-                                                    <td class="text-nowrap etat">
-                                                        {% if tablette.etat_nom != null %}
-                                                            {{ tablette.etat_nom }}
+                                                    <td class="text-nowrap fournisseur">
+                                                        {% if tablette.fournisseur_nom != null %}
+                                                            {{ tablette.fournisseur_nom }}
                                                         {% else %}
                                                             <span class="badge text-bg-danger">N/A</span>
                                                         {% endif %}
                                                     </td>
-                                                    <td class="text-nowrap commentaire">
-                                                        {% if tablette.commentaire != null %}
-                                                            {{ tablette.commentaire }}
+                                                    <td class="text-nowrap etat">
+                                                        {% if tablette.etat_nom != null %}
+                                                            {{ tablette.etat_nom }}
                                                         {% else %}
                                                             <span class="badge text-bg-danger">N/A</span>
                                                         {% endif %}
@@ -151,6 +164,13 @@
                                                     <td class="text-nowrap date_garantie">
                                                         {% if tablette.date_garantie != null %}
                                                             {{ tablette.date_garantie }}
+                                                        {% else %}
+                                                            <span class="badge text-bg-danger">N/A</span>
+                                                        {% endif %}
+                                                    </td>
+                                                    <td class="text-nowrap commentaire">
+                                                        {% if tablette.commentaire != null %}
+                                                            {{ tablette.commentaire }}
                                                         {% else %}
                                                             <span class="badge text-bg-danger">N/A</span>
                                                         {% endif %}

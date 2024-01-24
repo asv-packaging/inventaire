@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Tablette;
 use App\Form\TabletteFormType;
+use App\Repository\TabletteRepository;
+use App\Service\ExcelExportService;
 use App\Service\NotificationService;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
@@ -15,8 +17,10 @@ use Endroid\QrCode\Label\Label;
 use Endroid\QrCode\QrCode;
 use Endroid\QrCode\Writer\PngWriter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
@@ -30,9 +34,10 @@ class TabletteController extends AbstractController
     public function index(ManagerRegistry $registry): Response
     {
         $tablettes = $registry->getManager()->getRepository(Tablette::class)->createQueryBuilder('t')
-            ->select('t.id, t.nom, t.marque, t.modele, emplacement.nom as emplacement_nom, entreprise.nom as entreprise_nom, etat.nom as etat_nom, utilisateur.nom as utilisateur_nom, utilisateur.prenom as utilisateur_prenom, t.numero_serie, t.ip, t.date_achat, t.date_garantie, t.commentaire')
+            ->select('t.id, t.nom, t.marque, t.modele, fournisseur.nom as fournisseur_nom, emplacement.nom as emplacement_nom, entreprise.nom as entreprise_nom, etat.nom as etat_nom, utilisateur.nom as utilisateur_nom, utilisateur.prenom as utilisateur_prenom, t.numero_serie, t.ip, t.date_achat, t.date_garantie, t.commentaire')
             ->leftJoin('t.utilisateur', 'utilisateur')
             ->leftJoin('t.emplacement', 'emplacement')
+            ->leftJoin('t.fournisseur', 'fournisseur')
             ->leftJoin('t.entreprise', 'entreprise')
             ->leftJoin('t.etat', 'etat')
             ->orderBy('t.id', 'DESC')
@@ -43,6 +48,67 @@ class TabletteController extends AbstractController
             'tablettes' => $tablettes,
             'menu_active' => $this->menu_active,
         ]);
+    }
+
+    #[Route('/exporter', name: 'export')]
+    public function exportDataToExcel(ExcelExportService $excelExportService, TabletteRepository $repository): Response
+    {
+        $tablettes = $repository->findAll();
+
+        if(count($tablettes) !== 0)
+        {
+            $headers = ['ID', 'Nom', 'IP', 'Marque', 'Modèle', 'Utilisateur', 'Numéro de série', 'Emplacement', 'Site', 'Fournisseur', 'État', 'Date d\'installation', 'Date d\'achat', 'Date de garantie', 'Commentaire'];
+            $data = [];
+
+            foreach($tablettes as $tablette)
+            {
+                $data[] = [
+                    $tablette->getId(),
+                    $tablette->getNom(),
+                    $tablette->getIp() ?? 'N/A',
+                    $tablette->getMarque() ?? 'N/A',
+                    $tablette->getModele() ?? 'N/A',
+                    $tablette->getUtilisateur() !== null ? $tablette->getUtilisateur()->getNom() . ' ' . $tablette->getUtilisateur()->getPrenom() : 'N/A',
+                    $tablette->getNumeroSerie() ?? 'N/A',
+                    $tablette->getEmplacement()->getNom(),
+                    $tablette->getEntreprise() !== null ? $tablette->getEntreprise()->getNom() : 'N/A',
+                    $tablette->getFournisseur() !== null ? $tablette->getFournisseur()->getNom() : 'N/A',
+                    $tablette->getEtat()->getNom(),
+                    $tablette->getDateInstallation() ?? 'N/A',
+                    $tablette->getDateAchat() ?? 'N/A',
+                    $tablette->getDateGarantie() ?? 'N/A',
+                    $tablette->getCommentaire() ?? 'N/A',
+                ];
+            }
+
+            // Chemin où sauvegarder le fichier Excel
+            $filePath = $this->getParameter('kernel.project_dir') . '/var/export_data_inventaire_tablettes.xlsx';
+
+            // Utilise le service pour exporter les données
+            $excelExportService->exportToExcel($headers, $data, $filePath);
+
+            // Permet de télécharger le fichier
+            $response = new BinaryFileResponse($filePath);
+            $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'inventaire_tablettes.xlsx');
+            $response->headers->set('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+
+            // Supprime le fichier après le téléchargement
+            register_shutdown_function(function () use ($filePath)
+            {
+                if (file_exists($filePath))
+                {
+                    unlink($filePath);
+                }
+            });
+
+            return $response;
+        }
+        else
+        {
+            $this->addFlash('danger', "Vous ne pouvez pas exporter les données car aucune tablette n'a été trouvé !");
+
+            return $this->redirectToRoute('admin.tablette.show');
+        }
     }
 
     #[Route('/ajouter', name: 'add')]

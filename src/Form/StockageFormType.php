@@ -17,7 +17,7 @@ class StockageFormType extends AbstractType
                 'label' => 'Nom du type de stockage <span style="color: red">*</span>',
                 'label_html' => true,
                 'attr' => [
-                    'placeholder' => 'HDD, SSD, ...',
+                    'placeholder' => 'Go, To, ...',
                 ]
             ])
         ;

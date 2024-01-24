@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Imprimante;
 use App\Form\ImprimanteFormType;
+use App\Repository\ImprimanteRepository;
+use App\Service\ExcelExportService;
 use App\Service\NotificationService;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
@@ -15,8 +17,10 @@ use Endroid\QrCode\Label\Label;
 use Endroid\QrCode\QrCode;
 use Endroid\QrCode\Writer\PngWriter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
@@ -43,6 +47,67 @@ class ImprimanteController extends AbstractController
             'imprimantes' => $imprimantes,
             'menu_active' => $this->menu_active,
         ]);
+    }
+
+    #[Route('/exporter', name: 'export')]
+    public function exportDataToExcel(ExcelExportService $excelExportService, ImprimanteRepository $repository): Response
+    {
+        $imprimantes = $repository->findAll();
+
+        if(count($imprimantes) !== 0)
+        {
+            $headers = ['ID', 'Nom', 'Marque', 'Modèle', 'IP', 'Numéro de série', 'Emplacement', 'Site', 'Fournisseur', 'État', 'Contrat', 'Date d\'installation', 'Date d\'achat', 'Date de garantie', 'Commentaire'];
+            $data = [];
+
+            foreach($imprimantes as $imprimante)
+            {
+                $data[] = [
+                    $imprimante->getId(),
+                    $imprimante->getNom(),
+                    $imprimante->getMarque() ?? 'N/A',
+                    $imprimante->getModele() ?? 'N/A',
+                    $imprimante->getIp() ?? 'N/A',
+                    $imprimante->getNumeroSerie() ?? 'N/A',
+                    $imprimante->getEmplacement() !== null ? $imprimante->getEmplacement()->getNom() : 'N/A',
+                    $imprimante->getEntreprise() !== null ? $imprimante->getEntreprise()->getNom() : 'N/A',
+                    $imprimante->getFournisseur() !== null ? $imprimante->getFournisseur()->getNom() : 'N/A',
+                    $imprimante->getEtat()->getNom(),
+                    $imprimante->isContrat() == 0 ? 'Non' : 'Oui',
+                    $imprimante->getDateInstallation() ?? 'N/A',
+                    $imprimante->getDateAchat() ?? 'N/A',
+                    $imprimante->getDateGarantie() ?? 'N/A',
+                    $imprimante->getCommentaire() ?? 'N/A',
+                ];
+            }
+
+            // Chemin où sauvegarder le fichier Excel
+            $filePath = $this->getParameter('kernel.project_dir') . '/var/export_data_inventaire_imprimantes.xlsx';
+
+            // Utiliser le service pour exporter les données
+            $excelExportService->exportToExcel($headers, $data, $filePath);
+
+            // Créer une réponse binaire pour télécharger le fichier
+            $response = new BinaryFileResponse($filePath);
+            $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'inventaire_imprimantes.xlsx');
+            $response->headers->set('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+
+            // Supprimer le fichier après le téléchargement
+            register_shutdown_function(function () use ($filePath)
+            {
+                if (file_exists($filePath))
+                {
+                    unlink($filePath);
+                }
+            });
+
+            return $response;
+        }
+        else
+        {
+            $this->addFlash('danger', "Vous ne pouvez pas exporter les données car aucune imprimante n'a été trouvé !");
+
+            return $this->redirectToRoute('admin.imprimante.show');
+        }
     }
 
     #[Route('/ajouter', name: 'add')]

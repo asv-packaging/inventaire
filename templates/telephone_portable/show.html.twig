@@ -24,6 +24,12 @@
                     <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             {% endfor %}
+            {% for message in app.flashes('danger') %}
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>Erreur :</strong> {{ message }}
+                    <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
             <div class="sticky-sidebar">
                 <div class="card mb-3">
                     <div class="card-header d-flex flex-between-center">
@@ -41,6 +47,12 @@
                                         <div class="input-group-text bg-transparent">
                                             <span class="fa fa-search fs--1 text-600"></span>
                                         </div>
+                                        {% if telephones | length != 0 %}
+                                            &nbsp;&nbsp;
+                                            <a class="btn btn-falcon-default btn-sm" href="{{ path('admin.telephone_portable.export') }}">
+                                                Exporter
+                                            </a>
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>
@@ -59,10 +71,10 @@
                                             <th class="align-middle text-center">Site</th>
                                             <th class="align-middle text-center">Fournisseur</th>
                                             <th class="align-middle text-center">État</th>
-                                            <th class="align-middle text-center">Commentaire</th>
                                             <th class="align-middle text-center">Date d'installation</th>
                                             <th class="align-middle text-center">Date d'achat</th>
                                             <th class="align-middle text-center">Date de garantie</th>
+                                            <th class="align-middle text-center">Commentaire</th>
                                             <th class="align-middle text-center">Action</th>
                                         </tr>
                                     </thead>
@@ -135,13 +147,6 @@
                                                             <span class="badge text-bg-danger">N/A</span>
                                                         {% endif %}
                                                     </td>
-                                                    <td class="text-nowrap commentaire">
-                                                        {% if telephone.commentaire != null %}
-                                                            {{ telephone.commentaire }}
-                                                        {% else %}
-                                                            <span class="badge text-bg-danger">N/A</span>
-                                                        {% endif %}
-                                                    </td>
                                                     <td class="text-nowrap date_installation">
                                                         {% if telephone.date_installation != null %}
                                                             {{ telephone.date_installation }}
@@ -159,6 +164,13 @@
                                                     <td class="text-nowrap date_garantie">
                                                         {% if telephone.date_garantie != null %}
                                                             {{ telephone.date_garantie }}
+                                                        {% else %}
+                                                            <span class="badge text-bg-danger">N/A</span>
+                                                        {% endif %}
+                                                    </td>
+                                                    <td class="text-nowrap commentaire">
+                                                        {% if telephone.commentaire != null %}
+                                                            {{ telephone.commentaire }}
                                                         {% else %}
                                                             <span class="badge text-bg-danger">N/A</span>
                                                         {% endif %}

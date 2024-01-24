@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Emplacement;
 use App\Entity\Entreprise;
 use App\Entity\Etat;
+use App\Entity\Fournisseur;
 use App\Entity\Tablette;
 use App\Entity\Utilisateur;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -127,6 +128,16 @@ class TabletteFormType extends AbstractType
                 'choice_label' => 'nom',
                 'required' => false,
                 'placeholder' => 'Choisir un site',
+                'attr' => [
+                    'class' => 'selectpicker'
+                ]
+            ])
+            ->add('fournisseur', EntityType::class, [
+                'label' => 'Fournisseur',
+                'class' => Fournisseur::class,
+                'choice_label' => 'nom',
+                'required' => false,
+                'placeholder' => 'Choisir un fournisseur',
                 'attr' => [
                     'class' => 'selectpicker'
                 ]

@@ -24,6 +24,12 @@
                     <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             {% endfor %}
+            {% for message in app.flashes('danger') %}
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>Erreur :</strong> {{ message }}
+                    <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
             <div class="sticky-sidebar">
                 <div class="card mb-3">
                     <div class="card-header d-flex flex-between-center">
@@ -41,6 +47,12 @@
                                         <div class="input-group-text bg-transparent">
                                             <span class="fa fa-search fs--1 text-600"></span>
                                         </div>
+                                        {% if onduleurs | length != 0 %}
+                                            &nbsp;&nbsp;
+                                            <a class="btn btn-falcon-default btn-sm" href="{{ path('admin.onduleur.export') }}">
+                                                Exporter
+                                            </a>
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>
