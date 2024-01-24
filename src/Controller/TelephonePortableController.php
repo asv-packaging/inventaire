@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\TelephonePortable;
 use App\Form\TelephonePortableFormType;
+use App\Service\NotificationService;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -62,7 +63,7 @@ class TelephonePortableController extends AbstractController
     }
 
     #[Route('/{id}', name: 'edit', methods: ['GET', 'POST'])]
-    public function edit(TelephonePortable $telephone, EntityManagerInterface $entityManager, Request $request): Response
+    public function edit(TelephonePortable $telephone, EntityManagerInterface $entityManager, Request $request, NotificationService $notificationService): Response
     {
         $telephoneForm = $this->createForm(TelephonePortableFormType::class, $telephone);
 
@@ -70,6 +71,8 @@ class TelephonePortableController extends AbstractController
 
         if($telephoneForm->isSubmitted() && $telephoneForm->isValid())
         {
+            $notificationService->deleteNotification("telephone_portable", $telephone->getId());
+
             $entityManager->persist($telephone);
             $entityManager->flush();
 
@@ -85,10 +88,12 @@ class TelephonePortableController extends AbstractController
     }
 
     #[Route('/{id}', name: 'delete', methods: ['DELETE'])]
-    public function delete(TelephonePortable $telephone, EntityManagerInterface $entityManager, Request $request): Response
+    public function delete(TelephonePortable $telephone, EntityManagerInterface $entityManager, Request $request, NotificationService $notificationService): Response
     {
         if($this->isCsrfTokenValid('delete'.$telephone->getId(), $request->get('_token')))
         {
+            $notificationService->deleteNotification("telephone_portable", $telephone->getId());
+
             $entityManager->remove($telephone);
             $entityManager->flush();
 

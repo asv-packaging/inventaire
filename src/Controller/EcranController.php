@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Ecran;
+use App\Entity\Notification;
 use App\Form\EcranFormType;
 use App\Repository\EcranRepository;
+use App\Service\NotificationService;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Endroid\QrCode\Label\Font\NotoSans;
@@ -72,7 +74,7 @@ class EcranController extends AbstractController
     }
 
     #[Route('/{id}', name: 'edit', methods: ['GET', 'POST'])]
-    public function edit(Ecran $ecran, EntityManagerInterface $entityManager, Request $request, UrlGeneratorInterface $urlGenerator): Response
+    public function edit(Ecran $ecran, EntityManagerInterface $entityManager, Request $request, UrlGeneratorInterface $urlGenerator, NotificationService $notificationService): Response
     {
         $currentUrl = $urlGenerator->generate(
             $request->attributes->get('_route'),
@@ -102,6 +104,8 @@ class EcranController extends AbstractController
 
         if($ecranForm->isSubmitted() && $ecranForm->isValid())
         {
+            $notificationService->deleteNotification("ecran", $ecran->getId());
+
             $entityManager->persist($ecran);
             $entityManager->flush();
 
@@ -118,10 +122,12 @@ class EcranController extends AbstractController
     }
 
     #[Route('/{id}', name: 'delete', methods: ['DELETE'])]
-    public function delete(Ecran $ecran, EntityManagerInterface $entityManager, Request $request): Response
+    public function delete(Ecran $ecran, EntityManagerInterface $entityManager, Request $request, NotificationService $notificationService): Response
     {
         if($this->isCsrfTokenValid('delete'.$ecran->getId(), $request->get('_token')))
         {
+            $notificationService->deleteNotification("ecran", $ecran->getId());
+
             $entityManager->remove($ecran);
             $entityManager->flush();
 

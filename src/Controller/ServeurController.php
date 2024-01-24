@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Serveur;
 use App\Form\ServeurFormType;
+use App\Service\NotificationService;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Endroid\QrCode\Color\Color;
@@ -72,7 +73,7 @@ class ServeurController extends AbstractController
     }
 
     #[Route('/{id}', name: 'edit', methods: ['GET', 'POST'])]
-    public function edit(Serveur $serveur, EntityManagerInterface $entityManager, Request $request, UrlGeneratorInterface $urlGenerator): Response
+    public function edit(Serveur $serveur, EntityManagerInterface $entityManager, Request $request, UrlGeneratorInterface $urlGenerator, NotificationService $notificationService): Response
     {
         $currentUrl = $urlGenerator->generate(
             $request->attributes->get('_route'),
@@ -102,6 +103,8 @@ class ServeurController extends AbstractController
 
         if($serveurForm->isSubmitted() && $serveurForm->isValid())
         {
+            $notificationService->deleteNotification("serveur", $serveur->getId());
+
             $entityManager->persist($serveur);
             $entityManager->flush();
 
@@ -118,10 +121,12 @@ class ServeurController extends AbstractController
     }
 
     #[Route('/{id}', name: 'delete', methods: ['DELETE'])]
-    public function delete(Serveur $serveur, EntityManagerInterface $entityManager, Request $request): Response
+    public function delete(Serveur $serveur, EntityManagerInterface $entityManager, Request $request, NotificationService $notificationService): Response
     {
         if($this->isCsrfTokenValid('delete'.$serveur->getId(), $request->get('_token')))
         {
+            $notificationService->deleteNotification("serveur", $serveur->getId());
+
             $entityManager->remove($serveur);
             $entityManager->flush();
 

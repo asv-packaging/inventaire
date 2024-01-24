@@ -13,7 +13,7 @@
                 <span class="bg-200 dark__bg-1100 pe-3">Accueil</span>
                 <span class="border position-absolute top-50 translate-middle-y w-100 start-0 z-n1"></span>
             </h5>
-            <p class="mb-0">Bienvenue sur l'accueil de l'inventaire ASV PACKAGING</p>
+            <p class="mb-0">Bonjour <span class="badge bg-primary">{{ utilisateur.nom }}</span> ! Bienvenue sur l'accueil de l'inventaire d'ASV PACKAGING.</p>
         </div>
     </div>
     <div class="row g-0">
@@ -23,7 +23,7 @@
                     <h5 class="mb-0">Statitiques du matériel</h5>
                 </div>
                 <div class="card-body bg-light">
-                    <div class="echart-doughnut-rounded-chart-materiel" style="min-height: 320px;" data-echart-responsive="true"></div>
+                    <div class="echart-doughnut-rounded-chart-materiel" style="min-height: 250px;" data-echart-responsive="true"></div>
                 </div>
                 <div class="card-footer table-responsive scrollbar">
                     <table class="table overflow-hidden">
@@ -169,125 +169,179 @@
             </div>
         </div>
         <div class="col-lg-6 pe-lg-2">
-                <div class="card mb-3">
-                    <div class="card-header">
-                        <h5 class="mb-0">Statistiques des paramètres</h5>
+            <div class="card mb-3">
+                <div class="card-header">
+                    <h5 class="mb-0">Statistiques des paramètres</h5>
+                </div>
+                <div class="card-body bg-light">
+                    <div class="echart-doughnut-rounded-chart-parametre" style="min-height: 250px;" data-echart-responsive="true"></div>
+                </div>
+                <div class="card-footer table-responsive scrollbar">
+                    <table class="table overflow-hidden">
+                        <tbody>
+                        <tr>
+                            <td class="py-3">
+                                <div class="d-flex align-items-center">
+                                    <h6 class="text-600 mb-0 ms-2">
+                                        <a href="{{ path('admin.emplacement.show') }}" target="_blank">Emplacements</a>
+                                    </h6>
+                                </div>
+                            </td>
+                            <td class="py-3">
+                                <div class="d-flex align-items-center">
+                                    <span class="fas fa-circle fs-11 me-1 text-primary"></span>
+                                    <h6 class="fw-normal text-700 mb-0 me-5">{{ emplacements }}</h6>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-3">
+                                <div class="d-flex align-items-center">
+                                    <h6 class="text-600 mb-0 ms-2">
+                                        <a href="{{ path('admin.etat.show') }}" target="_blank">États</a>
+                                    </h6>
+                                </div>
+                            </td>
+                            <td class="py-3">
+                                <div class="d-flex align-items-center">
+                                    <span class="fas fa-circle fs-11 me-1 text-success"></span>
+                                    <h6 class="fw-normal text-700 mb-0 me-5">{{ etats }}</h6>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-3">
+                                <div class="d-flex align-items-center">
+                                    <h6 class="text-600 mb-0 ms-2">
+                                        <a href="{{ path('admin.fournisseur.show') }}" target="_blank">Fournisseurs</a>
+                                    </h6>
+                                </div>
+                            </td>
+                            <td class="py-3">
+                                <div class="d-flex align-items-center">
+                                    <span class="fas fa-circle fs-11 me-1 text-danger"></span>
+                                    <h6 class="fw-normal text-700 mb-0 me-5">{{ onduleurs }}</h6>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-3">
+                                <div class="d-flex align-items-center">
+                                    <h6 class="text-600 mb-0 ms-2">
+                                        <a href="{{ path('admin.entreprise.show') }}" target="_blank">Sites</a>
+                                    </h6>
+                                </div>
+                            </td>
+                            <td class="py-3">
+                                <div class="d-flex align-items-center">
+                                    <span class="fas fa-circle fs-11 me-1 text-info"></span>
+                                    <h6 class="fw-normal text-700 mb-0 me-5">{{ sites }}</h6>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-3">
+                                <div class="d-flex align-items-center">
+                                    <h6 class="text-600 mb-0 ms-2">
+                                        <a href="{{ path('admin.systeme-exploitation.show') }}" target="_blank">Systèmes d'exploitation</a>
+                                    </h6>
+                                </div>
+                            </td>
+                            <td class="py-3">
+                                <div class="d-flex align-items-center">
+                                    <span class="fas fa-circle fs-11 me-1 text-warning"></span>
+                                    <h6 class="fw-normal text-700 mb-0 me-5">{{ systemes_exploitation }}</h6>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-3">
+                                <div class="d-flex align-items-center">
+                                    <h6 class="text-600 mb-0 ms-2">
+                                        <a href="{{ path('admin.stockage.show') }}" target="_blank">Types de stockage</a>
+                                    </h6>
+                                </div>
+                            </td>
+                            <td class="py-3">
+                                <div class="d-flex align-items-center">
+                                    <span class="fas fa-circle fs-11 me-1 text-secondary"></span>
+                                    <h6 class="fw-normal text-700 mb-0 me-5">{{ stockage }}</h6>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-3">
+                                <div class="d-flex align-items-center">
+                                    <h6 class="text-600 mb-0 ms-2">
+                                        <a href="{{ path('admin.utilisateur.show') }}" target="_blank">Utilisateurs</a>
+                                    </h6>
+                                </div>
+                            </td>
+                            <td class="py-3">
+                                <div class="d-flex align-items-center">
+                                    <span class="fas fa-circle fs-11 me-1 text-dark"></span>
+                                    <h6 class="fw-normal text-700 mb-0 me-5">{{ utilisateurs }}</h6>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 pe-lg-2">
+            {% if notificationsNotRead is not empty %}
+                <div class="card mb-3 mb-3">
+                    <div class="card-header d-flex justify-content-between">
+                        <h5 class="mb-0">
+                            <span class="bi bi-eye-slash-fill text-danger"></span>
+                            Notifications non lues
+                        </h5>
                     </div>
-                    <div class="card-body bg-light">
-                        <div class="echart-doughnut-rounded-chart-parametre" style="min-height: 320px;" data-echart-responsive="true"></div>
-                    </div>
-                    <div class="card-footer table-responsive scrollbar">
-                        <table class="table overflow-hidden">
-                            <tbody>
-                            <tr>
-                                <td class="py-3">
-                                    <div class="d-flex align-items-center">
-                                        <h6 class="text-600 mb-0 ms-2">
-                                            <a href="{{ path('admin.emplacement.show') }}" target="_blank">Emplacements</a>
-                                        </h6>
-                                    </div>
-                                </td>
-                                <td class="py-3">
-                                    <div class="d-flex align-items-center">
-                                        <span class="fas fa-circle fs-11 me-1 text-primary"></span>
-                                        <h6 class="fw-normal text-700 mb-0 me-5">{{ emplacements }}</h6>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="py-3">
-                                    <div class="d-flex align-items-center">
-                                        <h6 class="text-600 mb-0 ms-2">
-                                            <a href="{{ path('admin.etat.show') }}" target="_blank">États</a>
-                                        </h6>
-                                    </div>
-                                </td>
-                                <td class="py-3">
-                                    <div class="d-flex align-items-center">
-                                        <span class="fas fa-circle fs-11 me-1 text-success"></span>
-                                        <h6 class="fw-normal text-700 mb-0 me-5">{{ etats }}</h6>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="py-3">
-                                    <div class="d-flex align-items-center">
-                                        <h6 class="text-600 mb-0 ms-2">
-                                            <a href="{{ path('admin.fournisseur.show') }}" target="_blank">Fournisseurs</a>
-                                        </h6>
-                                    </div>
-                                </td>
-                                <td class="py-3">
-                                    <div class="d-flex align-items-center">
-                                        <span class="fas fa-circle fs-11 me-1 text-danger"></span>
-                                        <h6 class="fw-normal text-700 mb-0 me-5">{{ onduleurs }}</h6>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="py-3">
-                                    <div class="d-flex align-items-center">
-                                        <h6 class="text-600 mb-0 ms-2">
-                                            <a href="{{ path('admin.entreprise.show') }}" target="_blank">Sites</a>
-                                        </h6>
-                                    </div>
-                                </td>
-                                <td class="py-3">
-                                    <div class="d-flex align-items-center">
-                                        <span class="fas fa-circle fs-11 me-1 text-info"></span>
-                                        <h6 class="fw-normal text-700 mb-0 me-5">{{ sites }}</h6>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="py-3">
-                                    <div class="d-flex align-items-center">
-                                        <h6 class="text-600 mb-0 ms-2">
-                                            <a href="{{ path('admin.systeme-exploitation.show') }}" target="_blank">Systèmes d'exploitation</a>
-                                        </h6>
-                                    </div>
-                                </td>
-                                <td class="py-3">
-                                    <div class="d-flex align-items-center">
-                                        <span class="fas fa-circle fs-11 me-1 text-warning"></span>
-                                        <h6 class="fw-normal text-700 mb-0 me-5">{{ systemes_exploitation }}</h6>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="py-3">
-                                    <div class="d-flex align-items-center">
-                                        <h6 class="text-600 mb-0 ms-2">
-                                            <a href="{{ path('admin.stockage.show') }}" target="_blank">Types de stockage</a>
-                                        </h6>
-                                    </div>
-                                </td>
-                                <td class="py-3">
-                                    <div class="d-flex align-items-center">
-                                        <span class="fas fa-circle fs-11 me-1 text-secondary"></span>
-                                        <h6 class="fw-normal text-700 mb-0 me-5">{{ stockage }}</h6>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="py-3">
-                                    <div class="d-flex align-items-center">
-                                        <h6 class="text-600 mb-0 ms-2">
-                                            <a href="{{ path('admin.utilisateur.show') }}" target="_blank">Utilisateurs</a>
-                                        </h6>
-                                    </div>
-                                </td>
-                                <td class="py-3">
-                                    <div class="d-flex align-items-center">
-                                        <span class="fas fa-circle fs-11 me-1 text-dark"></span>
-                                        <h6 class="fw-normal text-700 mb-0 me-5">{{ utilisateurs }}</h6>
-                                    </div>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
+                    <div class="card-body p-0">
+                        {% for notifications in notificationsNotRead %}
+                            <a id="unread-notification-index" class="border-bottom-0 notification-unread notification rounded-0 border-x-0 border-300">
+                                <div class="notification-body">
+                                    <p class="mb-1">{{ notifications.message|raw }}</p>
+                                    <span class="notification-time">
+                                            <span class="me-2 {{ notifications.icon }}" role="img" aria-label="Emoji"></span>
+                                            le {{ notifications.createdAt|date('d/m/Y à H:i') }}
+                                        </span>
+                                </div>
+                            </a>
+                        {% endfor %}
                     </div>
                 </div>
+            {% endif %}
+            <div class="card mb-3 pe-lg-0">
+                <div class="card-header bg-body-tertiary d-flex justify-content-between">
+                    <h5 class="mb-0">
+                        <span class="bi bi-eye-fill text-primary"></span>
+                        5 dernières notifications lues
+                    </h5>
+                </div>
+                <div class="card-body p-0">
+                    {% if notificationsRead is not empty %}
+                        {% for notifications in notificationsRead|slice(0, 5) %}
+                            <a id="unread-notification-index" class="border-bottom-0 notification rounded-0 border-x-0 border-300">
+                                <div class="notification-body">
+                                    <p class="mb-1">{{ notifications.message|raw }}</p>
+                                    <span class="notification-time">
+                                        <span class="me-2 {{ notifications.icon }}" role="img" aria-label="Emoji"></span>
+                                        le {{ notifications.createdAt|date('d/m/Y à H:i') }}
+                                    </span>
+                                </div>
+                            </a>
+                        {% endfor %}
+                    {% else %}
+                        <a class="border-bottom-0 notification rounded-0 border-x-0 border-300">
+                            <div class="notification-body">
+                                <p class="mb-1">Aucune notification lue 😀</p>
+                            </div>
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}

@@ -120,6 +120,13 @@
                                                             <span class="badge text-bg-danger">N/A</span>
                                                         {% endif %}
                                                     </td>
+                                                    <td class="text-nowrap etat">
+                                                        {% if ecran.etat_nom != null %}
+                                                            {{ ecran.etat_nom }}
+                                                        {% else %}
+                                                            <span class="badge text-bg-danger">N/A</span>
+                                                        {% endif %}
+                                                    </td>
                                                     <td class="text-nowrap date_installation">
                                                         {% if ecran.date_installation != null %}
                                                             {{ ecran.date_installation }}
@@ -137,13 +144,6 @@
                                                     <td class="text-nowrap date_garantie">
                                                         {% if ecran.date_garantie != null %}
                                                             {{ ecran.date_garantie }}
-                                                        {% else %}
-                                                            <span class="badge text-bg-danger">N/A</span>
-                                                        {% endif %}
-                                                    </td>
-                                                    <td class="text-nowrap etat">
-                                                        {% if ecran.etat_nom != null %}
-                                                            {{ ecran.etat_nom }}
                                                         {% else %}
                                                             <span class="badge text-bg-danger">N/A</span>
                                                         {% endif %}

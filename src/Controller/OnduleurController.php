@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Onduleur;
 use App\Form\OnduleurFormType;
+use App\Service\NotificationService;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Endroid\QrCode\Color\Color;
@@ -70,7 +71,7 @@ class OnduleurController extends AbstractController
     }
 
     #[Route('/{id}', name: 'edit', methods: ['GET', 'POST'])]
-    public function edit(Onduleur $onduleur, EntityManagerInterface $entityManager, Request $request, UrlGeneratorInterface $urlGenerator): Response
+    public function edit(Onduleur $onduleur, EntityManagerInterface $entityManager, Request $request, UrlGeneratorInterface $urlGenerator, NotificationService $notificationService): Response
     {
         $currentUrl = $urlGenerator->generate(
             $request->attributes->get('_route'),
@@ -100,6 +101,8 @@ class OnduleurController extends AbstractController
 
         if($onduleurForm->isSubmitted() && $onduleurForm->isValid())
         {
+            $notificationService->deleteNotification("onduleur", $onduleur->getId());
+
             $entityManager->persist($onduleur);
             $entityManager->flush();
 
@@ -116,10 +119,11 @@ class OnduleurController extends AbstractController
     }
 
     #[Route('/{id}', name: 'delete', methods: ['DELETE'])]
-    public function delete(Onduleur $onduleur, EntityManagerInterface $entityManager, Request $request): Response
+    public function delete(Onduleur $onduleur, EntityManagerInterface $entityManager, Request $request, NotificationService $notificationService): Response
     {
         if($this->isCsrfTokenValid('delete'.$onduleur->getId(), $request->get('_token')))
         {
+            $notificationService->deleteNotification("onduleur", $onduleur->getId());
             $entityManager->remove($onduleur);
             $entityManager->flush();
 

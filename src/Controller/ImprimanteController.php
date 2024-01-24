@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Imprimante;
 use App\Form\ImprimanteFormType;
+use App\Service\NotificationService;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Endroid\QrCode\Color\Color;
@@ -70,7 +71,7 @@ class ImprimanteController extends AbstractController
     }
 
     #[Route('/{id}', name: 'edit', methods: ['GET', 'POST'])]
-    public function edit(Imprimante $imprimante, EntityManagerInterface $entityManager, Request $request, UrlGeneratorInterface $urlGenerator): Response
+    public function edit(Imprimante $imprimante, EntityManagerInterface $entityManager, Request $request, UrlGeneratorInterface $urlGenerator, NotificationService $notificationService): Response
     {
         $currentUrl = $urlGenerator->generate(
             $request->attributes->get('_route'),
@@ -100,6 +101,8 @@ class ImprimanteController extends AbstractController
 
         if($imprimanteForm->isSubmitted() && $imprimanteForm->isValid())
         {
+            $notificationService->deleteNotification("imprimante", $imprimante->getId());
+
             $entityManager->persist($imprimante);
             $entityManager->flush();
 
@@ -116,10 +119,12 @@ class ImprimanteController extends AbstractController
     }
 
     #[Route('/{id}', name: 'delete', methods: ['DELETE'])]
-    public function delete(Imprimante $imprimante, EntityManagerInterface $entityManager, Request $request): Response
+    public function delete(Imprimante $imprimante, EntityManagerInterface $entityManager, Request $request, NotificationService $notificationService): Response
     {
         if($this->isCsrfTokenValid('delete'.$imprimante->getId(), $request->get('_token')))
         {
+            $notificationService->deleteNotification("imprimante", $imprimante->getId());
+
             $entityManager->remove($imprimante);
             $entityManager->flush();
 

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\TelephoneFixe;
 use App\Form\TelephoneFixeFormType;
+use App\Service\NotificationService;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Endroid\QrCode\Color\Color;
@@ -71,7 +72,7 @@ class TelephoneFixeController extends AbstractController
     }
 
     #[Route('/{id}', name: 'edit', methods: ['GET', 'POST'])]
-    public function edit(TelephoneFixe $telephone, EntityManagerInterface $entityManager, Request $request): Response
+    public function edit(TelephoneFixe $telephone, EntityManagerInterface $entityManager, Request $request, NotificationService $notificationService): Response
     {
         $telephoneForm = $this->createForm(TelephoneFixeFormType::class, $telephone);
 
@@ -79,6 +80,8 @@ class TelephoneFixeController extends AbstractController
 
         if($telephoneForm->isSubmitted() && $telephoneForm->isValid())
         {
+            $notificationService->deleteNotification("telephone_fixe", $telephone->getId());
+
             $entityManager->persist($telephone);
             $entityManager->flush();
 
@@ -94,10 +97,12 @@ class TelephoneFixeController extends AbstractController
     }
 
     #[Route('/{id}', name: 'delete', methods: ['DELETE'])]
-    public function delete(TelephoneFixe $telephone, EntityManagerInterface $entityManager, Request $request): Response
+    public function delete(TelephoneFixe $telephone, EntityManagerInterface $entityManager, Request $request, NotificationService $notificationService): Response
     {
         if($this->isCsrfTokenValid('delete'.$telephone->getId(), $request->get('_token')))
         {
+            $notificationService->deleteNotification("telephone_fixe", $telephone->getId());
+
             $entityManager->remove($telephone);
             $entityManager->flush();
 

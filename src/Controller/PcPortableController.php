@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\PcPortable;
 use App\Form\PcPortableFormType;
+use App\Service\NotificationService;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Endroid\QrCode\Color\Color;
@@ -73,7 +74,7 @@ class PcPortableController extends AbstractController
     }
 
     #[Route('/{id}', name: 'edit', methods: ['GET', 'POST'])]
-    public function edit(PcPortable $pcPortable, EntityManagerInterface $entityManager, Request $request, UrlGeneratorInterface $urlGenerator): Response
+    public function edit(PcPortable $pcPortable, EntityManagerInterface $entityManager, Request $request, UrlGeneratorInterface $urlGenerator, NotificationService $notificationService): Response
     {
         $currentUrl = $urlGenerator->generate(
             $request->attributes->get('_route'),
@@ -103,6 +104,8 @@ class PcPortableController extends AbstractController
 
         if($pcPortableForm->isSubmitted() && $pcPortableForm->isValid())
         {
+            $notificationService->deleteNotification("pc_portable", $pcPortable->getId());
+
             $entityManager->persist($pcPortable);
             $entityManager->flush();
 
@@ -119,10 +122,12 @@ class PcPortableController extends AbstractController
     }
 
     #[Route('/{id}', name: 'delete', methods: ['DELETE'])]
-    public function delete(PcPortable $pcPortable, EntityManagerInterface $entityManager, Request $request): Response
+    public function delete(PcPortable $pcPortable, EntityManagerInterface $entityManager, Request $request, NotificationService $notificationService): Response
     {
         if($this->isCsrfTokenValid('delete'.$pcPortable->getId(), $request->get('_token')))
         {
+            $notificationService->deleteNotification("pc_portable", $pcPortable->getId());
+
             $entityManager->remove($pcPortable);
             $entityManager->flush();
 

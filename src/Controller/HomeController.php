@@ -8,6 +8,7 @@ use App\Entity\Entreprise;
 use App\Entity\Etat;
 use App\Entity\Fournisseur;
 use App\Entity\Imprimante;
+use App\Entity\Notification;
 use App\Entity\Onduleur;
 use App\Entity\PcFixe;
 use App\Entity\PcPortable;
@@ -17,19 +18,25 @@ use App\Entity\SystemeExploitation;
 use App\Entity\Tablette;
 use App\Entity\TelephoneFixe;
 use App\Entity\TelephonePortable;
+use App\Entity\User;
 use App\Entity\Utilisateur;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
 
 class HomeController extends AbstractController
 {
     private $menu_active = "home";
 
     #[Route('/admin/accueil', name: 'admin.home')]
-    public function index(ManagerRegistry $registry): Response
+    public function index(ManagerRegistry $registry, EntityManagerInterface $entityManager, Security $security): Response
     {
+        // Récupération des informations de l'utilisateur connecté
+        $utilisateur = $security->getUser();
+
         // Gestions des statistiques pour le matériel
         $ecrans = count($registry->getManager()->getRepository(Ecran::class)->findAll());
         $imprimantes = count($registry->getManager()->getRepository(Imprimante::class)->findAll());
@@ -52,6 +59,7 @@ class HomeController extends AbstractController
 
         return $this->render('home/index.html.twig', [
             'menu_active' => $this->menu_active,
+            'utilisateur' => $utilisateur,
             'ecrans' => $ecrans,
             'imprimantes' => $imprimantes,
             'onduleurs' => $onduleurs,

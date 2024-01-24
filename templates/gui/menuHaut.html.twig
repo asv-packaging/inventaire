@@ -23,9 +23,11 @@
             </div>
         </li>
         <li class="nav-item dropdown">
-            <a class="nav-link {# notification-indicator notification-indicator-danger #} px-0 fa-icon-wait" id="navbarDropdownNotification" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-hide-on-body-scroll="data-hide-on-body-scroll">
-                <span class="fas fa-bell {# fa-shake #}" data-fa-transform="shrink-6" style="font-size: 34px;"></span>
-{#                <span class="notification-indicator-number #}{# fa-shake #}{#">1</span>#}
+            <a class="nav-link {% if notifications|length > 0 %} notification-indicator notification-indicator-danger notification-indicator-fill {% endif %} px-0 fa-icon-wait" id="navbarDropdownNotification" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-hide-on-body-scroll="data-hide-on-body-scroll">
+                <span class="fas fa-bell {% if notifications|length > 0 %} fa-shake {% endif %}" data-fa-transform="shrink-6" style="font-size: 34px;"></span>
+                {% if notifications|length > 0 %}
+                    <span class="notification-indicator-number fa-shake">{% if notifications|length > 9 %}+9{% else %}{{ notifications|length }}{% endif %}</span>
+                {% endif %}
             </a>
             <div class="dropdown-menu dropdown-caret dropdown-caret dropdown-menu-end dropdown-menu-card dropdown-menu-notification dropdown-caret-bg" aria-labelledby="navbarDropdownNotification">
                 <div class="card card-notification shadow-none">
@@ -34,55 +36,62 @@
                             <div class="col-auto">
                                 <h6 class="card-header-title mb-0">Notifications</h6>
                             </div>
-                            <div class="col-auto ps-0 ps-sm-3">
-                                <a class="card-link fw-normal" href="#">Marquer comme lu</a>
+                            {% if notifications is not empty %}
+                            <div class="col-auto">
+                                <a class="card-link fw-normal marquer-comme-lu" id="marquer-comme-lu">Marquer comme lu</a>
                             </div>
+                            {% endif %}
                         </div>
                     </div>
                     <div class="scrollbar-overlay" style="max-height:19rem">
                         <div class="list-group list-group-flush fw-normal fs--1">
-                            <div class="list-group-title border-bottom">NON LU</div>
-                            <div class="list-group-item">
-                                <a class="notification notification-flush notification-unread" href="#!">
-{#                                    <div class="notification-avatar">#}
-{#                                        <div class="avatar avatar-2xl me-3">#}
-{#                                            <div class="avatar-name rounded-circle"><span>AB</span></div>#}
-{#                                        </div>#}
-{#                                    </div>#}
-                                    <div class="notification-body">
-                                        <p class="mb-1">La date de fin de garantie du <strong>PC-728</strong> arrive bientôt a expiration.</p>
-                                        <span class="notification-time">
-                                            <span class="me-2 fas fa-triangle-exclamation text-danger"></span>
-                                            il y a 1 jour
-                                        </span>
+                            {% if notificationsNotRead|length > 0 %}
+                                <div class="list-group-title border-bottom" id="non-lu">NON LU</div>
+                                {% for notifications in notificationsNotRead %}
+                                    <div class="list-group-item" id="non-lu">
+                                        <a class="notification notification-flush notification-unread">
+                                            <div class="notification-body">
+                                                <p class="mb-1">{{ notifications.message|raw }}</p>
+                                                <span class="notification-time">
+                                                    <span class="me-2 {{ notifications.icon }}"></span>
+                                                    le {{ notifications.createdAt|date('d/m/Y à H:i') }}
+                                                </span>
+                                            </div>
+                                        </a>
                                     </div>
-                                </a>
-                            </div>
+                                {% endfor %}
+                            {% endif %}
                             <div class="list-group-title border-bottom">LU</div>
-                            <div class="list-group-item">
-                                <a class="notification notification-flush" href="#!">
-{#                                    <div class="notification-avatar">#}
-{#                                        <div class="avatar avatar-2xl me-3">#}
-{#                                            <div class="avatar-name rounded-circle"><span>AB</span></div>#}
-{#                                        </div>#}
-{#                                    </div>#}
-                                    <div class="notification-body">
-                                        <p class="mb-1">La <strong>date de fin de garantie</strong> du <strong>PC-727</strong> est <strong>arrivé a expiration</strong>.</p>
-                                        <span class="notification-time">
-                                            <span class="me-2 fas fa-triangle-exclamation text-danger"></span>
-                                            il y a 5 jours
-                                        </span>
-                                    </div>
-                                </a>
-                            </div>
+                            {% if notificationsRead|length > 0 %}
+                                    {% for notifications in notificationsRead %}
+                                        <div class="list-group-item" id="notification-lu">
+                                            <a class="notification notification-flush">
+                                                <div class="notification-body">
+                                                    <p class="mb-1">{{ notifications.message|raw }}</p>
+                                                    <span class="notification-time">
+                                                    <span class="me-2 {{ notifications.icon }}"></span>
+                                                    le {{ notifications.createdAt|date('d/m/Y à H:i') }}
+                                                </span>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    {% endfor %}
+                            {% else %}
+                                <div class="list-group-item">
+                                    <a class="notification notification-flush" id="aucune-notification-lu">
+                                        <div class="notification-body">
+                                            <p class="mb-1">Aucune notification 😀</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            {% endif %}
                         </div>
-                    </div>
-                    <div class="card-footer text-center border-top">
-                        <a class="card-link d-block" href="#">Toutes les notifications</a>
-                    </div>
+{#                    <div class="card-footer text-center border-top">#}
+{#                        <a class="card-link d-block" href="#">Toutes les notifications</a>#}
+{#                    </div>#}
                 </div>
             </div>
-
+            </div>
         </li>
         <li class="nav-item dropdown">
             <a class="nav-link pe-0 ps-2" id="navbarDropdownUser" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -106,3 +115,90 @@
         </li>
     </ul>
 </nav>
+{% if notifications is not empty %}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var liensMarquerLu = document.querySelectorAll('.marquer-comme-lu');
+        // Défini le style du curseur en main
+        document.getElementById('marquer-comme-lu').style = 'cursor: pointer';
+
+        liensMarquerLu.forEach(function (lien) {
+            lien.addEventListener('click', function (event) {
+                event.preventDefault();
+
+                // Identifie toutes les notifications non lues avant de les marquer comme lues
+                var nonLuesElements = document.querySelectorAll('.notification-unread:not(.deja-lue)');
+
+                fetch('{{ path('admin.notification.read') }}', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Marque les notifications comme lues et ajoutez la classe "deja-lue"
+                            nonLuesElements.forEach(function (element) {
+                                element.classList.remove('notification-unread');
+                                element.classList.add('deja-lue');
+                            });
+
+                            // Ajoute le code pour cloner et déplacer les éléments non lus vers la section "LU"
+                            var luDiv = document.getElementById('notification-lu');
+                            if (luDiv) {
+                                nonLuesElements.forEach(function (nonLueElement) {
+                                    var clone = nonLueElement.cloneNode(true);
+                                    luDiv.appendChild(clone);
+                                    nonLueElement.remove();
+                                });
+                            }
+
+                            // Supprime la section "NON LU" car il n'y a plus de notifications non lues
+                            var nonLuSection = document.getElementById('non-lu');
+                            if (nonLuSection) {
+                                nonLuSection.remove();
+                            }
+
+                            // Vérifie s'il n'y a plus de notifications non lues
+                            if (document.querySelectorAll('.notification-unread').length === 0) {
+                                var aucuneNotificationLu = document.getElementById('aucune-notification-lu');
+                                if (aucuneNotificationLu) {
+                                    aucuneNotificationLu.remove();
+                                }
+                            }
+
+                            // Vérifie si la liste de notifications a une longueur supérieure à zéro
+                            var notificationsLength = {{ notifications|length }};
+                            if (notificationsLength > 0) {
+                                // Supprime la classe "fa-shake" de la balise <span>
+                                document.querySelector('.fa-bell').classList.remove('fa-shake');
+
+                                // Supprime les classes "notification-indicator" de la balise <a>
+                                var notificationLink = document.getElementById('navbarDropdownNotification');
+                                if (notificationLink) {
+                                    notificationLink.classList.remove('notification-indicator', 'notification-indicator-danger', 'notification-indicator-fill');
+                                }
+
+                                // Supprime la deuxième balise <span> avec la classe "notification-indicator-number"
+                                var secondNotificationLink = document.querySelector('.notification-indicator-number');
+                                if (secondNotificationLink) {
+                                    secondNotificationLink.remove();
+                                }
+                            }
+
+                            // Enlève le bouton "Marquer comme lu" car les notifications ont déjà été marquées comme lues
+                            document.getElementById('marquer-comme-lu').remove();
+                        } else {
+                            console.error('Erreur lors de la requête API : ', data.error);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Erreur lors de la requête Fetch', error);
+                    });
+            });
+        });
+    });
+
+</script>
+{% endif %}

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\PcFixe;
 use App\Form\PcFixeFormType;
+use App\Service\NotificationService;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Endroid\QrCode\Color\Color;
@@ -75,7 +76,7 @@ class PcFixeController extends AbstractController
     }
 
     #[Route('/{id}', name: 'edit', methods: ['GET', 'POST'])]
-    public function edit(PcFixe $pcFixe, EntityManagerInterface $entityManager, Request $request, UrlGeneratorInterface $urlGenerator): Response
+    public function edit(PcFixe $pcFixe, EntityManagerInterface $entityManager, Request $request, UrlGeneratorInterface $urlGenerator, NotificationService $notificationService): Response
     {
         $currentUrl = $urlGenerator->generate(
             $request->attributes->get('_route'),
@@ -105,6 +106,8 @@ class PcFixeController extends AbstractController
 
         if($pcFixeForm->isSubmitted() && $pcFixeForm->isValid())
         {
+            $notificationService->deleteNotification("pc_fixe", $pcFixe->getId());
+
             $entityManager->persist($pcFixe);
             $entityManager->flush();
 
@@ -121,10 +124,12 @@ class PcFixeController extends AbstractController
     }
 
     #[Route('/{id}', name: 'delete', methods: ['DELETE'])]
-    public function delete(PcFixe $pcFixe, EntityManagerInterface $entityManager, Request $request): Response
+    public function delete(PcFixe $pcFixe, EntityManagerInterface $entityManager, Request $request, NotificationService $notificationService): Response
     {
         if($this->isCsrfTokenValid('delete'.$pcFixe->getId(), $request->get('_token')))
         {
+            $notificationService->deleteNotification("pc_fixe", $pcFixe->getId());
+
             $entityManager->remove($pcFixe);
             $entityManager->flush();
 

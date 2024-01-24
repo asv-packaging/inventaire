@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Tablette;
 use App\Form\TabletteFormType;
+use App\Service\NotificationService;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Endroid\QrCode\Color\Color;
@@ -70,7 +71,7 @@ class TabletteController extends AbstractController
     }
 
     #[Route('/{id}', name: 'edit', methods: ['GET', 'POST'])]
-    public function edit(Tablette $tablette, EntityManagerInterface $entityManager, Request $request, UrlGeneratorInterface $urlGenerator): Response
+    public function edit(Tablette $tablette, EntityManagerInterface $entityManager, Request $request, UrlGeneratorInterface $urlGenerator, NotificationService $notificationService): Response
     {
         $currentUrl = $urlGenerator->generate(
             $request->attributes->get('_route'),
@@ -100,6 +101,8 @@ class TabletteController extends AbstractController
 
         if($tabletteForm->isSubmitted() && $tabletteForm->isValid())
         {
+            $notificationService->deleteNotification("tablette", $tablette->getId());
+
             $entityManager->persist($tablette);
             $entityManager->flush();
 
@@ -116,10 +119,12 @@ class TabletteController extends AbstractController
     }
 
     #[Route('/{id}', name: 'delete', methods: ['DELETE'])]
-    public function delete(Tablette $tablette, EntityManagerInterface $entityManager, Request $request): Response
+    public function delete(Tablette $tablette, EntityManagerInterface $entityManager, Request $request, NotificationService $notificationService): Response
     {
         if($this->isCsrfTokenValid('delete'.$tablette->getId(), $request->get('_token')))
         {
+            $notificationService->deleteNotification("tablette", $tablette->getId());
+
             $entityManager->remove($tablette);
             $entityManager->flush();
 
