@@ -8,7 +8,6 @@ use App\Repository\TabletteRepository;
 use App\Service\ExcelExportService;
 use App\Service\NotificationService;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\Persistence\ManagerRegistry;
 use Endroid\QrCode\Color\Color;
 use Endroid\QrCode\Encoding\Encoding;
 use Endroid\QrCode\ErrorCorrectionLevel\ErrorCorrectionLevelLow;
@@ -24,25 +23,20 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-#[Route('/admin/tablettes', name: 'admin.tablette.')]
+#[Route('/gestion/tablettes', name: 'admin.tablette.')]
 class TabletteController extends AbstractController
 {
-    private $repository;
     private $menu_active = "tablette";
 
+    /**
+     * @param TabletteRepository $tabletteRepository
+     * @return Response
+     * Permet d'afficher la liste des tablettes
+     */
     #[Route('', name: 'show')]
-    public function index(ManagerRegistry $registry): Response
+    public function index(TabletteRepository $tabletteRepository): Response
     {
-        $tablettes = $registry->getManager()->getRepository(Tablette::class)->createQueryBuilder('t')
-            ->select('t.id, t.nom, t.marque, t.modele, fournisseur.nom as fournisseur_nom, emplacement.nom as emplacement_nom, entreprise.nom as entreprise_nom, etat.nom as etat_nom, utilisateur.nom as utilisateur_nom, utilisateur.prenom as utilisateur_prenom, t.numero_serie, t.ip, t.date_achat, t.date_garantie, t.commentaire')
-            ->leftJoin('t.utilisateur', 'utilisateur')
-            ->leftJoin('t.emplacement', 'emplacement')
-            ->leftJoin('t.fournisseur', 'fournisseur')
-            ->leftJoin('t.entreprise', 'entreprise')
-            ->leftJoin('t.etat', 'etat')
-            ->orderBy('t.id', 'DESC')
-            ->getQuery()
-            ->getResult();
+        $tablettes = $tabletteRepository->findBy([], ['id' => 'DESC']);
 
         return $this->render('tablette/show.html.twig', [
             'tablettes' => $tablettes,
@@ -50,6 +44,12 @@ class TabletteController extends AbstractController
         ]);
     }
 
+    /**
+     * @param ExcelExportService $excelExportService
+     * @param TabletteRepository $repository
+     * @return Response
+     * Permet d'exporter les données des tablettes dans un fichier Excel
+     */
     #[Route('/exporter', name: 'export')]
     public function exportDataToExcel(ExcelExportService $excelExportService, TabletteRepository $repository): Response
     {
@@ -87,7 +87,7 @@ class TabletteController extends AbstractController
             // Utilise le service pour exporter les données
             $excelExportService->exportToExcel($headers, $data, $filePath);
 
-            // Permet de télécharger le fichier
+            // Télécharge le fichier
             $response = new BinaryFileResponse($filePath);
             $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'inventaire_tablettes.xlsx');
             $response->headers->set('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
@@ -111,6 +111,12 @@ class TabletteController extends AbstractController
         }
     }
 
+    /**
+     * @param EntityManagerInterface $entityManager
+     * @param Request $request
+     * @return Response
+     * Permet d'ajouter une tablette
+     */
     #[Route('/ajouter', name: 'add')]
     public function add(EntityManagerInterface $entityManager, Request $request): Response
     {
@@ -136,6 +142,15 @@ class TabletteController extends AbstractController
         ]);
     }
 
+    /**
+     * @param Tablette $tablette
+     * @param EntityManagerInterface $entityManager
+     * @param Request $request
+     * @param UrlGeneratorInterface $urlGenerator
+     * @param NotificationService $notificationService
+     * @return Response
+     * Permet de modifier une tablette
+     */
     #[Route('/{id}', name: 'edit', methods: ['GET', 'POST'])]
     public function edit(Tablette $tablette, EntityManagerInterface $entityManager, Request $request, UrlGeneratorInterface $urlGenerator, NotificationService $notificationService): Response
     {
@@ -184,6 +199,14 @@ class TabletteController extends AbstractController
         ]);
     }
 
+    /**
+     * @param Tablette $tablette
+     * @param EntityManagerInterface $entityManager
+     * @param Request $request
+     * @param NotificationService $notificationService
+     * @return Response
+     * Permet de supprimer une tablette
+     */
     #[Route('/{id}', name: 'delete', methods: ['DELETE'])]
     public function delete(Tablette $tablette, EntityManagerInterface $entityManager, Request $request, NotificationService $notificationService): Response
     {

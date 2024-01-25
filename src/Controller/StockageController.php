@@ -11,21 +11,20 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/admin/stockages', name: 'admin.stockage.')]
+#[Route('/parametres/stockages', name: 'admin.stockage.')]
 class StockageController extends AbstractController
 {
-    private $repository;
     private $menu_active = "stockage";
 
-    public function __construct(StockageRepository $repository)
-    {
-        $this->repository = $repository;
-    }
-
+    /**
+     * @param StockageRepository $stockageRepository
+     * @return Response
+     * Permet d'afficher la liste des types de stockage
+     */
     #[Route('', name: 'show')]
-    public function index(): Response
+    public function index(StockageRepository $stockageRepository): Response
     {
-        $stockages = $this->repository->findBy([], ['id' => 'DESC']);
+        $stockages = $stockageRepository->findBy([], ['id' => 'DESC']);
 
         return $this->render('stockage/show.html.twig', [
             'stockages' => $stockages,
@@ -33,6 +32,12 @@ class StockageController extends AbstractController
         ]);
     }
 
+    /**
+     * @param EntityManagerInterface $entityManager
+     * @param Request $request
+     * @return Response
+     * Permet d'ajouter un type de stockage
+     */
     #[Route('/ajouter', name: 'add')]
     public function add(EntityManagerInterface $entityManager, Request $request): Response
     {
@@ -58,6 +63,13 @@ class StockageController extends AbstractController
         ]);
     }
 
+    /**
+     * @param Stockage $stockage
+     * @param EntityManagerInterface $entityManager
+     * @param Request $request
+     * @return Response
+     * Permet de modifier un type de stockage
+     */
     #[Route('/{id}', name: 'edit', methods: ['GET', 'POST'])]
     public function edit(Stockage $stockage, EntityManagerInterface $entityManager, Request $request): Response
     {
@@ -81,6 +93,13 @@ class StockageController extends AbstractController
         ]);
     }
 
+    /**
+     * @param Stockage $stockage
+     * @param EntityManagerInterface $entityManager
+     * @param Request $request
+     * @return Response
+     * Permet de supprimer un type de stockage
+     */
     #[Route('/{id}', name: 'delete', methods: ['DELETE'])]
     public function delete(Stockage $stockage, EntityManagerInterface $entityManager, Request $request): Response
     {

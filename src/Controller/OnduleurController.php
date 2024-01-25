@@ -8,7 +8,6 @@ use App\Repository\OnduleurRepository;
 use App\Service\ExcelExportService;
 use App\Service\NotificationService;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\Persistence\ManagerRegistry;
 use Endroid\QrCode\Color\Color;
 use Endroid\QrCode\Encoding\Encoding;
 use Endroid\QrCode\ErrorCorrectionLevel\ErrorCorrectionLevelLow;
@@ -24,24 +23,20 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-#[Route('/admin/onduleurs', name: 'admin.onduleur.')]
+#[Route('/gestion/onduleurs', name: 'admin.onduleur.')]
 class OnduleurController extends AbstractController
 {
-    private $repository;
     private $menu_active = "onduleur";
 
+    /**
+     * @param OnduleurRepository $onduleurRepository
+     * @return Response
+     * Permet d'afficher la liste des onduleurs
+     */
     #[Route('', name: 'show')]
-    public function index(ManagerRegistry $registry): Response
+    public function index(OnduleurRepository $onduleurRepository): Response
     {
-        $onduleurs = $registry->getManager()->getRepository(Onduleur::class)->createQueryBuilder('o')
-            ->select('o.id, o.nom, o.marque, o.modele, emplacement.nom as emplacement_nom, etat.nom as etat_nom, entreprise.nom as entreprise_nom, fournisseur.nom as fournisseur_nom, o.numero_serie, o.capacite, o.type_prise, o.date_installation, o.date_achat, o.date_garantie, o.commentaire')
-            ->leftJoin('o.emplacement', 'emplacement')
-            ->leftJoin('o.etat', 'etat')
-            ->leftJoin('o.entreprise', 'entreprise')
-            ->leftJoin('o.fournisseur', 'fournisseur')
-            ->orderBy('o.id', 'DESC')
-            ->getQuery()
-            ->getResult();
+        $onduleurs = $onduleurRepository->findBy([], ['id' => 'DESC']);
 
         return $this->render('onduleur/show.html.twig', [
             'onduleurs' => $onduleurs,
@@ -49,6 +44,12 @@ class OnduleurController extends AbstractController
         ]);
     }
 
+    /**
+     * @param ExcelExportService $excelExportService
+     * @param OnduleurRepository $repository
+     * @return Response
+     * Permet d'exporter les données des onduleurs au format Excel
+     */
     #[Route('/exporter', name: 'export')]
     public function exportDataToExcel(ExcelExportService $excelExportService, OnduleurRepository $repository): Response
     {
@@ -83,15 +84,15 @@ class OnduleurController extends AbstractController
             // Chemin où sauvegarder le fichier Excel
             $filePath = $this->getParameter('kernel.project_dir') . '/var/export_data_inventaire_onduleurs.xlsx';
 
-            // Utiliser le service pour exporter les données
+            // Utilise le service pour exporter les données
             $excelExportService->exportToExcel($headers, $data, $filePath);
 
-            // Créer une réponse binaire pour télécharger le fichier
+            // Télécharge le fichier
             $response = new BinaryFileResponse($filePath);
             $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'inventaire_onduleurs.xlsx');
             $response->headers->set('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 
-            // Supprimer le fichier après le téléchargement
+            // Supprime le fichier après le téléchargement
             register_shutdown_function(function () use ($filePath)
             {
                 if (file_exists($filePath))
@@ -110,6 +111,12 @@ class OnduleurController extends AbstractController
         }
     }
 
+    /**
+     * @param EntityManagerInterface $entityManager
+     * @param Request $request
+     * @return Response
+     * Permet d'ajouter un onduleur
+     */
     #[Route('/ajouter', name: 'add')]
     public function add(EntityManagerInterface $entityManager, Request $request): Response
     {
@@ -135,6 +142,15 @@ class OnduleurController extends AbstractController
         ]);
     }
 
+    /**
+     * @param Onduleur $onduleur
+     * @param EntityManagerInterface $entityManager
+     * @param Request $request
+     * @param UrlGeneratorInterface $urlGenerator
+     * @param NotificationService $notificationService
+     * @return Response
+     * Permet de modifier un onduleur
+     */
     #[Route('/{id}', name: 'edit', methods: ['GET', 'POST'])]
     public function edit(Onduleur $onduleur, EntityManagerInterface $entityManager, Request $request, UrlGeneratorInterface $urlGenerator, NotificationService $notificationService): Response
     {
@@ -183,6 +199,14 @@ class OnduleurController extends AbstractController
         ]);
     }
 
+    /**
+     * @param Onduleur $onduleur
+     * @param EntityManagerInterface $entityManager
+     * @param Request $request
+     * @param NotificationService $notificationService
+     * @return Response
+     * Permet de supprimer un onduleur
+     */
     #[Route('/{id}', name: 'delete', methods: ['DELETE'])]
     public function delete(Onduleur $onduleur, EntityManagerInterface $entityManager, Request $request, NotificationService $notificationService): Response
     {

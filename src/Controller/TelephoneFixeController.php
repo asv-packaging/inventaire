@@ -8,7 +8,6 @@ use App\Repository\TelephoneFixeRepository;
 use App\Service\ExcelExportService;
 use App\Service\NotificationService;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\Persistence\ManagerRegistry;
 use Endroid\QrCode\Color\Color;
 use Endroid\QrCode\Encoding\Encoding;
 use Endroid\QrCode\ErrorCorrectionLevel\ErrorCorrectionLevelLow;
@@ -24,25 +23,20 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-#[Route('/admin/telephones/fixes', name: 'admin.telephone_fixe.')]
+#[Route('/gestion/telephones/fixes', name: 'admin.telephone_fixe.')]
 class TelephoneFixeController extends AbstractController
 {
-    private $repository;
     private $menu_active = "telephone_fixe";
 
+    /**
+     * @param TelephoneFixeRepository $telephoneFixeRepository
+     * @return Response
+     * Permet d'afficher la liste des téléphones fixes
+     */
     #[Route('', name: 'show')]
-    public function index(ManagerRegistry $registry): Response
+    public function index(TelephoneFixeRepository $telephoneFixeRepository): Response
     {
-        $telephones = $registry->getManager()->getRepository(TelephoneFixe::class)->createQueryBuilder('t')
-            ->select('t.id, t.ligne, t.marque, t.modele, fournisseur.nom as fournisseur_nom, entreprise.nom as entreprise_nom, etat.nom as etat_nom, utilisateur.nom as utilisateur_nom, utilisateur.prenom as utilisateur_prenom, emplacement.nom as emplacement_nom, t.numero_serie, t.ip, t.type, t.date_achat, t.date_garantie, t.date_installation, t.commentaire')
-            ->leftJoin('t.utilisateur', 'utilisateur')
-            ->leftJoin('t.etat', 'etat')
-            ->leftJoin('t.fournisseur', 'fournisseur')
-            ->leftJoin('t.entreprise', 'entreprise')
-            ->leftJoin('t.emplacement', 'emplacement')
-            ->orderBy('t.id', 'DESC')
-            ->getQuery()
-            ->getResult();
+        $telephones = $telephoneFixeRepository->findBy([], ['id' => 'DESC']);
 
         return $this->render('telephone_fixe/show.html.twig', [
             'telephones' => $telephones,
@@ -50,6 +44,12 @@ class TelephoneFixeController extends AbstractController
         ]);
     }
 
+    /**
+     * @param ExcelExportService $excelExportService
+     * @param TelephoneFixeRepository $repository
+     * @return Response
+     * Permet d'exporter les données des téléphones fixes au format Excel
+     */
     #[Route('/exporter', name: 'export')]
     public function exportDataToExcel(ExcelExportService $excelExportService, TelephoneFixeRepository $repository): Response
     {
@@ -88,7 +88,7 @@ class TelephoneFixeController extends AbstractController
             // Utilise le service pour exporter les données
             $excelExportService->exportToExcel($headers, $data, $filePath);
 
-            // Permet de télécharger le fichier
+            // Télécharge le fichier
             $response = new BinaryFileResponse($filePath);
             $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'inventaire_telephonesFixes.xlsx');
             $response->headers->set('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
@@ -112,6 +112,12 @@ class TelephoneFixeController extends AbstractController
         }
     }
 
+    /**
+     * @param EntityManagerInterface $entityManager
+     * @param Request $request
+     * @return Response
+     * Permet d'ajouter un téléphone fixe
+     */
     #[Route('/ajouter', name: 'add')]
     public function add(EntityManagerInterface $entityManager, Request $request): Response
     {
@@ -137,6 +143,14 @@ class TelephoneFixeController extends AbstractController
         ]);
     }
 
+    /**
+     * @param TelephoneFixe $telephone
+     * @param EntityManagerInterface $entityManager
+     * @param Request $request
+     * @param NotificationService $notificationService
+     * @return Response
+     * Permet de modifier un téléphone fixe
+     */
     #[Route('/{id}', name: 'edit', methods: ['GET', 'POST'])]
     public function edit(TelephoneFixe $telephone, EntityManagerInterface $entityManager, Request $request, NotificationService $notificationService): Response
     {
@@ -162,6 +176,14 @@ class TelephoneFixeController extends AbstractController
         ]);
     }
 
+    /**
+     * @param TelephoneFixe $telephone
+     * @param EntityManagerInterface $entityManager
+     * @param Request $request
+     * @param NotificationService $notificationService
+     * @return Response
+     * Permet de supprimer un téléphone fixe
+     */
     #[Route('/{id}', name: 'delete', methods: ['DELETE'])]
     public function delete(TelephoneFixe $telephone, EntityManagerInterface $entityManager, Request $request, NotificationService $notificationService): Response
     {

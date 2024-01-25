@@ -11,21 +11,20 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/admin/fournisseurs', name: 'admin.fournisseur.')]
+#[Route('/parametres/fournisseurs', name: 'admin.fournisseur.')]
 class FournisseurController extends AbstractController
 {
-    private $repository;
     private $menu_active = "fournisseur";
 
-    public function __construct(FournisseurRepository $repository)
-    {
-        $this->repository = $repository;
-    }
-
+    /**
+     * @param FournisseurRepository $fournisseurRepository
+     * @return Response
+     * Permet d'afficher la liste des fournisseurs
+     */
     #[Route('', name: 'show')]
-    public function index(): Response
+    public function index(FournisseurRepository $fournisseurRepository): Response
     {
-        $fournisseurs = $this->repository->findBy([], ['id' => 'DESC']);
+        $fournisseurs = $fournisseurRepository->findBy([], ['id' => 'DESC']);
 
         return $this->render('fournisseur/show.html.twig', [
             'fournisseurs' => $fournisseurs,
@@ -33,6 +32,12 @@ class FournisseurController extends AbstractController
         ]);
     }
 
+    /**
+     * @param EntityManagerInterface $entityManager
+     * @param Request $request
+     * @return Response
+     * Permet d'ajouter un fournisseur
+     */
     #[Route('/ajouter', name: 'add')]
     public function add(EntityManagerInterface $entityManager, Request $request): Response
     {
@@ -58,6 +63,13 @@ class FournisseurController extends AbstractController
         ]);
     }
 
+    /**
+     * @param Fournisseur $fournisseur
+     * @param EntityManagerInterface $entityManager
+     * @param Request $request
+     * @return Response
+     * Permet de modifier un fournisseur
+     */
     #[Route('/{id}', name: 'edit', methods: ['GET', 'POST'])]
     public function edit(Fournisseur $fournisseur, EntityManagerInterface $entityManager, Request $request): Response
     {
@@ -81,6 +93,13 @@ class FournisseurController extends AbstractController
         ]);
     }
 
+    /**
+     * @param Fournisseur $fournisseur
+     * @param EntityManagerInterface $entityManager
+     * @param Request $request
+     * @return Response
+     * Permet de supprimer un fournisseur
+     */
     #[Route('/{id}', name: 'delete', methods: ['DELETE'])]
     public function delete(Fournisseur $fournisseur, EntityManagerInterface $entityManager, Request $request): Response
     {

@@ -8,7 +8,6 @@ use App\Repository\PcPortableRepository;
 use App\Service\ExcelExportService;
 use App\Service\NotificationService;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\Persistence\ManagerRegistry;
 use Endroid\QrCode\Color\Color;
 use Endroid\QrCode\Encoding\Encoding;
 use Endroid\QrCode\ErrorCorrectionLevel\ErrorCorrectionLevelLow;
@@ -24,27 +23,21 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-#[Route('/admin/pc/portables', name: 'admin.pc_portable.')]
+#[Route('/gestion/pc/portables', name: 'admin.pc_portable.')]
 class PcPortableController extends AbstractController
 {
-    private $repository;
     private $menu_active = "pc_portable";
 
+
+    /**
+     * @param PcPortableRepository $pcPortableRepository
+     * @return Response
+     * Permet d'afficher la liste des PC Portables
+     */
     #[Route('', name: 'show')]
-    public function index(ManagerRegistry $registry): Response
+    public function index(PcPortableRepository $pcPortableRepository): Response
     {
-        $pcPortables = $registry->getManager()->getRepository(PcPortable::class)->createQueryBuilder('pc_portable')
-            ->select('pc_portable.id, pc_portable.nom, pc_portable.marque, pc_portable.modele, emplacement.nom as emplacement_nom, etat.nom as etat_nom, utilisateur.nom as utilisateur_nom, utilisateur.prenom as utilisateur_prenom, systeme_exploitation.nom as systeme_exploitation_nom, fournisseur.nom as fournisseur_nom, entreprise.nom as entreprise_nom, pc_portable.numero_serie, pc_portable.ip, pc_portable.processeur, pc_portable.memoire, pc_portable.stockage_nombre, stockage.nom as stockage_nom, pc_portable.stockage_type, pc_portable.date_installation, pc_portable.date_achat, pc_portable.date_garantie, pc_portable.commentaire')
-            ->leftJoin('pc_portable.utilisateur', 'utilisateur')
-            ->leftJoin('pc_portable.emplacement', 'emplacement')
-            ->leftJoin('pc_portable.etat', 'etat')
-            ->leftJoin('pc_portable.stockage', 'stockage')
-            ->leftJoin('pc_portable.systeme_exploitation', 'systeme_exploitation')
-            ->leftJoin('pc_portable.fournisseur', 'fournisseur')
-            ->leftJoin('pc_portable.entreprise', 'entreprise')
-            ->orderBy('pc_portable.id', 'DESC')
-            ->getQuery()
-            ->getResult();
+        $pcPortables = $pcPortableRepository->findBy([], ['id' => 'DESC']);
 
         return $this->render('pc_portable/show.html.twig', [
             'pcPortables' => $pcPortables,
@@ -52,6 +45,12 @@ class PcPortableController extends AbstractController
         ]);
     }
 
+    /**
+     * @param ExcelExportService $excelExportService
+     * @param PcPortableRepository $repository
+     * @return Response
+     * Permet d'exporter les données des PC Portables au format Excel
+     */
     #[Route('/exporter', name: 'export')]
     public function exportDataToExcel(ExcelExportService $excelExportService, PcPortableRepository $repository): Response
     {
@@ -118,6 +117,12 @@ class PcPortableController extends AbstractController
         }
     }
 
+    /**
+     * @param EntityManagerInterface $entityManager
+     * @param Request $request
+     * @return Response
+     * Permet d'ajouter un PC Portable
+     */
     #[Route('/ajouter', name: 'add')]
     public function add(EntityManagerInterface $entityManager, Request $request): Response
     {
@@ -143,6 +148,15 @@ class PcPortableController extends AbstractController
         ]);
     }
 
+    /**
+     * @param PcPortable $pcPortable
+     * @param EntityManagerInterface $entityManager
+     * @param Request $request
+     * @param UrlGeneratorInterface $urlGenerator
+     * @param NotificationService $notificationService
+     * @return Response
+     * Permet de modifier un PC Portable
+     */
     #[Route('/{id}', name: 'edit', methods: ['GET', 'POST'])]
     public function edit(PcPortable $pcPortable, EntityManagerInterface $entityManager, Request $request, UrlGeneratorInterface $urlGenerator, NotificationService $notificationService): Response
     {
@@ -191,6 +205,14 @@ class PcPortableController extends AbstractController
         ]);
     }
 
+    /**
+     * @param PcPortable $pcPortable
+     * @param EntityManagerInterface $entityManager
+     * @param Request $request
+     * @param NotificationService $notificationService
+     * @return Response
+     * Permet de supprimer un PC Portable
+     */
     #[Route('/{id}', name: 'delete', methods: ['DELETE'])]
     public function delete(PcPortable $pcPortable, EntityManagerInterface $entityManager, Request $request, NotificationService $notificationService): Response
     {

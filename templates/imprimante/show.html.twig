@@ -112,36 +112,36 @@
                                                         {% endif %}
                                                     </td>
                                                     <td class="text-nowrap numero_serie">
-                                                        {% if imprimante.numero_serie != null %}
-                                                            {{ imprimante.numero_serie }}
+                                                        {% if imprimante.numeroSerie != null %}
+                                                            {{ imprimante.numeroSerie }}
                                                         {% else %}
                                                             <span class="badge text-bg-danger">N/A</span>
                                                         {% endif %}
                                                     </td>
                                                     <td class="text-nowrap emplacement">
-                                                        {% if imprimante.emplacement_nom != null %}
-                                                            {{ imprimante.emplacement_nom }}
+                                                        {% if imprimante.getEmplacement != null %}
+                                                            {{ imprimante.getEmplacement.nom }}
                                                         {% else %}
                                                             <span class="badge text-bg-danger">N/A</span>
                                                         {% endif %}
                                                     </td>
                                                     <td class="text-nowrap site">
-                                                        {% if imprimante.entreprise_nom != null %}
-                                                            {{ imprimante.entreprise_nom }}
+                                                        {% if imprimante.getEntreprise != null %}
+                                                            {{ imprimante.getEntreprise.nom }}
                                                         {% else %}
                                                             <span class="badge text-bg-danger">N/A</span>
                                                         {% endif %}
                                                     </td>
                                                     <td class="text-nowrap fournisseur">
-                                                        {% if imprimante.fournisseur_nom != null %}
-                                                            {{ imprimante.fournisseur_nom }}
+                                                        {% if imprimante.getFournisseur != null %}
+                                                            {{ imprimante.getFournisseur.nom }}
                                                         {% else %}
                                                             <span class="badge text-bg-danger">N/A</span>
                                                         {% endif %}
                                                     </td>
                                                     <td class="text-nowrap etat">
-                                                        {% if imprimante.etat_nom != null %}
-                                                            {{ imprimante.etat_nom }}
+                                                        {% if imprimante.getEtat != null %}
+                                                            {{ imprimante.getEtat.nom }}
                                                         {% else %}
                                                             <span class="badge text-bg-danger">N/A</span>
                                                         {% endif %}
@@ -154,22 +154,22 @@
                                                         {% endif %}
                                                     </td>
                                                     <td class="text-nowrap date_installation">
-                                                        {% if imprimante.date_installation != null %}
-                                                            {{ imprimante.date_installation }}
+                                                        {% if imprimante.dateInstallation != null %}
+                                                            {{ imprimante.dateInstallation }}
                                                         {% else %}
                                                             <span class="badge text-bg-danger">N/A</span>
                                                         {% endif %}
                                                     </td>
                                                     <td class="text-nowrap date_achat">
-                                                        {% if imprimante.date_achat != null %}
-                                                            {{ imprimante.date_achat }}
+                                                        {% if imprimante.dateAchat != null %}
+                                                            {{ imprimante.dateAchat }}
                                                         {% else %}
                                                             <span class="badge text-bg-danger">N/A</span>
                                                         {% endif %}
                                                     </td>
                                                     <td class="text-nowrap date_garantie">
-                                                        {% if imprimante.date_garantie != null %}
-                                                            {{ imprimante.date_garantie }}
+                                                        {% if imprimante.dateGarantie != null %}
+                                                            {{ imprimante.dateGarantie }}
                                                         {% else %}
                                                             <span class="badge text-bg-danger">N/A</span>
                                                         {% endif %}

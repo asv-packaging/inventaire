@@ -8,7 +8,6 @@ use App\Repository\PcFixeRepository;
 use App\Service\ExcelExportService;
 use App\Service\NotificationService;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\Persistence\ManagerRegistry;
 use Endroid\QrCode\Color\Color;
 use Endroid\QrCode\Encoding\Encoding;
 use Endroid\QrCode\ErrorCorrectionLevel\ErrorCorrectionLevelLow;
@@ -26,27 +25,20 @@ use Symfony\Component\Process\Process;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-#[Route('/admin/pc/fixes', name: 'admin.pc_fixe.')]
+#[Route('/gestion/pc/fixes', name: 'admin.pc_fixe.')]
 class PcFixeController extends AbstractController
 {
-    private $repository;
     private $menu_active = "pc_fixe";
 
+    /**
+     * @param PcFixeRepository $pcFixeRepository
+     * @return Response
+     * Permet d'afficher la liste des PC Fixes
+     */
     #[Route('', name: 'show')]
-    public function index(ManagerRegistry $registry): Response
+    public function index(PcFixeRepository $pcFixeRepository): Response
     {
-        $pcFixes = $registry->getManager()->getRepository(PcFixe::class)->createQueryBuilder('pc_fixe')
-            ->select('pc_fixe.id, pc_fixe.nom, pc_fixe.marque, pc_fixe.modele, emplacement.nom as emplacement_nom, etat.nom as etat_nom, utilisateur.nom as utilisateur_nom, utilisateur.prenom as utilisateur_prenom, systeme_exploitation.nom as systeme_exploitation_nom, fournisseur.nom as fournisseur_nom, entreprise.nom as entreprise_nom, pc_fixe.numero_serie, pc_fixe.ip, pc_fixe.processeur, pc_fixe.memoire, pc_fixe.stockage_nombre, stockage.nom as stockage_nom, pc_fixe.stockage_type, pc_fixe.date_installation, pc_fixe.date_achat, pc_fixe.date_garantie, pc_fixe.commentaire')
-            ->leftJoin('pc_fixe.utilisateur', 'utilisateur')
-            ->leftJoin('pc_fixe.emplacement', 'emplacement')
-            ->leftJoin('pc_fixe.etat', 'etat')
-            ->leftJoin('pc_fixe.stockage', 'stockage')
-            ->leftJoin('pc_fixe.systeme_exploitation', 'systeme_exploitation')
-            ->leftJoin('pc_fixe.fournisseur', 'fournisseur')
-            ->leftJoin('pc_fixe.entreprise', 'entreprise')
-            ->orderBy('pc_fixe.id', 'DESC')
-            ->getQuery()
-            ->getResult();
+        $pcFixes = $pcFixeRepository->findBy([], ['id' => 'DESC']);
 
         return $this->render('pc_fixe/show.html.twig', [
             'pcFixes' => $pcFixes,
@@ -54,6 +46,12 @@ class PcFixeController extends AbstractController
         ]);
     }
 
+    /**
+     * @param ExcelExportService $excelExportService
+     * @param PcFixeRepository $repository
+     * @return Response
+     * Permet d'exporter les données des PC Fixes au format Excel
+     */
     #[Route('/exporter', name: 'export')]
     public function exportDataToExcel(ExcelExportService $excelExportService, PcFixeRepository $repository): Response
     {
@@ -93,15 +91,15 @@ class PcFixeController extends AbstractController
             // Chemin où sauvegarder le fichier Excel
             $filePath = $this->getParameter('kernel.project_dir') . '/var/export_data_inventaire_pcFixes.xlsx';
 
-            // Utiliser le service pour exporter les données
+            // Utilise le service pour exporter les données
             $excelExportService->exportToExcel($headers, $data, $filePath);
 
-            // Créer une réponse binaire pour télécharger le fichier
+            // Télécharge le fichier
             $response = new BinaryFileResponse($filePath);
             $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'inventaire_pcFixes.xlsx');
             $response->headers->set('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 
-            // Supprimer le fichier après le téléchargement
+            // Supprime le fichier après le téléchargement
             register_shutdown_function(function () use ($filePath)
             {
                 if (file_exists($filePath))
@@ -120,6 +118,12 @@ class PcFixeController extends AbstractController
         }
     }
 
+    /**
+     * @param EntityManagerInterface $entityManager
+     * @param Request $request
+     * @return Response
+     * Permet d'ajouter un PC Fixe
+     */
     #[Route('/ajouter', name: 'add')]
     public function add(EntityManagerInterface $entityManager, Request $request): Response
     {
@@ -145,6 +149,15 @@ class PcFixeController extends AbstractController
         ]);
     }
 
+    /**
+     * @param PcFixe $pcFixe
+     * @param EntityManagerInterface $entityManager
+     * @param Request $request
+     * @param UrlGeneratorInterface $urlGenerator
+     * @param NotificationService $notificationService
+     * @return Response
+     * Permet de modifier un PC Fixe
+     */
     #[Route('/{id}', name: 'edit', methods: ['GET', 'POST'])]
     public function edit(PcFixe $pcFixe, EntityManagerInterface $entityManager, Request $request, UrlGeneratorInterface $urlGenerator, NotificationService $notificationService): Response
     {
@@ -193,6 +206,14 @@ class PcFixeController extends AbstractController
         ]);
     }
 
+    /**
+     * @param PcFixe $pcFixe
+     * @param EntityManagerInterface $entityManager
+     * @param Request $request
+     * @param NotificationService $notificationService
+     * @return Response
+     * Permet de supprimer un PC Fixe
+     */
     #[Route('/{id}', name: 'delete', methods: ['DELETE'])]
     public function delete(PcFixe $pcFixe, EntityManagerInterface $entityManager, Request $request, NotificationService $notificationService): Response
     {

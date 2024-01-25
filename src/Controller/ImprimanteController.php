@@ -8,7 +8,6 @@ use App\Repository\ImprimanteRepository;
 use App\Service\ExcelExportService;
 use App\Service\NotificationService;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\Persistence\ManagerRegistry;
 use Endroid\QrCode\Color\Color;
 use Endroid\QrCode\Encoding\Encoding;
 use Endroid\QrCode\ErrorCorrectionLevel\ErrorCorrectionLevelLow;
@@ -24,24 +23,20 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-#[Route('/admin/imprimantes', name: 'admin.imprimante.')]
+#[Route('/gestion/imprimantes', name: 'admin.imprimante.')]
 class ImprimanteController extends AbstractController
 {
-    private $repository;
     private $menu_active = "imprimante";
 
+    /**
+     * @param ImprimanteRepository $imprimanteRepository
+     * @return Response
+     * Permet d'afficher la liste des imprimantes
+     */
     #[Route('', name: 'show')]
-    public function index(ManagerRegistry $registry): Response
+    public function index(ImprimanteRepository $imprimanteRepository): Response
     {
-        $imprimantes = $registry->getManager()->getRepository(Imprimante::class)->createQueryBuilder('i')
-            ->select('i.id, i.nom, i.marque, i.modele, emplacement.nom as emplacement_nom, etat.nom as etat_nom, entreprise.nom as entreprise_nom, fournisseur.nom as fournisseur_nom, i.numero_serie, i.ip, i.contrat, i.date_installation, i.date_achat, i.date_garantie, i.commentaire')
-            ->leftJoin('i.emplacement', 'emplacement')
-            ->leftJoin('i.etat', 'etat')
-            ->leftJoin('i.entreprise', 'entreprise')
-            ->leftJoin('i.fournisseur', 'fournisseur')
-            ->orderBy('i.id', 'DESC')
-            ->getQuery()
-            ->getResult();
+        $imprimantes = $imprimanteRepository->findBy([], ['id' => 'DESC']);
 
         return $this->render('imprimante/show.html.twig', [
             'imprimantes' => $imprimantes,
@@ -49,6 +44,12 @@ class ImprimanteController extends AbstractController
         ]);
     }
 
+    /**
+     * @param ExcelExportService $excelExportService
+     * @param ImprimanteRepository $repository
+     * @return Response
+     * Permet d'exporter les données des imprimantes au format Excel
+     */
     #[Route('/exporter', name: 'export')]
     public function exportDataToExcel(ExcelExportService $excelExportService, ImprimanteRepository $repository): Response
     {
@@ -83,15 +84,15 @@ class ImprimanteController extends AbstractController
             // Chemin où sauvegarder le fichier Excel
             $filePath = $this->getParameter('kernel.project_dir') . '/var/export_data_inventaire_imprimantes.xlsx';
 
-            // Utiliser le service pour exporter les données
+            // Utilise le service pour exporter les données
             $excelExportService->exportToExcel($headers, $data, $filePath);
 
-            // Créer une réponse binaire pour télécharger le fichier
+            // Télécharge le fichier
             $response = new BinaryFileResponse($filePath);
             $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'inventaire_imprimantes.xlsx');
             $response->headers->set('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 
-            // Supprimer le fichier après le téléchargement
+            // Supprime le fichier après le téléchargement
             register_shutdown_function(function () use ($filePath)
             {
                 if (file_exists($filePath))
@@ -110,6 +111,12 @@ class ImprimanteController extends AbstractController
         }
     }
 
+    /**
+     * @param EntityManagerInterface $entityManager
+     * @param Request $request
+     * @return Response
+     * Permet d'ajouter une imprimante
+     */
     #[Route('/ajouter', name: 'add')]
     public function add(EntityManagerInterface $entityManager, Request $request): Response
     {
@@ -135,6 +142,15 @@ class ImprimanteController extends AbstractController
         ]);
     }
 
+    /**
+     * @param Imprimante $imprimante
+     * @param EntityManagerInterface $entityManager
+     * @param Request $request
+     * @param UrlGeneratorInterface $urlGenerator
+     * @param NotificationService $notificationService
+     * @return Response
+     * Permet de modifier une imprimante
+     */
     #[Route('/{id}', name: 'edit', methods: ['GET', 'POST'])]
     public function edit(Imprimante $imprimante, EntityManagerInterface $entityManager, Request $request, UrlGeneratorInterface $urlGenerator, NotificationService $notificationService): Response
     {
@@ -183,6 +199,14 @@ class ImprimanteController extends AbstractController
         ]);
     }
 
+    /**
+     * @param Imprimante $imprimante
+     * @param EntityManagerInterface $entityManager
+     * @param Request $request
+     * @param NotificationService $notificationService
+     * @return Response
+     * Permet de supprimer une imprimante
+     */
     #[Route('/{id}', name: 'delete', methods: ['DELETE'])]
     public function delete(Imprimante $imprimante, EntityManagerInterface $entityManager, Request $request, NotificationService $notificationService): Response
     {

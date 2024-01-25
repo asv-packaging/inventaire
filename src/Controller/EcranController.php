@@ -25,25 +25,21 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-#[Route('/admin/ecrans', name: 'admin.ecran.')]
+#[Route('/gestion/ecrans', name: 'admin.ecran.')]
 class EcranController extends AbstractController
 {
     private $repository;
     private $menu_active = "ecran";
 
+    /**
+     * @param EcranRepository $ecranRepository
+     * @return Response
+     * Permet d'afficher la liste des écrans
+     */
     #[Route('', name: 'show')]
-    public function index(ManagerRegistry $registry): Response
+    public function index(EcranRepository $ecranRepository): Response
     {
-        $ecrans = $registry->getManager()->getRepository(Ecran::class)->createQueryBuilder('e')
-            ->select('e.id, e.nom, e.marque, e.modele, e.numero_serie, e.date_installation, e.date_achat, e.date_garantie, e.commentaire, utilisateur.nom as utilisateur_nom, utilisateur.prenom as utilisateur_prenom, emplacement.nom as emplacement_nom, etat.nom as etat_nom, fournisseur.nom as fournisseur_nom, entreprise.nom as entreprise_nom')
-            ->leftJoin('e.utilisateur', 'utilisateur')
-            ->leftJoin('e.emplacement', 'emplacement')
-            ->leftJoin('e.fournisseur', 'fournisseur')
-            ->leftJoin('e.entreprise', 'entreprise')
-            ->leftJoin('e.etat', 'etat')
-            ->orderBy('e.id', 'DESC')
-            ->getQuery()
-            ->getResult();
+        $ecrans = $ecranRepository->findBy([], ['id' => 'DESC']);
 
         return $this->render('ecran/show.html.twig', [
             'ecrans' => $ecrans,
@@ -51,6 +47,12 @@ class EcranController extends AbstractController
         ]);
     }
 
+    /**
+     * @param ExcelExportService $excelExportService
+     * @param EcranRepository $repository
+     * @return Response
+     * Permet d'exporter les données des écrans dans un fichier Excel
+     */
     #[Route('/exporter', name: 'export')]
     public function exportDataToExcel(ExcelExportService $excelExportService, EcranRepository $repository): Response
     {
@@ -84,15 +86,15 @@ class EcranController extends AbstractController
             // Chemin où sauvegarder le fichier Excel
             $filePath = $this->getParameter('kernel.project_dir') . '/var/export_data_inventaire_ecrans.xlsx';
 
-            // Utiliser le service pour exporter les données
+            // Utilise le service pour exporter les données
             $excelExportService->exportToExcel($headers, $data, $filePath);
 
-            // Créer une réponse binaire pour télécharger le fichier
+            // Télécharge le fichier
             $response = new BinaryFileResponse($filePath);
             $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'inventaire_ecrans.xlsx');
             $response->headers->set('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 
-            // Supprimer le fichier après le téléchargement
+            // Supprime le fichier après le téléchargement
             register_shutdown_function(function () use ($filePath)
             {
                 if (file_exists($filePath))
@@ -111,6 +113,12 @@ class EcranController extends AbstractController
         }
     }
 
+    /**
+     * @param EntityManagerInterface $entityManager
+     * @param Request $request
+     * @return Response
+     * Permet d'ajouter un écran
+     */
     #[Route('/ajouter', name: 'add')]
     public function add(EntityManagerInterface $entityManager, Request $request): Response
     {
@@ -136,6 +144,15 @@ class EcranController extends AbstractController
         ]);
     }
 
+    /**
+     * @param Ecran $ecran
+     * @param EntityManagerInterface $entityManager
+     * @param Request $request
+     * @param UrlGeneratorInterface $urlGenerator
+     * @param NotificationService $notificationService
+     * @return Response
+     * Permet de modifier un écran
+     */
     #[Route('/{id}', name: 'edit', methods: ['GET', 'POST'])]
     public function edit(Ecran $ecran, EntityManagerInterface $entityManager, Request $request, UrlGeneratorInterface $urlGenerator, NotificationService $notificationService): Response
     {
@@ -184,6 +201,14 @@ class EcranController extends AbstractController
         ]);
     }
 
+    /**
+     * @param Ecran $ecran
+     * @param EntityManagerInterface $entityManager
+     * @param Request $request
+     * @param NotificationService $notificationService
+     * @return Response
+     * Permet de supprimer un écran
+     */
     #[Route('/{id}', name: 'delete', methods: ['DELETE'])]
     public function delete(Ecran $ecran, EntityManagerInterface $entityManager, Request $request, NotificationService $notificationService): Response
     {

@@ -11,21 +11,20 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/admin/sites', name: 'admin.entreprise.')]
+#[Route('/parametres/sites', name: 'admin.entreprise.')]
 class EntrepriseController extends AbstractController
 {
-    private $repository;
     private $menu_active = "entreprise";
 
-    public function __construct(EntrepriseRepository $repository)
-    {
-        $this->repository = $repository;
-    }
-
+    /**
+     * @param EntrepriseRepository $entrepriseRepository
+     * @return Response
+     * Permet d'afficher la liste des entreprises (sites)
+     */
     #[Route('', name: 'show')]
-    public function index(): Response
+    public function index(EntrepriseRepository $entrepriseRepository): Response
     {
-        $entreprises = $this->repository->findBy([], ['id' => 'DESC']);
+        $entreprises = $entrepriseRepository->findBy([], ['id' => 'DESC']);
 
         return $this->render('entreprise/show.html.twig', [
             'entreprises' => $entreprises,
@@ -33,6 +32,12 @@ class EntrepriseController extends AbstractController
         ]);
     }
 
+    /**
+     * @param EntityManagerInterface $entityManager
+     * @param Request $request
+     * @return Response
+     * Permet d'ajouter une entreprise (site)
+     */
     #[Route('/ajouter', name: 'add')]
     public function add(EntityManagerInterface $entityManager, Request $request): Response
     {
@@ -58,6 +63,13 @@ class EntrepriseController extends AbstractController
         ]);
     }
 
+    /**
+     * @param Entreprise $entreprise
+     * @param EntityManagerInterface $entityManager
+     * @param Request $request
+     * @return Response
+     * Permet de modifier une entreprise (site)
+     */
     #[Route('/{id}', name: 'edit', methods: ['GET', 'POST'])]
     public function edit(Entreprise $entreprise, EntityManagerInterface $entityManager, Request $request): Response
     {
@@ -81,6 +93,13 @@ class EntrepriseController extends AbstractController
         ]);
     }
 
+    /**
+     * @param Entreprise $entreprise
+     * @param EntityManagerInterface $entityManager
+     * @param Request $request
+     * @return Response
+     * Permet de supprimer une entreprise (site)
+     */
     #[Route('/{id}', name: 'delete', methods: ['DELETE'])]
     public function delete(Entreprise $entreprise, EntityManagerInterface $entityManager, Request $request): Response
     {

@@ -31,7 +31,13 @@ class HomeController extends AbstractController
 {
     private $menu_active = "home";
 
-    #[Route('/admin/accueil', name: 'admin.home')]
+    /**
+     * @param ManagerRegistry $registry
+     * @param EntityManagerInterface $entityManager
+     * @param Security $security
+     * @return Response
+     */
+    #[Route('/accueil', name: 'admin.home')]
     public function index(ManagerRegistry $registry, EntityManagerInterface $entityManager, Security $security): Response
     {
         // Récupération des informations de l'utilisateur connecté

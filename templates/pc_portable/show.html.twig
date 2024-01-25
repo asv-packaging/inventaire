@@ -111,8 +111,8 @@
                                                     {% endif %}
                                                 </td>
                                                 <td class="text-nowrap utilisateur">
-                                                    {% if pcPortable.utilisateur_nom != null or pcPortable.utilisateur_prenom != null %}
-                                                        {{ pcPortable.utilisateur_nom }} {{ pcPortable.utilisateur_prenom }}
+                                                    {% if pcPortable.getUtilisateur != null %}
+                                                        {{ pcPortable.getUtilisateur.nom }} {{ pcPortable.getUtilisateur.prenom }}
                                                     {% else %}
                                                         <span class="badge text-bg-danger">N/A</span>
                                                     {% endif %}
@@ -132,70 +132,70 @@
                                                     {% endif %}
                                                 </td>
                                                 <td class="text-nowrap stockage">
-                                                    {% if pcPortable.stockage_nombre != null %}
-                                                        {{ pcPortable.stockage_nombre }} {% if pcPortable.stockage_nom != null %} {{ pcPortable.stockage_nom }} {% endif %}
+                                                    {% if pcPortable.stockageNombre != null %}
+                                                        {{ pcPortable.stockageNombre }} {% if pcPortable.getStockage != null %} {{ pcPortable.getStockage.nom }} {% endif %}
                                                     {% else %}
                                                         <span class="badge text-bg-danger">N/A</span>
                                                     {% endif %}
                                                 </td>
                                                 <td class="text-nowrap stockage_type">
-                                                    {% if pcPortable.stockage_type != null %}
-                                                        {{ pcPortable.stockage_type }}
+                                                    {% if pcPortable.stockageType != null %}
+                                                        {{ pcPortable.stockageType }}
                                                     {% else %}
                                                         <span class="badge text-bg-danger">N/A</span>
                                                     {% endif %}
                                                 </td>
                                                 <td class="text-nowrap os">
-                                                    {% if pcPortable.systeme_exploitation_nom != null %}
-                                                        {{ pcPortable.systeme_exploitation_nom }}
+                                                    {% if pcPortable.getSystemeExploitation != null %}
+                                                        {{ pcPortable.getSystemeExploitation.nom }}
                                                     {% else %}
                                                         <span class="badge text-bg-danger">N/A</span>
                                                     {% endif %}
                                                 </td>
                                                 <td class="text-nowrap numero_serie">
-                                                    {% if pcPortable.numero_serie != null %}
-                                                        {{ pcPortable.numero_serie }}
+                                                    {% if pcPortable.numeroSerie != null %}
+                                                        {{ pcPortable.numeroSerie }}
                                                     {% else %}
                                                         <span class="badge text-bg-danger">N/A</span>
                                                     {% endif %}
                                                 </td>
                                                 <td class="text-nowrap emplacement">
-                                                    {{ pcPortable.emplacement_nom }}
+                                                    {{ pcPortable.getEmplacement.nom }}
                                                 </td>
                                                 <td class="text-nowrap site">
-                                                    {% if pcPortable.entreprise_nom != null %}
-                                                        {{ pcPortable.entreprise_nom }}
+                                                    {% if pcPortable.getEntreprise != null %}
+                                                        {{ pcPortable.getEntreprise.nom }}
                                                     {% else %}
                                                         <span class="badge text-bg-danger">N/A</span>
                                                     {% endif %}
                                                 </td>
                                                 <td class="text-nowrap fournisseur">
-                                                    {% if pcPortable.fournisseur_nom != null %}
-                                                        {{ pcPortable.fournisseur_nom }}
+                                                    {% if pcPortable.getFournisseur != null %}
+                                                        {{ pcPortable.getFournisseur.nom }}
                                                     {% else %}
                                                         <span class="badge text-bg-danger">N/A</span>
                                                     {% endif %}
                                                 </td>
                                                 <td class="text-nowrap etat">
-                                                    {{ pcPortable.etat_nom }}
+                                                    {{ pcPortable.getEtat.nom }}
                                                 </td>
                                                 <td class="text-nowrap date_installation">
-                                                    {% if pcPortable.date_installation != null %}
-                                                        {{ pcPortable.date_installation }}
+                                                    {% if pcPortable.dateInstallation != null %}
+                                                        {{ pcPortable.dateInstallation }}
                                                     {% else %}
                                                         <span class="badge text-bg-danger">N/A</span>
                                                     {% endif %}
                                                 </td>
                                                 <td class="text-nowrap date_achat">
-                                                    {% if pcPortable.date_achat != null %}
-                                                        {{ pcPortable.date_achat }}
+                                                    {% if pcPortable.dateAchat != null %}
+                                                        {{ pcPortable.dateAchat }}
                                                     {% else %}
                                                         <span class="badge text-bg-danger">N/A</span>
                                                     {% endif %}
                                                 </td>
                                                 <td class="text-nowrap date_garantie">
-                                                    {% if pcPortable.date_garantie != null %}
-                                                        {{ pcPortable.date_garantie }}
+                                                    {% if pcPortable.dateGarantie != null %}
+                                                        {{ pcPortable.dateGarantie }}
                                                     {% else %}
                                                         <span class="badge text-bg-danger">N/A</span>
                                                     {% endif %}

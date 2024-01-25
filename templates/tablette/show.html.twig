@@ -106,64 +106,64 @@
                                                         {% endif %}
                                                     </td>
                                                     <td class="text-nowrap utilisateur">
-                                                        {% if tablette.utilisateur_nom != null or tablette.utilisateur_prenom != null %}
-                                                            {{ tablette.utilisateur_nom }} {{ tablette.utilisateur_prenom }}
+                                                        {% if tablette.getUtilisateur != null %}
+                                                            {{ tablette.getUtilisateur.nom }} {{ tablette.getUtilisateur.prenom }}
                                                         {% else %}
                                                             <span class="badge text-bg-danger">N/A</span>
                                                         {% endif %}
                                                     </td>
                                                     <td class="text-nowrap numero_serie">
-                                                        {% if tablette.numero_serie != null %}
-                                                            {{ tablette.numero_serie }}
+                                                        {% if tablette.numeroSerie != null %}
+                                                            {{ tablette.numeroSerie }}
                                                         {% else %}
                                                             <span class="badge text-bg-danger">N/A</span>
                                                         {% endif %}
                                                     </td>
                                                     <td class="text-nowrap emplacement">
-                                                        {% if tablette.emplacement_nom != null %}
-                                                            {{ tablette.emplacement_nom }}
+                                                        {% if tablette.getEmplacement != null %}
+                                                            {{ tablette.getEmplacement.nom }}
                                                         {% else %}
                                                             <span class="badge text-bg-danger">N/A</span>
                                                         {% endif %}
                                                     </td>
                                                     <td class="text-nowrap site">
-                                                        {% if tablette.entreprise_nom != null %}
-                                                            {{ tablette.entreprise_nom }}
+                                                        {% if tablette.getEntreprise != null %}
+                                                            {{ tablette.getEntreprise.nom }}
                                                         {% else %}
                                                             <span class="badge text-bg-danger">N/A</span>
                                                         {% endif %}
                                                     </td>
                                                     <td class="text-nowrap fournisseur">
-                                                        {% if tablette.fournisseur_nom != null %}
-                                                            {{ tablette.fournisseur_nom }}
+                                                        {% if tablette.getFournisseur != null %}
+                                                            {{ tablette.getFournisseur.nom }}
                                                         {% else %}
                                                             <span class="badge text-bg-danger">N/A</span>
                                                         {% endif %}
                                                     </td>
                                                     <td class="text-nowrap etat">
-                                                        {% if tablette.etat_nom != null %}
-                                                            {{ tablette.etat_nom }}
+                                                        {% if tablette.getEtat != null %}
+                                                            {{ tablette.getEtat.nom }}
                                                         {% else %}
                                                             <span class="badge text-bg-danger">N/A</span>
                                                         {% endif %}
                                                     </td>
                                                     <td class="text-nowrap date_installation">
-                                                        {% if tablette.date_achat != null %}
-                                                            {{ tablette.date_achat }}
+                                                        {% if tablette.dateInstallation != null %}
+                                                            {{ tablette.dateInstallation }}
                                                         {% else %}
                                                             <span class="badge text-bg-danger">N/A</span>
                                                         {% endif %}
                                                     </td>
                                                     <td class="text-nowrap date_achat">
-                                                        {% if tablette.date_achat != null %}
-                                                            {{ tablette.date_achat }}
+                                                        {% if tablette.dateAchat != null %}
+                                                            {{ tablette.dateAchat }}
                                                         {% else %}
                                                             <span class="badge text-bg-danger">N/A</span>
                                                         {% endif %}
                                                     </td>
                                                     <td class="text-nowrap date_garantie">
-                                                        {% if tablette.date_garantie != null %}
-                                                            {{ tablette.date_garantie }}
+                                                        {% if tablette.dateGarantie != null %}
+                                                            {{ tablette.dateGarantie }}
                                                         {% else %}
                                                             <span class="badge text-bg-danger">N/A</span>
                                                         {% endif %}

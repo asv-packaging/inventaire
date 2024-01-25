@@ -111,8 +111,8 @@
                                                         {% endif %}
                                                     </td>
                                                     <td class="text-nowrap utilisateur">
-                                                        {% if pcFixe.utilisateur_nom != null or pcFixe.utilisateur_prenom != null %}
-                                                            {{ pcFixe.utilisateur_nom }} {{ pcFixe.utilisateur_prenom }}
+                                                        {% if pcFixe.getUtilisateur != null %}
+                                                            {{ pcFixe.getUtilisateur.nom }} {{ pcFixe.getUtilisateur.prenom }}
                                                         {% else %}
                                                             <span class="badge text-bg-danger">N/A</span>
                                                         {% endif %}
@@ -132,70 +132,70 @@
                                                         {% endif %}
                                                     </td>
                                                     <td class="text-nowrap stockage">
-                                                        {% if pcFixe.stockage_nombre != null %}
-                                                            {{ pcFixe.stockage_nombre }} {% if pcFixe.stockage_nom != null %} {{ pcFixe.stockage_nom }} {% endif %}
+                                                        {% if pcFixe.stockageNombre != null %}
+                                                            {{ pcFixe.stockageNombre }} {% if pcFixe.getStockage != null %} {{ pcFixe.getStockage.nom }} {% endif %}
                                                         {% else %}
                                                             <span class="badge text-bg-danger">N/A</span>
                                                         {% endif %}
                                                     </td>
                                                     <td class="text-nowrap stockage_type">
-                                                        {% if pcFixe.stockage_type != null %}
-                                                            {{ pcFixe.stockage_type }}
+                                                        {% if pcFixe.stockageType != null %}
+                                                            {{ pcFixe.stockageType }}
                                                         {% else %}
                                                             <span class="badge text-bg-danger">N/A</span>
                                                         {% endif %}
                                                     </td>
                                                     <td class="text-nowrap os">
-                                                        {% if pcFixe.systeme_exploitation_nom != null %}
-                                                            {{ pcFixe.systeme_exploitation_nom }}
+                                                        {% if pcFixe.getSystemeExploitation != null %}
+                                                            {{ pcFixe.getSystemeExploitation.nom }}
                                                         {% else %}
                                                             <span class="badge text-bg-danger">N/A</span>
                                                         {% endif %}
                                                     </td>
                                                     <td class="text-nowrap numero_serie">
-                                                        {% if pcFixe.numero_serie != null %}
-                                                            {{ pcFixe.numero_serie }}
+                                                        {% if pcFixe.numeroSerie != null %}
+                                                            {{ pcFixe.numeroSerie }}
                                                         {% else %}
                                                             <span class="badge text-bg-danger">N/A</span>
                                                         {% endif %}
                                                     </td>
                                                     <td class="text-nowrap emplacement">
-                                                        {{ pcFixe.emplacement_nom }}
+                                                        {{ pcFixe.getEmplacement.nom }}
                                                     </td>
                                                     <td class="text-nowrap site">
-                                                        {% if pcFixe.entreprise_nom != null %}
-                                                            {{ pcFixe.entreprise_nom }}
+                                                        {% if pcFixe.getEntreprise != null %}
+                                                            {{ pcFixe.getEntreprise.nom }}
                                                         {% else %}
                                                             <span class="badge text-bg-danger">N/A</span>
                                                         {% endif %}
                                                     </td>
                                                     <td class="text-nowrap fournisseur">
-                                                        {% if pcFixe.fournisseur_nom != null %}
-                                                            {{ pcFixe.fournisseur_nom }}
+                                                        {% if pcFixe.getFournisseur != null %}
+                                                            {{ pcFixe.getFournisseur.nom }}
                                                         {% else %}
                                                             <span class="badge text-bg-danger">N/A</span>
                                                         {% endif %}
                                                     </td>
                                                     <td class="text-nowrap etat">
-                                                        {{ pcFixe.etat_nom }}
+                                                        {{ pcFixe.getEtat.nom }}
                                                     </td>
                                                     <td class="text-nowrap date_installation">
-                                                        {% if pcFixe.date_installation != null %}
-                                                            {{ pcFixe.date_installation }}
+                                                        {% if pcFixe.dateInstallation != null %}
+                                                            {{ pcFixe.dateInstallation }}
                                                         {% else %}
                                                             <span class="badge text-bg-danger">N/A</span>
                                                         {% endif %}
                                                     </td>
                                                     <td class="text-nowrap date_achat">
-                                                        {% if pcFixe.date_achat != null %}
-                                                            {{ pcFixe.date_achat }}
+                                                        {% if pcFixe.dateAchat != null %}
+                                                            {{ pcFixe.dateAchat }}
                                                         {% else %}
                                                             <span class="badge text-bg-danger">N/A</span>
                                                         {% endif %}
                                                     </td>
                                                     <td class="text-nowrap date_garantie">
-                                                        {% if pcFixe.date_garantie != null %}
-                                                            {{ pcFixe.date_garantie }}
+                                                        {% if pcFixe.dateGarantie != null %}
+                                                            {{ pcFixe.dateGarantie }}
                                                         {% else %}
                                                             <span class="badge text-bg-danger">N/A</span>
                                                         {% endif %}

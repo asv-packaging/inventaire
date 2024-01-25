@@ -11,21 +11,20 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/admin/emplacements', name: 'admin.emplacement.')]
+#[Route('/parametres/emplacements', name: 'admin.emplacement.')]
 class EmplacementController extends AbstractController
 {
-    private $repository;
     private $menu_active = "emplacement";
 
-    public function __construct(EmplacementRepository $repository)
-    {
-        $this->repository = $repository;
-    }
-
+    /**
+     * @param EmplacementRepository $emplacementRepository
+     * @return Response
+     * Permet d'afficher la liste des emplacements
+     */
     #[Route('', name: 'show')]
-    public function index(): Response
+    public function index(EmplacementRepository $emplacementRepository): Response
     {
-        $emplacements = $this->repository->findBy([], ['id' => 'DESC']);
+        $emplacements = $emplacementRepository->findBy([], ['id' => 'DESC']);
 
         return $this->render('emplacement/show.html.twig', [
             'emplacements' => $emplacements,
@@ -33,6 +32,12 @@ class EmplacementController extends AbstractController
         ]);
     }
 
+    /**
+     * @param EntityManagerInterface $entityManager
+     * @param Request $request
+     * @return Response
+     * Permet d'ajouter un emplacement
+     */
     #[Route('/ajouter', name: 'add')]
     public function add(EntityManagerInterface $entityManager, Request $request): Response
     {
@@ -58,6 +63,13 @@ class EmplacementController extends AbstractController
         ]);
     }
 
+    /**
+     * @param Emplacement $emplacement
+     * @param EntityManagerInterface $entityManager
+     * @param Request $request
+     * @return Response
+     * Permet de modifier un emplacement
+     */
     #[Route('/{id}', name: 'edit', methods: ['GET', 'POST'])]
     public function edit(Emplacement $emplacement, EntityManagerInterface $entityManager, Request $request): Response
     {
@@ -81,6 +93,13 @@ class EmplacementController extends AbstractController
         ]);
     }
 
+    /**
+     * @param Emplacement $emplacement
+     * @param EntityManagerInterface $entityManager
+     * @param Request $request
+     * @return Response
+     * Permet de supprimer un emplacement
+     */
     #[Route('/{id}', name: 'delete', methods: ['DELETE'])]
     public function delete(Emplacement $emplacement, EntityManagerInterface $entityManager, Request $request): Response
     {

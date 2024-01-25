@@ -81,8 +81,8 @@
                                                         {% endif %}
                                                     </td>
                                                     <td class="text-nowrap site">
-                                                        {% if utilisateur.entreprise_nom != null %}
-                                                            {{ utilisateur.entreprise_nom }}
+                                                        {% if utilisateur.getEntreprise != null %}
+                                                            {{ utilisateur.getEntreprise.nom }}
                                                         {% else %}
                                                             <span class="badge text-bg-danger">N/A</span>
                                                         {% endif %}

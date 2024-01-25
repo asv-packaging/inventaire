@@ -7,7 +7,6 @@ use App\Form\UtilisateurFormType;
 use App\Repository\UtilisateurRepository;
 use App\Service\ExcelExportService;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,26 +14,20 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/admin/utilisateurs', name: 'admin.utilisateur.')]
+#[Route('/parametres/utilisateurs', name: 'admin.utilisateur.')]
 class UtilisateurController extends AbstractController
 {
-    private $repository;
     private $menu_active = "utilisateur";
 
-    public function __construct(UtilisateurRepository $repository)
-    {
-        $this->repository = $repository;
-    }
-
+    /**
+     * @param UtilisateurRepository $utilisateurRepository
+     * @return Response
+     * Permet d'afficher la liste des utilisateurs
+     */
     #[Route('', name: 'show')]
-    public function index(ManagerRegistry $registry): Response
+    public function index(UtilisateurRepository $utilisateurRepository): Response
     {
-        $utilisateurs = $registry->getManager()->getRepository(Utilisateur::class)->createQueryBuilder('u')
-            ->select('u.id, u.nom, u.prenom, u.email, entreprise.nom as entreprise_nom')
-            ->leftJoin('u.entreprise', 'entreprise')
-            ->orderBy('u.id', 'DESC')
-            ->getQuery()
-            ->getResult();
+        $utilisateurs = $utilisateurRepository->findBy([], ['id' => 'DESC']);
 
         return $this->render('utilisateur/show.html.twig', [
             'utilisateurs' => $utilisateurs,
@@ -42,6 +35,11 @@ class UtilisateurController extends AbstractController
         ]);
     }
 
+    /**
+     * @param ExcelExportService $excelExportService
+     * @return Response
+     * Permet d'exporter les données des utilisateurs au format Excel
+     */
     #[Route('/exporter', name: 'export')]
     public function exportDataToExcel(ExcelExportService $excelExportService): Response
     {
@@ -66,10 +64,10 @@ class UtilisateurController extends AbstractController
             // Chemin où sauvegarder le fichier Excel
             $filePath = $this->getParameter('kernel.project_dir') . '/var/export_data_inventaire_utilisateurs.xlsx';
 
-            // Utiliser le service pour exporter les données
+            // Utilise le service pour exporter les données
             $excelExportService->exportToExcel($headers, $data, $filePath);
 
-            // Créer une réponse binaire pour télécharger le fichier
+            // Télécharge le fichier
             $response = new BinaryFileResponse($filePath);
             $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'inventaire_utilisateurs.xlsx');
             $response->headers->set('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
@@ -93,6 +91,12 @@ class UtilisateurController extends AbstractController
         }
     }
 
+    /**
+     * @param EntityManagerInterface $entityManager
+     * @param Request $request
+     * @return Response
+     * Permet d'ajouter un utilisateur
+     */
     #[Route('/ajouter', name: 'add')]
     public function add(EntityManagerInterface $entityManager, Request $request): Response
     {
@@ -118,6 +122,13 @@ class UtilisateurController extends AbstractController
         ]);
     }
 
+    /**
+     * @param Utilisateur $utilisateur
+     * @param EntityManagerInterface $entityManager
+     * @param Request $request
+     * @return Response
+     * Permet de modifier un utilisateur
+     */
     #[Route('/{id}', name: 'edit', methods: ['GET', 'POST'])]
     public function edit(Utilisateur $utilisateur, EntityManagerInterface $entityManager, Request $request): Response
     {
@@ -141,6 +152,13 @@ class UtilisateurController extends AbstractController
         ]);
     }
 
+    /**
+     * @param Utilisateur $utilisateur
+     * @param EntityManagerInterface $entityManager
+     * @param Request $request
+     * @return Response
+     * Permet de supprimer un utilisateur
+     */
     #[Route('/{id}', name: 'delete', methods: ['DELETE'])]
     public function delete(Utilisateur $utilisateur, EntityManagerInterface $entityManager, Request $request): Response
     {

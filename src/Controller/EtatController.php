@@ -11,21 +11,20 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/admin/etats', name: 'admin.etat.')]
+#[Route('/parametres/etats', name: 'admin.etat.')]
 class EtatController extends AbstractController
 {
-    private $repository;
     private $menu_active = "etat";
 
-    public function __construct(EtatRepository $repository)
-    {
-        $this->repository = $repository;
-    }
-
+    /**
+     * @param EtatRepository $etatRepository
+     * @return Response
+     * Permet d'afficher la liste des états
+     */
     #[Route('', name: 'show')]
-    public function index(): Response
+    public function index(EtatRepository $etatRepository): Response
     {
-        $etats = $this->repository->findBy([], ['id' => 'DESC']);
+        $etats = $etatRepository->findBy([], ['id' => 'DESC']);
 
         return $this->render('etat/show.html.twig', [
             'etats' => $etats,
@@ -33,6 +32,12 @@ class EtatController extends AbstractController
         ]);
     }
 
+    /**
+     * @param EntityManagerInterface $entityManager
+     * @param Request $request
+     * @return Response
+     * Permet d'ajouter un état
+     */
     #[Route('/ajouter', name: 'add')]
     public function add(EntityManagerInterface $entityManager, Request $request): Response
     {
@@ -58,6 +63,13 @@ class EtatController extends AbstractController
         ]);
     }
 
+    /**
+     * @param Etat $etat
+     * @param EntityManagerInterface $entityManager
+     * @param Request $request
+     * @return Response
+     * Permet de modifier un état
+     */
     #[Route('/{id}', name: 'edit', methods: ['GET', 'POST'])]
     public function edit(Etat $etat, EntityManagerInterface $entityManager, Request $request): Response
     {
@@ -81,6 +93,13 @@ class EtatController extends AbstractController
         ]);
     }
 
+    /**
+     * @param Etat $etat
+     * @param EntityManagerInterface $entityManager
+     * @param Request $request
+     * @return Response
+     * Permet de supprimer un état
+     */
     #[Route('/{id}', name: 'delete', methods: ['DELETE'])]
     public function delete(Etat $etat, EntityManagerInterface $entityManager, Request $request): Response
     {

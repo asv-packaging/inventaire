@@ -125,22 +125,22 @@
                                                         {% endif %}
                                                     </td>
                                                     <td class="text-nowrap stockage">
-                                                        {% if serveur.stockage_nombre != null %}
-                                                            {{ serveur.stockage_nombre }} {% if serveur.stockage_nom != null %} {{ serveur.stockage_nom }} {% endif %}
+                                                        {% if serveur.stockageNombre != null %}
+                                                            {{ serveur.stockageNombre }} {% if serveur.getStockage != null %} {{ serveur.getStockage.nom }} {% endif %}
                                                         {% else %}
                                                             <span class="badge text-bg-danger">N/A</span>
                                                         {% endif %}
                                                     </td>
                                                     <td class="text-nowrap stockage_type">
-                                                        {% if serveur.stockage_type != null %}
-                                                            {{ serveur.stockage_type }}
+                                                        {% if serveur.stockageType != null %}
+                                                            {{ serveur.stockageType }}
                                                         {% else %}
                                                             <span class="badge text-bg-danger">N/A</span>
                                                         {% endif %}
                                                     </td>
                                                     <td class="text-nowrap os">
-                                                        {% if serveur.systeme_exploitation_nom != null %}
-                                                            {{ serveur.systeme_exploitation_nom }}
+                                                        {% if serveur.getSystemeExploitation != null %}
+                                                            {{ serveur.getSystemeExploitation.nom }}
                                                         {% else %}
                                                             <span class="badge text-bg-danger">N/A</span>
                                                         {% endif %}
@@ -153,49 +153,49 @@
                                                         {% endif %}
                                                     </td>
                                                     <td class="text-nowrap numero_serie">
-                                                        {% if serveur.numero_serie != null %}
-                                                            {{ serveur.numero_serie }}
+                                                        {% if serveur.numeroSerie != null %}
+                                                            {{ serveur.numeroSerie }}
                                                         {% else %}
                                                             <span class="badge text-bg-danger">N/A</span>
                                                         {% endif %}
                                                     </td>
                                                     <td class="text-nowrap emplacement">
-                                                        {{ serveur.emplacement_nom }}
+                                                        {{ serveur.getEmplacement.nom }}
                                                     </td>
                                                     <td class="text-nowrap entreprise">
-                                                        {% if serveur.entreprise_nom != null %}
-                                                            {{ serveur.entreprise_nom }}
+                                                        {% if serveur.getEntreprise != null %}
+                                                            {{ serveur.getEntreprise.nom }}
                                                         {% else %}
                                                             <span class="badge text-bg-danger">N/A</span>
                                                         {% endif %}
                                                     </td>
                                                     <td class="text-nowrap entreprise">
-                                                        {% if serveur.fournisseur_nom != null %}
-                                                            {{ serveur.fournisseur_nom }}
+                                                        {% if serveur.getFournisseur != null %}
+                                                            {{ serveur.getFournisseur.nom }}
                                                         {% else %}
                                                             <span class="badge text-bg-danger">N/A</span>
                                                         {% endif %}
                                                     </td>
                                                     <td class="text-nowrap etat">
-                                                        {{ serveur.etat_nom }}
+                                                        {{ serveur.getEtat.nom }}
                                                     </td>
                                                     <td class="text-nowrap date_contrat">
-                                                        {% if serveur.date_contrat != null %}
-                                                            {{ serveur.date_contrat }}
+                                                        {% if serveur.dateContrat != null %}
+                                                            {{ serveur.dateContrat }}
                                                         {% else %}
                                                             <span class="badge text-bg-danger">N/A</span>
                                                         {% endif %}
                                                     </td>
                                                     <td class="text-nowrap date_achat">
-                                                        {% if serveur.date_achat != null %}
-                                                            {{ serveur.date_achat }}
+                                                        {% if serveur.dateAchat != null %}
+                                                            {{ serveur.dateAchat }}
                                                         {% else %}
                                                             <span class="badge text-bg-danger">N/A</span>
                                                         {% endif %}
                                                     </td>
                                                     <td class="text-nowrap date_garantie">
-                                                        {% if serveur.date_garantie != null %}
-                                                            {{ serveur.date_garantie }}
+                                                        {% if serveur.dateGarantie != null %}
+                                                            {{ serveur.dateGarantie }}
                                                         {% else %}
                                                             <span class="badge text-bg-danger">N/A</span>
                                                         {% endif %}

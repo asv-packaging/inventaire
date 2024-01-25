@@ -8,7 +8,6 @@ use App\Repository\TelephoneRepository;
 use App\Service\ExcelExportService;
 use App\Service\NotificationService;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,24 +15,20 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/admin/telephones/portables', name: 'admin.telephone_portable.')]
+#[Route('/gestion/telephones/portables', name: 'admin.telephone_portable.')]
 class TelephonePortableController extends AbstractController
 {
-    private $repository;
     private $menu_active = "telephone_portable";
 
+    /**
+     * @param TelephoneRepository $telephonePortableRepository
+     * @return Response
+     * Permet d'afficher la liste des téléphones portables
+     */
     #[Route('', name: 'show')]
-    public function index(ManagerRegistry $registry): Response
+    public function index(TelephoneRepository $telephonePortableRepository): Response
     {
-        $telephones = $registry->getManager()->getRepository(TelephonePortable::class)->createQueryBuilder('t')
-            ->select('t.id, t.ligne, t.marque, t.modele, fournisseur.nom as fournisseur_nom, entreprise.nom as entreprise_nom, etat.nom as etat_nom, utilisateur.nom as utilisateur_nom, utilisateur.prenom as utilisateur_prenom, t.numero_serie, t.imei1, t.imei2, t.date_achat, t.date_garantie, t.date_installation, t.commentaire')
-            ->leftJoin('t.utilisateur', 'utilisateur')
-            ->leftJoin('t.etat', 'etat')
-            ->leftJoin('t.fournisseur', 'fournisseur')
-            ->leftJoin('t.entreprise', 'entreprise')
-            ->orderBy('t.id', 'DESC')
-            ->getQuery()
-            ->getResult();
+        $telephones = $telephonePortableRepository->findBy([], ['id' => 'DESC']);
 
         return $this->render('telephone_portable/show.html.twig', [
             'telephones' => $telephones,
@@ -41,6 +36,12 @@ class TelephonePortableController extends AbstractController
         ]);
     }
 
+    /**
+     * @param ExcelExportService $excelExportService
+     * @param TelephoneRepository $repository
+     * @return Response
+     * Permet d'exporter les données des téléphones portables au format Excel
+     */
     #[Route('/exporter', name: 'export')]
     public function exportDataToExcel(ExcelExportService $excelExportService, TelephoneRepository $repository): Response
     {
@@ -78,7 +79,7 @@ class TelephonePortableController extends AbstractController
             // Utilise le service pour exporter les données
             $excelExportService->exportToExcel($headers, $data, $filePath);
 
-            // Permet de télécharger le fichier
+            // Télécharge le fichier
             $response = new BinaryFileResponse($filePath);
             $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'inventaire_telephonesPortables.xlsx');
             $response->headers->set('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
@@ -102,6 +103,12 @@ class TelephonePortableController extends AbstractController
         }
     }
 
+    /**
+     * @param EntityManagerInterface $entityManager
+     * @param Request $request
+     * @return Response
+     * Permet d'ajouter un téléphone portable
+     */
     #[Route('/ajouter', name: 'add')]
     public function add(EntityManagerInterface $entityManager, Request $request): Response
     {
@@ -127,6 +134,14 @@ class TelephonePortableController extends AbstractController
         ]);
     }
 
+    /**
+     * @param TelephonePortable $telephone
+     * @param EntityManagerInterface $entityManager
+     * @param Request $request
+     * @param NotificationService $notificationService
+     * @return Response
+     * Permet de modifier un téléphone portable
+     */
     #[Route('/{id}', name: 'edit', methods: ['GET', 'POST'])]
     public function edit(TelephonePortable $telephone, EntityManagerInterface $entityManager, Request $request, NotificationService $notificationService): Response
     {
@@ -152,6 +167,14 @@ class TelephonePortableController extends AbstractController
         ]);
     }
 
+    /**
+     * @param TelephonePortable $telephone
+     * @param EntityManagerInterface $entityManager
+     * @param Request $request
+     * @param NotificationService $notificationService
+     * @return Response
+     * Permet de supprimer un téléphone portable
+     */
     #[Route('/{id}', name: 'delete', methods: ['DELETE'])]
     public function delete(TelephonePortable $telephone, EntityManagerInterface $entityManager, Request $request, NotificationService $notificationService): Response
     {

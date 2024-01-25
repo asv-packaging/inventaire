@@ -101,8 +101,8 @@
                                                         {% endif %}
                                                     </td>
                                                     <td class="text-nowrap numero_serie">
-                                                        {% if onduleur.numero_serie != null %}
-                                                            {{ onduleur.numero_serie }}
+                                                        {% if onduleur.numeroSerie != null %}
+                                                            {{ onduleur.numeroSerie }}
                                                         {% else %}
                                                             <span class="badge text-bg-danger">N/A</span>
                                                         {% endif %}
@@ -115,57 +115,57 @@
                                                         {% endif %}
                                                     </td>
                                                     <td class="text-nowrap type_prise">
-                                                        {% if onduleur.type_prise != null %}
-                                                            {{ onduleur.type_prise }}
+                                                        {% if onduleur.typePrise != null %}
+                                                            {{ onduleur.typePrise }}
                                                         {% else %}
                                                             <span class="badge text-bg-danger">N/A</span>
                                                         {% endif %}
                                                     </td>
                                                     <td class="text-nowrap emplacement">
-                                                        {% if onduleur.emplacement_nom != null %}
-                                                            {{ onduleur.emplacement_nom }}
+                                                        {% if onduleur.getEmplacement != null %}
+                                                            {{ onduleur.getEmplacement.nom }}
                                                         {% else %}
                                                             <span class="badge text-bg-danger">N/A</span>
                                                         {% endif %}
                                                     </td>
                                                     <td class="text-nowrap site">
-                                                        {% if onduleur.entreprise_nom != null %}
-                                                            {{ onduleur.entreprise_nom }}
+                                                        {% if onduleur.getEntreprise != null %}
+                                                            {{ onduleur.getEntreprise.nom }}
                                                         {% else %}
                                                             <span class="badge text-bg-danger">N/A</span>
                                                         {% endif %}
                                                     </td>
                                                     <td class="text-nowrap fournisseur">
-                                                        {% if onduleur.fournisseur_nom != null %}
-                                                            {{ onduleur.fournisseur_nom }}
+                                                        {% if onduleur.getFournisseur != null %}
+                                                            {{ onduleur.getFournisseur.nom }}
                                                         {% else %}
                                                             <span class="badge text-bg-danger">N/A</span>
                                                         {% endif %}
                                                     </td>
                                                     <td class="text-nowrap etat">
-                                                        {% if onduleur.etat_nom != null %}
-                                                            {{ onduleur.etat_nom }}
+                                                        {% if onduleur.getEtat != null %}
+                                                            {{ onduleur.getEtat.nom }}
                                                         {% else %}
                                                             <span class="badge text-bg-danger">N/A</span>
                                                         {% endif %}
                                                     </td>
                                                     <td class="text-nowrap date_installation">
-                                                        {% if onduleur.date_installation != null %}
-                                                            {{ onduleur.date_installation }}
+                                                        {% if onduleur.dateInstallation != null %}
+                                                            {{ onduleur.dateInstallation }}
                                                         {% else %}
                                                             <span class="badge text-bg-danger">N/A</span>
                                                         {% endif %}
                                                     </td>
                                                     <td class="text-nowrap date_achat">
-                                                        {% if onduleur.date_achat != null %}
-                                                            {{ onduleur.date_achat }}
+                                                        {% if onduleur.dateAchat != null %}
+                                                            {{ onduleur.dateAchat }}
                                                         {% else %}
                                                             <span class="badge text-bg-danger">N/A</span>
                                                         {% endif %}
                                                     </td>
                                                     <td class="text-nowrap date_garantie">
-                                                        {% if onduleur.date_garantie != null %}
-                                                            {{ onduleur.date_garantie }}
+                                                        {% if onduleur.dateGarantie != null %}
+                                                            {{ onduleur.dateGarantie }}
                                                         {% else %}
                                                             <span class="badge text-bg-danger">N/A</span>
                                                         {% endif %}

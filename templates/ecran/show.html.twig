@@ -98,64 +98,64 @@
                                                         {% endif %}
                                                     </td>
                                                     <td class="text-nowrap utilisateur">
-                                                        {% if ecran.utilisateur_nom != null or ecran.utilisateur_prenom != null %}
-                                                            {{ ecran.utilisateur_nom }} {{ ecran.utilisateur_prenom }}
+                                                        {% if ecran.getUtilisateur != null %}
+                                                            {{ ecran.getUtilisateur.nom }} {{ ecran.getUtilisateur.prenom }}
                                                         {% else %}
                                                             <span class="badge text-bg-danger">N/A</span>
                                                         {% endif %}
                                                     </td>
                                                     <td class="text-nowrap emplacement">
-                                                        {% if ecran.emplacement_nom != null %}
-                                                            {{ ecran.emplacement_nom }}
+                                                        {% if ecran.getEmplacement != null %}
+                                                            {{ ecran.getEmplacement.nom }}
                                                         {% else %}
                                                             <span class="badge text-bg-danger">N/A</span>
                                                         {% endif %}
                                                     </td>
                                                     <td class="text-nowrap site">
-                                                        {% if ecran.entreprise_nom != null %}
-                                                            {{ ecran.entreprise_nom }}
+                                                        {% if ecran.getEntreprise != null %}
+                                                            {{ ecran.getEntreprise.nom }}
                                                         {% else %}
                                                             <span class="badge text-bg-danger">N/A</span>
                                                         {% endif %}
                                                     </td>
                                                     <td class="text-nowrap fournisseur">
-                                                        {% if ecran.fournisseur_nom != null %}
-                                                            {{ ecran.fournisseur_nom }}
+                                                        {% if ecran.getFournisseur != null %}
+                                                            {{ ecran.getFournisseur.nom }}
                                                         {% else %}
                                                             <span class="badge text-bg-danger">N/A</span>
                                                         {% endif %}
                                                     </td>
                                                     <td class="text-nowrap numero_serie">
-                                                        {% if ecran.numero_serie != null %}
-                                                            {{ ecran.numero_serie }}
+                                                        {% if ecran.numeroSerie != null %}
+                                                            {{ ecran.numeroSerie }}
                                                         {% else %}
                                                             <span class="badge text-bg-danger">N/A</span>
                                                         {% endif %}
                                                     </td>
                                                     <td class="text-nowrap etat">
-                                                        {% if ecran.etat_nom != null %}
-                                                            {{ ecran.etat_nom }}
+                                                        {% if ecran.getEtat != null %}
+                                                            {{ ecran.getEtat.nom }}
                                                         {% else %}
                                                             <span class="badge text-bg-danger">N/A</span>
                                                         {% endif %}
                                                     </td>
                                                     <td class="text-nowrap date_installation">
-                                                        {% if ecran.date_installation != null %}
-                                                            {{ ecran.date_installation }}
+                                                        {% if ecran.dateInstallation != null %}
+                                                            {{ ecran.dateInstallation }}
                                                         {% else %}
                                                             <span class="badge text-bg-danger">N/A</span>
                                                         {% endif %}
                                                     </td>
                                                     <td class="text-nowrap date_achat">
-                                                        {% if ecran.date_achat != null %}
-                                                            {{ ecran.date_achat }}
+                                                        {% if ecran.dateAchat != null %}
+                                                            {{ ecran.dateAchat }}
                                                         {% else %}
                                                             <span class="badge text-bg-danger">N/A</span>
                                                         {% endif %}
                                                     </td>
                                                     <td class="text-nowrap date_garantie">
-                                                        {% if ecran.date_garantie != null %}
-                                                            {{ ecran.date_garantie }}
+                                                        {% if ecran.dateGarantie != null %}
+                                                            {{ ecran.dateGarantie }}
                                                         {% else %}
                                                             <span class="badge text-bg-danger">N/A</span>
                                                         {% endif %}

@@ -121,57 +121,57 @@
                                                         {% endif %}
                                                     </td>
                                                     <td class="text-nowrap utilisateur">
-                                                        {% if telephone.utilisateur_nom != null or telephone.utilisateur_prenom != null %}
-                                                            {{ telephone.utilisateur_nom }} {{ telephone.utilisateur_prenom }}
+                                                        {% if telephone.getUtilisateur != null %}
+                                                            {{ telephone.getUtilisateur.nom }} {{ telephone.getUtilisateur.prenom }}
                                                         {% else %}
                                                             <span class="badge text-bg-danger">N/A</span>
                                                         {% endif %}
                                                     </td>
                                                     <td class="text-nowrap numero_serie">
-                                                        {% if telephone.numero_serie != null %}
-                                                            {{ telephone.numero_serie }}
+                                                        {% if telephone.numeroSerie != null %}
+                                                            {{ telephone.numeroSerie }}
                                                         {% else %}
                                                             <span class="badge text-bg-danger">N/A</span>
                                                         {% endif %}
                                                     </td>
                                                     <td class="text-nowrap site">
-                                                        {% if telephone.entreprise_nom != null %}
-                                                            {{ telephone.entreprise_nom }}
+                                                        {% if telephone.getEntreprise != null %}
+                                                            {{ telephone.getEntreprise.nom }}
                                                         {% else %}
                                                             <span class="badge text-bg-danger">N/A</span>
                                                         {% endif %}
                                                     </td>
                                                     <td class="text-nowrap fournisseur">
-                                                        {% if telephone.fournisseur_nom != null %}
-                                                            {{ telephone.fournisseur_nom }}
+                                                        {% if telephone.getFournisseur != null %}
+                                                            {{ telephone.getFournisseur.nom }}
                                                         {% else %}
                                                             <span class="badge text-bg-danger">N/A</span>
                                                         {% endif %}
                                                     </td>
                                                     <td class="text-nowrap etat">
-                                                        {% if telephone.etat_nom != null %}
-                                                            {{ telephone.etat_nom }}
+                                                        {% if telephone.getEtat != null %}
+                                                            {{ telephone.getEtat.nom }}
                                                         {% else %}
                                                             <span class="badge text-bg-danger">N/A</span>
                                                         {% endif %}
                                                     </td>
                                                     <td class="text-nowrap date_installation">
-                                                        {% if telephone.date_installation != null %}
-                                                            {{ telephone.date_installation }}
+                                                        {% if telephone.dateInstallation != null %}
+                                                            {{ telephone.dateInstallation }}
                                                         {% else %}
                                                             <span class="badge text-bg-danger">N/A</span>
                                                         {% endif %}
                                                     </td>
                                                     <td class="text-nowrap date_achat">
-                                                        {% if telephone.date_achat != null %}
-                                                            {{ telephone.date_achat }}
+                                                        {% if telephone.dateAchat != null %}
+                                                            {{ telephone.dateAchat }}
                                                         {% else %}
                                                             <span class="badge text-bg-danger">N/A</span>
                                                         {% endif %}
                                                     </td>
                                                     <td class="text-nowrap date_garantie">
-                                                        {% if telephone.date_garantie != null %}
-                                                            {{ telephone.date_garantie }}
+                                                        {% if telephone.dateGarantie != null %}
+                                                            {{ telephone.dateGarantie }}
                                                         {% else %}
                                                             <span class="badge text-bg-danger">N/A</span>
                                                         {% endif %}
