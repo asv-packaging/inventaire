@@ -3,6 +3,8 @@ use strict;
 use warnings;
 use Term::ANSIColor;
 
+system("clear");
+
 # Ligne horizontale de * pour le titre
 my $title_line = "*" x 80;
 my $title = "*                         Informatique - ASV PACKAGING                         *";

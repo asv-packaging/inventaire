@@ -1,5 +1,5 @@
 <nav class="navbar navbar-light navbar-glass navbar-top navbar-expand">
-    <button class="btn navbar-toggler-humburger-icon navbar-toggler me-1 me-sm-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarVerticalCollapse" aria-controls="navbarVerticalCollapse" aria-expanded="false" aria-label="Toggle Navigation">
+    <button class="btn navbar-toggler-humburger-icon navbar-toggler me-1 me-sm-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarVerticalCollapse" aria-controls="navbarVerticalCollapse" aria-expanded="false" aria-label="Ouvrir/Fermer">
         <span class="navbar-toggle-icon">
             <span class="toggle-line"></span>
         </span>
@@ -86,9 +86,9 @@
                                 </div>
                             {% endif %}
                         </div>
-{#                    <div class="card-footer text-center border-top">#}
-{#                        <a class="card-link d-block" href="#">Toutes les notifications</a>#}
-{#                    </div>#}
+                    <div class="card-footer text-center border-top">
+                        <a class="card-link d-block" href="#">Toutes les notifications</a>
+                    </div>
                 </div>
             </div>
             </div>
@@ -101,11 +101,6 @@
             </a>
             <div class="dropdown-menu dropdown-caret dropdown-caret dropdown-menu-end py-0" aria-labelledby="navbarDropdownUser">
                 <div class="bg-white dark__bg-1000 rounded-2 py-2">
-{#                    <a class="dropdown-item" href="">#}
-{#                        <i class="fas fa-user-edit"></i>#}
-{#                        Profil#}
-{#                    </a>#}
-{#                    <div class="dropdown-divider"></div>#}
                     <a style="color: red" class="dropdown-item" href="{{ path('admin.security.deconnexion') }}">
                         <i class="fas fa-sign-out-alt"></i>
                         Se déconnecter
@@ -118,12 +113,12 @@
 {% if notifications is not empty %}
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        var liensMarquerLu = document.querySelectorAll('.marquer-comme-lu');
         // Défini le style du curseur en main
-        document.getElementById('marquer-comme-lu').style = 'cursor: pointer';
+        var marquerCommeLu = document.getElementById('marquer-comme-lu');
+        if (marquerCommeLu) {
+            marquerCommeLu.style = 'cursor: pointer';
 
-        liensMarquerLu.forEach(function (lien) {
-            lien.addEventListener('click', function (event) {
+            marquerCommeLu.addEventListener('click', function (event) {
                 event.preventDefault();
 
                 // Identifie toutes les notifications non lues avant de les marquer comme lues
@@ -188,7 +183,7 @@
                             }
 
                             // Enlève le bouton "Marquer comme lu" car les notifications ont déjà été marquées comme lues
-                            document.getElementById('marquer-comme-lu').remove();
+                            marquerCommeLu.remove();
                         } else {
                             console.error('Erreur lors de la requête API : ', data.error);
                         }
@@ -197,8 +192,7 @@
                         console.error('Erreur lors de la requête Fetch', error);
                     });
             });
-        });
+        }
     });
-
 </script>
 {% endif %}

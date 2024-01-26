@@ -1195,7 +1195,7 @@ var Prism = (function (_self) {
 		// See https://github.com/PrismJS/prism/issues/2102
 		var readyState = document.readyState;
 		if (readyState === 'loading' || readyState === 'interactive' && script && script.defer) {
-			document.addEventListener('DOMContentLoaded', highlightAutomaticallyCallback);
+			document.addEventListener('turbolinks:load', highlightAutomaticallyCallback);
 		} else {
 			if (window.requestAnimationFrame) {
 				window.requestAnimationFrame(highlightAutomaticallyCallback);

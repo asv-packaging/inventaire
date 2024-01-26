@@ -37,7 +37,7 @@ function _typeof(t) {
 }
 
 var docReady = function (t) {
-    "loading" === document.readyState ? document.addEventListener("DOMContentLoaded", t) : setTimeout(t, 1)
+    "loading" === document.readyState ? document.addEventListener("turbolinks:load", t) : setTimeout(t, 1)
 }, resize = function (t) {
     return window.addEventListener("resize", t)
 }, isIterableArray = function (t) {

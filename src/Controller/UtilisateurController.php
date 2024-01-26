@@ -37,13 +37,14 @@ class UtilisateurController extends AbstractController
 
     /**
      * @param ExcelExportService $excelExportService
+     * @param UtilisateurRepository $utilisateurRepository
      * @return Response
      * Permet d'exporter les données des utilisateurs au format Excel
      */
     #[Route('/exporter', name: 'export')]
-    public function exportDataToExcel(ExcelExportService $excelExportService): Response
+    public function exportDataToExcel(ExcelExportService $excelExportService, UtilisateurRepository $utilisateurRepository): Response
     {
-        $utilisateurs = $this->repository->findAll();
+        $utilisateurs = $utilisateurRepository->findAll();
 
         if(count($utilisateurs) !== 0)
         {
@@ -72,7 +73,7 @@ class UtilisateurController extends AbstractController
             $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'inventaire_utilisateurs.xlsx');
             $response->headers->set('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 
-            // Supprimer le fichier après le téléchargement
+            // Supprime le fichier après le téléchargement
             register_shutdown_function(function () use ($filePath)
             {
                 if (file_exists($filePath))

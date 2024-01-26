@@ -36,6 +36,7 @@ security:
     access_control:
          - { path: ^/gestion/, roles: ROLE_ADMIN }
          - { path: ^/parametres/, roles: ROLE_ADMIN }
+         - { path: ^/accueil, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
 
     role_hierarchy:

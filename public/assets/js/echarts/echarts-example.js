@@ -16,7 +16,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
 var docReady = function docReady(fn) {
   // see if DOM is already available
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', fn);
+    document.addEventListener('turbolinks:load', fn);
   } else {
     setTimeout(fn, 1);
   }
