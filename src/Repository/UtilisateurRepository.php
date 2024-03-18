@@ -39,6 +39,14 @@ class UtilisateurRepository extends ServiceEntityRepository
         }
     }
 
+    public function countUtilisateurs(): int
+    {
+        return $this->createQueryBuilder('u')
+            ->select('count(u.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
 //    /**
 //     * @return Utilisateur[] Returns an array of Utilisateur objects
 //     */

@@ -35,7 +35,7 @@ class PcFixeController extends AbstractController
      * @return Response
      * Permet d'afficher la liste des PC Fixes
      */
-    #[Route('', name: 'show')]
+    #[Route(name: 'show')]
     public function index(PcFixeRepository $pcFixeRepository): Response
     {
         $pcFixes = $pcFixeRepository->findBy([], ['id' => 'DESC']);
@@ -122,10 +122,10 @@ class PcFixeController extends AbstractController
      * @param EntityManagerInterface $entityManager
      * @param Request $request
      * @return Response
-     * Permet d'ajouter un PC Fixe
+     * Permet de créer un PC Fixe
      */
-    #[Route('/ajouter', name: 'add')]
-    public function add(EntityManagerInterface $entityManager, Request $request): Response
+    #[Route('/creer', name: 'create')]
+    public function create(EntityManagerInterface $entityManager, Request $request): Response
     {
         $pcFixe = new PcFixe();
 
@@ -138,12 +138,12 @@ class PcFixeController extends AbstractController
             $entityManager->persist($pcFixe);
             $entityManager->flush();
 
-            $this->addFlash('success', "Le PC Fixe a bien été ajouté !");
+            $this->addFlash('success', "Le PC Fixe a été créé.");
 
             return $this->redirectToRoute('admin.pc_fixe.show');
         }
 
-        return $this->render('pc_fixe/add.html.twig', [
+        return $this->render('pc_fixe/create.html.twig', [
             'pcFixeForm' => $pcFixeForm->createView(),
             'menu_active' => $this->menu_active,
         ]);
@@ -194,7 +194,7 @@ class PcFixeController extends AbstractController
             $entityManager->persist($pcFixe);
             $entityManager->flush();
 
-            $this->addFlash('success', "Le PC Fixe a bien été modifié !");
+            $this->addFlash('success', "Le PC Fixe a été modifié.");
 
             return $this->redirectToRoute('admin.pc_fixe.show');
         }
@@ -224,7 +224,7 @@ class PcFixeController extends AbstractController
             $entityManager->remove($pcFixe);
             $entityManager->flush();
 
-            $this->addFlash('success', "Le PC Fixe a bien été supprimé !");
+            $this->addFlash('success', "Le PC Fixe a été supprimé.");
         }
 
         return $this->redirectToRoute('admin.pc_fixe.show');

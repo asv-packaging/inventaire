@@ -39,6 +39,14 @@ class EmplacementRepository extends ServiceEntityRepository
         }
     }
 
+    public function countEmplacements(): int
+    {
+        return $this->createQueryBuilder('e')
+            ->select('count(e.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
 //    /**
 //     * @return Emplacement[] Returns an array of Emplacement objects
 //     */

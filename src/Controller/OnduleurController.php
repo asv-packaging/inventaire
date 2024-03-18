@@ -33,7 +33,7 @@ class OnduleurController extends AbstractController
      * @return Response
      * Permet d'afficher la liste des onduleurs
      */
-    #[Route('', name: 'show')]
+    #[Route(name: 'show')]
     public function index(OnduleurRepository $onduleurRepository): Response
     {
         $onduleurs = $onduleurRepository->findBy([], ['id' => 'DESC']);
@@ -115,10 +115,10 @@ class OnduleurController extends AbstractController
      * @param EntityManagerInterface $entityManager
      * @param Request $request
      * @return Response
-     * Permet d'ajouter un onduleur
+     * Permet de créer un onduleur
      */
-    #[Route('/ajouter', name: 'add')]
-    public function add(EntityManagerInterface $entityManager, Request $request): Response
+    #[Route('/creer', name: 'create')]
+    public function create(EntityManagerInterface $entityManager, Request $request): Response
     {
         $onduleur = new Onduleur();
 
@@ -131,12 +131,12 @@ class OnduleurController extends AbstractController
             $entityManager->persist($onduleur);
             $entityManager->flush();
 
-            $this->addFlash('success', "L'onduleur a bien été ajouté !");
+            $this->addFlash('success', "L'onduleur a été créé.");
 
             return $this->redirectToRoute('admin.onduleur.show');
         }
 
-        return $this->render('onduleur/add.html.twig', [
+        return $this->render('onduleur/create.html.twig', [
             'onduleurForm' => $onduleurForm->createView(),
             'menu_active' => $this->menu_active,
         ]);
@@ -187,7 +187,7 @@ class OnduleurController extends AbstractController
             $entityManager->persist($onduleur);
             $entityManager->flush();
 
-            $this->addFlash('success', "L'onduleur a bien été modifié !");
+            $this->addFlash('success', "L'onduleur a été modifié.");
 
             return $this->redirectToRoute('admin.onduleur.show');
         }
@@ -216,7 +216,7 @@ class OnduleurController extends AbstractController
             $entityManager->remove($onduleur);
             $entityManager->flush();
 
-            $this->addFlash('success', "L'onduleur a bien été supprimé !");
+            $this->addFlash('success', "L'onduleur a été supprimé.");
         }
 
         return $this->redirectToRoute('admin.onduleur.show');

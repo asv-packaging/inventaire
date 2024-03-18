@@ -1,6 +1,6 @@
 {% extends 'gui/base.html.twig' %}
 
-{% block title %}Ajouter un PC Fixe | Inventaire{% endblock %}
+{% block title %}Création d'un PC Fixe{% endblock %}
 {% block stylesheets %}
     <link href="{{ asset('assets/vendors/flatpickr/flatpickr.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/vendors/select2/select2.min.css') }}" rel="stylesheet" />
@@ -18,7 +18,7 @@
                 <span class="bg-200 dark__bg-1100 pe-3">PC Fixes</span>
                 <span class="border position-absolute top-50 translate-middle-y w-100 start-0 z-n1"></span>
             </h5>
-            <p class="mb-0">Cette page vous permet d'ajouter un PC Fixe.</p>
+            <p class="mb-0">Cette page vous permet de créer un PC Fixe.</p>
         </div>
     </div>
     <div class="row g-0">
@@ -32,9 +32,13 @@
             <div class="sticky-sidebar">
                 <div class="card mb-3">
                     <div class="card-header d-flex flex-between-center">
-                        <h5 class="mb-0">Ajouter un PC Fixe</h5>
-                        <a class="btn btn-falcon-default btn-sm" href="{{ path('admin.pc_fixe.show') }}">
-                            Retour
+                        <h5 class="mb-0">
+                            <span class="fas fa-circle-plus"></span>
+                            &nbsp;Création d'un PC Fixe
+                        </h5>
+                        <a class="btn btn-primary btn-sm" href="{{ path('admin.pc_fixe.show') }}">
+                            <span class="fas fa-circle-left"></span>
+                            &nbsp;Retour
                         </a>
                     </div>
                     <div class="card-body bg-light">
@@ -69,7 +73,7 @@
                                     Champs obligatoires
                                 </label>
                                 <div class="d-flex justify-content-end">
-                                    <button class="btn btn-primary me-1 mb-1" type="submit">Créer</button>
+                                    <button class="btn btn-primary me-1 mb-1" type="submit">Sauvegarder</button>
                                 </div>
                             </div>
                         {{ form_end(pcFixeForm) }}

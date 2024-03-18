@@ -33,7 +33,7 @@ class TelephoneFixeController extends AbstractController
      * @return Response
      * Permet d'afficher la liste des téléphones fixes
      */
-    #[Route('', name: 'show')]
+    #[Route(name: 'show')]
     public function index(TelephoneFixeRepository $telephoneFixeRepository): Response
     {
         $telephones = $telephoneFixeRepository->findBy([], ['id' => 'DESC']);
@@ -116,10 +116,10 @@ class TelephoneFixeController extends AbstractController
      * @param EntityManagerInterface $entityManager
      * @param Request $request
      * @return Response
-     * Permet d'ajouter un téléphone fixe
+     * Permet de créer un téléphone fixe
      */
-    #[Route('/ajouter', name: 'add')]
-    public function add(EntityManagerInterface $entityManager, Request $request): Response
+    #[Route('/creer', name: 'create')]
+    public function create(EntityManagerInterface $entityManager, Request $request): Response
     {
         $telephone = new TelephoneFixe();
 
@@ -132,12 +132,12 @@ class TelephoneFixeController extends AbstractController
             $entityManager->persist($telephone);
             $entityManager->flush();
 
-            $this->addFlash('success', "Le téléphone fixe a bien été ajouté !");
+            $this->addFlash('success', "Le téléphone fixe a été créé.");
 
             return $this->redirectToRoute('admin.telephone_fixe.show');
         }
 
-        return $this->render('telephone_fixe/add.html.twig', [
+        return $this->render('telephone_fixe/create.html.twig', [
             'telephoneForm' => $telephoneForm->createView(),
             'menu_active' => $this->menu_active,
         ]);
@@ -165,7 +165,7 @@ class TelephoneFixeController extends AbstractController
             $entityManager->persist($telephone);
             $entityManager->flush();
 
-            $this->addFlash('success', "Le téléphone fixe a bien été modifié !");
+            $this->addFlash('success', "Le téléphone fixe a été modifié.");
 
             return $this->redirectToRoute('admin.telephone_fixe.show');
         }
@@ -194,7 +194,7 @@ class TelephoneFixeController extends AbstractController
             $entityManager->remove($telephone);
             $entityManager->flush();
 
-            $this->addFlash('success', "Le téléphone fixe a bien été supprimé !");
+            $this->addFlash('success', "Le téléphone fixe a été supprimé.");
         }
 
         return $this->redirectToRoute('admin.telephone_fixe.show');

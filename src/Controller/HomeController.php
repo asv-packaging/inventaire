@@ -2,24 +2,22 @@
 
 namespace App\Controller;
 
-use App\Entity\Ecran;
-use App\Entity\Emplacement;
-use App\Entity\Entreprise;
-use App\Entity\Etat;
-use App\Entity\Fournisseur;
-use App\Entity\Imprimante;
-use App\Entity\Notification;
-use App\Entity\Onduleur;
-use App\Entity\PcFixe;
-use App\Entity\PcPortable;
-use App\Entity\Serveur;
-use App\Entity\Stockage;
-use App\Entity\SystemeExploitation;
-use App\Entity\Tablette;
-use App\Entity\TelephoneFixe;
-use App\Entity\TelephonePortable;
-use App\Entity\User;
-use App\Entity\Utilisateur;
+use App\Repository\EcranRepository;
+use App\Repository\EmplacementRepository;
+use App\Repository\EntrepriseRepository;
+use App\Repository\EtatRepository;
+use App\Repository\FournisseurRepository;
+use App\Repository\ImprimanteRepository;
+use App\Repository\OnduleurRepository;
+use App\Repository\PcFixeRepository;
+use App\Repository\PcPortableRepository;
+use App\Repository\ServeurRepository;
+use App\Repository\StockageRepository;
+use App\Repository\SystemeExploitationRepository;
+use App\Repository\TabletteRepository;
+use App\Repository\TelephoneFixeRepository;
+use App\Repository\TelephoneRepository;
+use App\Repository\UtilisateurRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -31,37 +29,38 @@ class HomeController extends AbstractController
 {
     private $menu_active = "home";
 
-    /**
-     * @param ManagerRegistry $registry
-     * @param EntityManagerInterface $entityManager
-     * @param Security $security
-     * @return Response
-     */
+
     #[Route('/accueil', name: 'admin.home')]
-    public function index(ManagerRegistry $registry, EntityManagerInterface $entityManager, Security $security): Response
+    public function index(
+        Security $security, EcranRepository $ecranRepository, ImprimanteRepository $imprimanteRepository, OnduleurRepository $onduleurRepository,
+        PcFixeRepository $pcFixeRepository, PcPortableRepository $pcPortableRepository, ServeurRepository $serveurRepository,
+        TabletteRepository $tabletteRepository, TelephoneFixeRepository $telephoneFixeRepository, TelephoneRepository $telephonePortableRepository,
+        EmplacementRepository $emplacementRepository, EtatRepository $etatRepository, FournisseurRepository $fournisseurRepository,
+        EntrepriseRepository $entrepriseRepository, SystemeExploitationRepository $systemeExploitationRepository, StockageRepository $stockageRepository,
+        UtilisateurRepository $utilisateurRepository): Response
     {
         // Récupération des informations de l'utilisateur connecté
         $utilisateur = $security->getUser();
 
         // Gestions des statistiques pour le matériel
-        $ecrans = count($registry->getManager()->getRepository(Ecran::class)->findAll());
-        $imprimantes = count($registry->getManager()->getRepository(Imprimante::class)->findAll());
-        $onduleurs = count($registry->getManager()->getRepository(Onduleur::class)->findAll());
-        $pc_fixes = count($registry->getManager()->getRepository(PcFixe::class)->findAll());
-        $pc_portable = count($registry->getManager()->getRepository(PcPortable::class)->findAll());
-        $serveurs = count($registry->getManager()->getRepository(Serveur::class)->findAll());
-        $tablettes = count($registry->getManager()->getRepository(Tablette::class)->findAll());
-        $telephone_fixes = count($registry->getManager()->getRepository(TelephoneFixe::class)->findAll());
-        $telephone_portables = count($registry->getManager()->getRepository(TelephonePortable::class)->findAll());
+        $ecrans = $ecranRepository->countEcrans();
+        $imprimantes = $imprimanteRepository->countImprimantes();
+        $onduleurs = $onduleurRepository->countOnduleurs();
+        $pc_fixes = $pcFixeRepository->countPcFixes();
+        $pc_portable = $pcPortableRepository->countPcPortables();
+        $serveurs = $serveurRepository->countServeurs();
+        $tablettes = $tabletteRepository->countTablettes();
+        $telephone_fixes = $telephoneFixeRepository->countTelephoneFixes();
+        $telephone_portables = $telephonePortableRepository->countTelephonePortables();
 
         // Gestions des statistiques pour les paramètres
-        $emplacements = count($registry->getManager()->getRepository(Emplacement::class)->findAll());
-        $etats = count($registry->getManager()->getRepository(Etat::class)->findAll());
-        $fournisseurs = count($registry->getManager()->getRepository(Fournisseur::class)->findAll());
-        $sites = count($registry->getManager()->getRepository(Entreprise::class)->findAll());
-        $systemes_exploitation = count($registry->getManager()->getRepository(SystemeExploitation::class)->findAll());
-        $stockage = count($registry->getManager()->getRepository(Stockage::class)->findAll());
-        $utilisateurs = count($registry->getManager()->getRepository(Utilisateur::class)->findAll());
+        $emplacements = $emplacementRepository->countEmplacements();
+        $etats = $etatRepository->countEtats();
+        $fournisseurs = $fournisseurRepository->countFournisseurs();
+        $sites = $entrepriseRepository->countEntreprises();
+        $systemes_exploitation = $systemeExploitationRepository->countSystemeExploitations();
+        $stockage = $stockageRepository->countStockages();
+        $utilisateurs = $utilisateurRepository->countUtilisateurs();
 
         return $this->render('home/index.html.twig', [
             'menu_active' => $this->menu_active,

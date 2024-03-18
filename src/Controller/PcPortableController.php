@@ -28,13 +28,12 @@ class PcPortableController extends AbstractController
 {
     private $menu_active = "pc_portable";
 
-
     /**
      * @param PcPortableRepository $pcPortableRepository
      * @return Response
      * Permet d'afficher la liste des PC Portables
      */
-    #[Route('', name: 'show')]
+    #[Route(name: 'show')]
     public function index(PcPortableRepository $pcPortableRepository): Response
     {
         $pcPortables = $pcPortableRepository->findBy([], ['id' => 'DESC']);
@@ -121,10 +120,10 @@ class PcPortableController extends AbstractController
      * @param EntityManagerInterface $entityManager
      * @param Request $request
      * @return Response
-     * Permet d'ajouter un PC Portable
+     * Permet de créer un PC Portable
      */
-    #[Route('/ajouter', name: 'add')]
-    public function add(EntityManagerInterface $entityManager, Request $request): Response
+    #[Route('/creer', name: 'create')]
+    public function create(EntityManagerInterface $entityManager, Request $request): Response
     {
         $pcPortable = new PcPortable();
 
@@ -137,12 +136,12 @@ class PcPortableController extends AbstractController
             $entityManager->persist($pcPortable);
             $entityManager->flush();
 
-            $this->addFlash('success', "Le PC Portable a bien été ajouté !");
+            $this->addFlash('success', "Le PC Portable a été créé.");
 
             return $this->redirectToRoute('admin.pc_portable.show');
         }
 
-        return $this->render('pc_portable/add.html.twig', [
+        return $this->render('pc_portable/create.html.twig', [
             'pcPortableForm' => $pcPortableForm->createView(),
             'menu_active' => $this->menu_active,
         ]);
@@ -193,7 +192,7 @@ class PcPortableController extends AbstractController
             $entityManager->persist($pcPortable);
             $entityManager->flush();
 
-            $this->addFlash('success', "Le PC Portable a bien été modifié !");
+            $this->addFlash('success', "Le PC Portable a été modifié.");
 
             return $this->redirectToRoute('admin.pc_portable.show');
         }
@@ -223,7 +222,7 @@ class PcPortableController extends AbstractController
             $entityManager->remove($pcPortable);
             $entityManager->flush();
 
-            $this->addFlash('success', "Le PC Portable a bien été supprimé !");
+            $this->addFlash('success', "Le PC Portable a été supprimé.");
         }
 
         return $this->redirectToRoute('admin.pc_portable.show');

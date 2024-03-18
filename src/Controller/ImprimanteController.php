@@ -33,7 +33,7 @@ class ImprimanteController extends AbstractController
      * @return Response
      * Permet d'afficher la liste des imprimantes
      */
-    #[Route('', name: 'show')]
+    #[Route(name: 'show')]
     public function index(ImprimanteRepository $imprimanteRepository): Response
     {
         $imprimantes = $imprimanteRepository->findBy([], ['id' => 'DESC']);
@@ -115,10 +115,10 @@ class ImprimanteController extends AbstractController
      * @param EntityManagerInterface $entityManager
      * @param Request $request
      * @return Response
-     * Permet d'ajouter une imprimante
+     * Permet de créer une imprimante
      */
-    #[Route('/ajouter', name: 'add')]
-    public function add(EntityManagerInterface $entityManager, Request $request): Response
+    #[Route('/creer', name: 'create')]
+    public function create(EntityManagerInterface $entityManager, Request $request): Response
     {
         $imprimante = new Imprimante();
 
@@ -131,12 +131,12 @@ class ImprimanteController extends AbstractController
             $entityManager->persist($imprimante);
             $entityManager->flush();
 
-            $this->addFlash('success', "L'imprimante a bien été ajouté !");
+            $this->addFlash('success', "L'imprimante a été créée.");
 
             return $this->redirectToRoute('admin.imprimante.show');
         }
 
-        return $this->render('imprimante/add.html.twig', [
+        return $this->render('imprimante/create.html.twig', [
             'imprimanteForm' => $imprimanteForm->createView(),
             'menu_active' => $this->menu_active,
         ]);
@@ -187,7 +187,7 @@ class ImprimanteController extends AbstractController
             $entityManager->persist($imprimante);
             $entityManager->flush();
 
-            $this->addFlash('success', "L'imprimante a bien été modifié !");
+            $this->addFlash('success', "L'imprimante a été modifiée.");
 
             return $this->redirectToRoute('admin.imprimante.show');
         }
@@ -217,7 +217,7 @@ class ImprimanteController extends AbstractController
             $entityManager->remove($imprimante);
             $entityManager->flush();
 
-            $this->addFlash('success', "L'imprimante a bien été supprimé !");
+            $this->addFlash('success', "L'imprimante a été supprimée.");
         }
 
         return $this->redirectToRoute('admin.imprimante.show');

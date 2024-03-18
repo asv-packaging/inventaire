@@ -39,6 +39,14 @@ class PcFixeRepository extends ServiceEntityRepository
         }
     }
 
+    public function countPcFixes(): int
+    {
+        return $this->createQueryBuilder('p')
+            ->select('count(p.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
 //    /**
 //     * @return PcFixe[] Returns an array of PcFixe objects
 //     */

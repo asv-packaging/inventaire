@@ -1,6 +1,6 @@
 {% extends 'gui/base.html.twig' %}
 
-{% block title %}Onduleurs | Inventaire{% endblock %}
+{% block title %}Gestion des onduleurs{% endblock %}
 
 {% block body %}
     <div class="d-flex mb-4 mt-3">
@@ -13,7 +13,7 @@
                 <span class="bg-200 dark__bg-1100 pe-3">Onduleurs</span>
                 <span class="border position-absolute top-50 translate-middle-y w-100 start-0 z-n1"></span>
             </h5>
-            <p class="mb-0">Cette page vous permet de voir tous les onduleurs.</p>
+            <p class="mb-0">Cette page vous permet de gérer tous les onduleurs.</p>
         </div>
     </div>
     <div class="row g-0">
@@ -32,27 +32,36 @@
             {% endfor %}
             <div class="sticky-sidebar">
                 <div class="card mb-3">
-                    <div class="card-header d-flex flex-between-center">
-                        <h5 class="mb-0">Toutes les onduleurs</h5>
-                        <a class="btn btn-falcon-default btn-sm" href="{{ path('admin.onduleur.add') }}">
-                            Ajouter
-                        </a>
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">
+                            <span class="fas fa-car-battery"></span>
+                            &nbsp;Gestion des onduleurs
+                        </h5>
+                        <div>
+                            <a class="btn btn-primary btn-sm" href="{{ path('admin.onduleur.create') }}">
+                                <span class="fas fa-plus-circle"></span>
+                                &nbsp;Créer un onduleur
+                            </a>
+                            {% if onduleurs | length != 0 %}
+                                <a class="btn btn-primary btn-sm me-2" href="{{ path('admin.onduleur.export') }}">
+                                    <span class="fas fa-file-export"></span>
+                                    &nbsp;Exporter
+                                </a>
+                            {% endif %}
+                        </div>
                     </div>
                     <div class="card-body bg-light">
-                        <div id="table_onduleur" data-list='{"valueNames":["nom","marque","modele","numero_serie","capacite","type_prise","emplacement","site","fournisseur","etat","date_installation","date_achat","date_garantie","commentaire"],"page":20,"pagination":true}'>
+                        <div id="table_onduleurs" data-list='{"page":20,"pagination":true}'>
                             <div class="row justify-content-end g-0">
-                                <div class="col-auto col-sm-5 mb-3">
+                                <div class="col-auto mb-3">
                                     <div class="input-group">
-                                        <input class="form-control form-control-sm shadow-none search" type="search" placeholder="Rechercher..." aria-label="search" pattern="-*" />
-                                        <div class="input-group-text bg-transparent">
-                                            <span class="fa fa-search fs--1 text-600"></span>
+                                        <div class="search-box">
+                                            <input id="searchInput" class="form-control search-input" type="search" placeholder="Rechercher..." aria-label="Rechercher" />
+                                            <span class="fas fa-search search-box-icon"></span>
+                                            <div class="btn-close-falcon-container position-absolute end-0 top-50 translate-middle" data-bs-dismiss="search">
+                                                <button class="btn btn-link btn-close-falcon p-0" id="btn-search-close" aria-label="Close"></button>
+                                            </div>
                                         </div>
-                                        {% if onduleurs | length != 0 %}
-                                            &nbsp;&nbsp;
-                                            <a class="btn btn-falcon-default btn-sm" href="{{ path('admin.onduleur.export') }}">
-                                                Exporter
-                                            </a>
-                                        {% endif %}
                                     </div>
                                 </div>
                             </div>
@@ -62,15 +71,11 @@
                                         <tr>
                                             <th class="align-middle text-center">#</th>
                                             <th class="align-middle text-center">Nom</th>
-                                            <th class="align-middle text-center">Marque</th>
-                                            <th class="align-middle text-center">Modèle</th>
-                                            <th class="align-middle text-center">Numéro de série</th>
                                             <th class="align-middle text-center">Capacité</th>
                                             <th class="align-middle text-center">Type de prise</th>
+                                            <th class="align-middle text-center">Numéro de série</th>
                                             <th class="align-middle text-center">Emplacement</th>
                                             <th class="align-middle text-center">Site</th>
-                                            <th class="align-middle text-center">Fournisseur</th>
-                                            <th class="align-middle text-center">État</th>
                                             <th class="align-middle text-center">Date d'installation</th>
                                             <th class="align-middle text-center">Date d'achat</th>
                                             <th class="align-middle text-center">Date de garantie</th>
@@ -83,99 +88,37 @@
                                             {% for onduleur in onduleurs %}
                                                 <tr class="align-middle text-center">
                                                     <td class="text-nowrap">{{ loop.revindex }}</td>
-                                                    <td class="text-nowrap nom">
-                                                        {{ onduleur.nom }}
+                                                    <td class="text-nowrap">
+                                                        <a href="{{ path('admin.onduleur.edit', {id: onduleur.id}) }}">
+                                                            <b>{{ onduleur.nom }}</b>
+                                                        </a>
                                                     </td>
-                                                    <td class="text-nowrap marque">
-                                                        {% if onduleur.marque != null %}
-                                                            {{ onduleur.marque }}
-                                                        {% else %}
-                                                            <span class="badge text-bg-danger">N/A</span>
-                                                        {% endif %}
+                                                    <td class="text-nowrap">
+                                                        {{ onduleur.capacite is not null ? onduleur.capacite ~ ' W' | raw : '<span class="badge bg-danger">N/A</span>' }}
                                                     </td>
-                                                    <td class="text-nowrap modele">
-                                                        {% if onduleur.modele != null %}
-                                                            {{ onduleur.modele }}
-                                                        {% else %}
-                                                            <span class="badge text-bg-danger">N/A</span>
-                                                        {% endif %}
+                                                    <td class="text-nowrap">
+                                                        {{ onduleur.typePrise | default('<span class="badge bg-danger">N/A</span>') | raw }}
                                                     </td>
-                                                    <td class="text-nowrap numero_serie">
-                                                        {% if onduleur.numeroSerie != null %}
-                                                            {{ onduleur.numeroSerie }}
-                                                        {% else %}
-                                                            <span class="badge text-bg-danger">N/A</span>
-                                                        {% endif %}
+                                                    <td class="text-nowrap">
+                                                        {{ onduleur.numeroSerie | default('<span class="badge bg-danger">N/A</span>') | raw }}
                                                     </td>
-                                                    <td class="text-nowrap capacite">
-                                                        {% if onduleur.capacite != null %}
-                                                            {{ onduleur.capacite }}W
-                                                        {% else %}
-                                                            <span class="badge text-bg-danger">N/A</span>
-                                                        {% endif %}
+                                                    <td class="text-nowrap">
+                                                        {{ onduleur.getEmplacement.nom | default('<span class="badge bg-danger">N/A</span>') | raw }}
                                                     </td>
-                                                    <td class="text-nowrap type_prise">
-                                                        {% if onduleur.typePrise != null %}
-                                                            {{ onduleur.typePrise }}
-                                                        {% else %}
-                                                            <span class="badge text-bg-danger">N/A</span>
-                                                        {% endif %}
+                                                    <td class="text-nowrap">
+                                                        {{ onduleur.getEntreprise.nom | default('<span class="badge bg-danger">N/A</span>') | raw }}
                                                     </td>
-                                                    <td class="text-nowrap emplacement">
-                                                        {% if onduleur.getEmplacement != null %}
-                                                            {{ onduleur.getEmplacement.nom }}
-                                                        {% else %}
-                                                            <span class="badge text-bg-danger">N/A</span>
-                                                        {% endif %}
+                                                    <td class="text-nowrap">
+                                                        {{ onduleur.dateInstallation | default('<span class="badge bg-danger">N/A</span>') | raw }}
                                                     </td>
-                                                    <td class="text-nowrap site">
-                                                        {% if onduleur.getEntreprise != null %}
-                                                            {{ onduleur.getEntreprise.nom }}
-                                                        {% else %}
-                                                            <span class="badge text-bg-danger">N/A</span>
-                                                        {% endif %}
+                                                    <td class="text-nowrap">
+                                                        {{ onduleur.dateAchat | default('<span class="badge bg-danger">N/A</span>') | raw }}
                                                     </td>
-                                                    <td class="text-nowrap fournisseur">
-                                                        {% if onduleur.getFournisseur != null %}
-                                                            {{ onduleur.getFournisseur.nom }}
-                                                        {% else %}
-                                                            <span class="badge text-bg-danger">N/A</span>
-                                                        {% endif %}
+                                                    <td class="text-nowrap">
+                                                        {{ onduleur.dateGarantie | default('<span class="badge bg-danger">N/A</span>') | raw }}
                                                     </td>
-                                                    <td class="text-nowrap etat">
-                                                        {% if onduleur.getEtat != null %}
-                                                            {{ onduleur.getEtat.nom }}
-                                                        {% else %}
-                                                            <span class="badge text-bg-danger">N/A</span>
-                                                        {% endif %}
-                                                    </td>
-                                                    <td class="text-nowrap date_installation">
-                                                        {% if onduleur.dateInstallation != null %}
-                                                            {{ onduleur.dateInstallation }}
-                                                        {% else %}
-                                                            <span class="badge text-bg-danger">N/A</span>
-                                                        {% endif %}
-                                                    </td>
-                                                    <td class="text-nowrap date_achat">
-                                                        {% if onduleur.dateAchat != null %}
-                                                            {{ onduleur.dateAchat }}
-                                                        {% else %}
-                                                            <span class="badge text-bg-danger">N/A</span>
-                                                        {% endif %}
-                                                    </td>
-                                                    <td class="text-nowrap date_garantie">
-                                                        {% if onduleur.dateGarantie != null %}
-                                                            {{ onduleur.dateGarantie }}
-                                                        {% else %}
-                                                            <span class="badge text-bg-danger">N/A</span>
-                                                        {% endif %}
-                                                    </td>
-                                                    <td class="text-nowrap commentaire">
-                                                        {% if onduleur.commentaire != null %}
-                                                            {{ onduleur.commentaire }}
-                                                        {% else %}
-                                                            <span class="badge text-bg-danger">N/A</span>
-                                                        {% endif %}
+                                                    <td class="text-nowrap">
+                                                        {{ onduleur.commentaire | default('<span class="badge bg-danger">N/A</span>') | raw }}
                                                     </td>
                                                     <td class="text-nowrap">
                                                         <a href="{{ path('admin.onduleur.edit', {id: onduleur.id}) }}" class="btn btn-primary btn-sm">
@@ -197,6 +140,9 @@
                                                 <td colspan="12">Aucun onduleur n'a été trouvé.</td>
                                             </tr>
                                         {% endif %}
+                                        <tr id="noResultsRow" class="align-middle text-center" style="display: none;">
+                                            <td colspan="12">Aucun onduleur n'a été trouvé.</td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -215,4 +161,53 @@
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        // Script pour la recherche dans le tableau
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchBar = document.getElementById('searchInput');
+            const rows = document.querySelectorAll('.list tr');
+            const noResultsRow = document.getElementById('noResultsRow');
+            const btnCloseSearch = document.getElementById('btn-search-close');
+
+            searchBar.addEventListener('input', function(event) {
+                const searchTerm = event.target.value.toLowerCase();
+                let resultsFound = false;
+
+                rows.forEach(row => {
+                    const cells = row.querySelectorAll('td');
+                    let found = false;
+
+                    cells.forEach(cell => {
+                        if (cell.textContent.toLowerCase().includes(searchTerm)) {
+                            found = true;
+                        }
+                    });
+
+                    if (found) {
+                        row.style.display = '';
+                        resultsFound = true;
+                    } else {
+                        row.style.display = 'none';
+                    }
+
+                    if(btnCloseSearch) {
+                        btnCloseSearch.addEventListener('click', function() {
+                            searchBar.value = '';
+                            row.style.display = '';
+                            noResultsRow.style.display = 'none';
+                        });
+                    }
+                });
+
+                if (resultsFound) {
+                    noResultsRow.style.display = 'none';
+                } else {
+                    noResultsRow.style.display = '';
+                }
+            });
+        });
+    </script>
 {% endblock %}

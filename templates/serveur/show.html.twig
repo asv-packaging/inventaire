@@ -1,6 +1,6 @@
 {% extends 'gui/base.html.twig' %}
 
-{% block title %}Serveurs | Inventaire{% endblock %}
+{% block title %}Gestion des serveurs{% endblock %}
 
 {% block body %}
     <div class="d-flex mb-4 mt-3">
@@ -13,7 +13,7 @@
                 <span class="bg-200 dark__bg-1100 pe-3">Serveurs</span>
                 <span class="border position-absolute top-50 translate-middle-y w-100 start-0 z-n1"></span>
             </h5>
-            <p class="mb-0">Cette page vous permet de voir tous les serveurs.</p>
+            <p class="mb-0">Cette page vous permet de gérer tous les serveurs.</p>
         </div>
     </div>
     <div class="row g-0">
@@ -32,27 +32,36 @@
             {% endfor %}
             <div class="sticky-sidebar">
                 <div class="card mb-3">
-                    <div class="card-header d-flex flex-between-center">
-                        <h5 class="mb-0">Tous les serveurs</h5>
-                        <a class="btn btn-falcon-default btn-sm" href="{{ path('admin.serveur.add') }}">
-                            Ajouter
-                        </a>
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">
+                            <span class="fas fa-server"></span>
+                            &nbsp;Gestion des serveurs
+                        </h5>
+                        <div>
+                            <a class="btn btn-primary btn-sm" href="{{ path('admin.serveur.create') }}">
+                                <span class="fas fa-circle-plus"></span>
+                                &nbsp;Créer un serveur
+                            </a>
+                            {% if serveurs | length != 0 %}
+                                <a class="btn btn-primary btn-sm" href="{{ path('admin.serveur.export') }}">
+                                    <span class="fas fa-file-export"></span>
+                                    &nbsp;Exporter
+                                </a>
+                            {% endif %}
+                        </div>
                     </div>
                     <div class="card-body bg-light">
-                        <div id="table_serveurs" data-list='{"valueNames":["nom","ip","marque","modele","processeur","memoire","stockage","stockage_type","os","numero_serie","emplacement","site","fournisseur","etat","date_contrat","date_achat","date_garantie","commentaire"],"page":20,"pagination":true}'>
+                        <div id="table_serveurs" data-list='{"page":20,"pagination":true}'>
                             <div class="row justify-content-end g-0">
-                                <div class="col-auto col-sm-5 mb-3">
+                                <div class="col-auto mb-3">
                                     <div class="input-group">
-                                        <input class="form-control form-control-sm shadow-none search" type="search" placeholder="Rechercher..." aria-label="search" pattern=".*" />
-                                        <div class="input-group-text bg-transparent">
-                                            <span class="fa fa-search fs--1 text-600"></span>
+                                        <div class="search-box">
+                                            <input id="searchInput" class="form-control search-input" type="search" placeholder="Rechercher..." aria-label="Rechercher" />
+                                            <span class="fas fa-search search-box-icon"></span>
+                                            <div class="btn-close-falcon-container position-absolute end-0 top-50 translate-middle" data-bs-dismiss="search">
+                                                <button class="btn btn-link btn-close-falcon p-0" id="btn-search-close" aria-label="Close"></button>
+                                            </div>
                                         </div>
-                                        {% if serveurs | length != 0 %}
-                                            &nbsp;&nbsp;
-                                            <a class="btn btn-falcon-default btn-sm" href="{{ path('admin.serveur.export') }}">
-                                                Exporter
-                                            </a>
-                                        {% endif %}
                                     </div>
                                 </div>
                             </div>
@@ -63,19 +72,11 @@
                                             <th class="align-middle text-center">#</th>
                                             <th class="align-middle text-center">Nom</th>
                                             <th class="align-middle text-center">IP</th>
-                                            <th class="align-middle text-center">Marque</th>
-                                            <th class="align-middle text-center">Modèle</th>
-                                            <th class="align-middle text-center">Processeur</th>
-                                            <th class="align-middle text-center">Mémoire</th>
-                                            <th class="align-middle text-center">Stockage</th>
-                                            <th class="align-middle text-center">Type de disque dur</th>
                                             <th class="align-middle text-center">Système d'exploitation</th>
                                             <th class="align-middle text-center">Type</th>
                                             <th class="align-middle text-center">Numéro de série</th>
                                             <th class="align-middle text-center">Emplacement</th>
                                             <th class="align-middle text-center">Site</th>
-                                            <th class="align-middle text-center">Fournisseur</th>
-                                            <th class="align-middle text-center">État</th>
                                             <th class="align-middle text-center">Date de contrat</th>
                                             <th class="align-middle text-center">Date d'achat</th>
                                             <th class="align-middle text-center">Date de garantie</th>
@@ -88,124 +89,42 @@
                                             {% for serveur in serveurs %}
                                                 <tr class="align-middle text-center">
                                                     <td class="text-nowrap">{{ loop.revindex }}</td>
-                                                    <td class="text-nowrap nom">{{ serveur.nom }}</td>
-                                                    <td class="text-nowrap ip">
-                                                        {% if serveur.ip != null %}
-                                                            {{ serveur.ip }}
-                                                        {% else %}
-                                                            <span class="badge text-bg-danger">N/A</span>
-                                                        {% endif %}
+                                                    <td class="text-nowrap">
+                                                        <a href="{{ path('admin.serveur.edit', {id: serveur.id}) }}"><b>{{ serveur.nom }}</b></a>
                                                     </td>
-                                                    <td class="text-nowrap marque">
-                                                        {% if serveur.marque != null %}
-                                                            {{ serveur.marque }}
-                                                        {% else %}
-                                                            <span class="badge text-bg-danger">N/A</span>
-                                                        {% endif %}
+                                                    <td class="text-nowrap">
+                                                        {{ serveur.ip | default('<span class="badge bg-danger">N/A</span>') | raw }}
                                                     </td>
-                                                    <td class="text-nowrap modele">
-                                                        {% if serveur.modele != null %}
-                                                            {{ serveur.modele }}
-                                                        {% else %}
-                                                            <span class="badge text-bg-danger">N/A</span>
-                                                        {% endif %}
+                                                    <td class="text-nowrap">
+                                                        {{ serveur.getSystemeExploitation.nom | default('<span class="badge bg-danger">N/A</span>') | raw }}
                                                     </td>
-                                                    <td class="text-nowrap processeur">
-                                                        {% if serveur.processeur != null %}
-                                                            {{ serveur.processeur }}
-                                                        {% else %}
-                                                            <span class="badge text-bg-danger">N/A</span>
-                                                        {% endif %}
-                                                    </td>
-                                                    <td class="text-nowrap memoire">
-                                                        {% if serveur.memoire != null %}
-                                                            {{ serveur.memoire }} Go
-                                                        {% else %}
-                                                            <span class="badge text-bg-danger">N/A</span>
-                                                        {% endif %}
-                                                    </td>
-                                                    <td class="text-nowrap stockage">
-                                                        {% if serveur.stockageNombre != null %}
-                                                            {{ serveur.stockageNombre }} {% if serveur.getStockage != null %} {{ serveur.getStockage.nom }} {% endif %}
-                                                        {% else %}
-                                                            <span class="badge text-bg-danger">N/A</span>
-                                                        {% endif %}
-                                                    </td>
-                                                    <td class="text-nowrap stockage_type">
-                                                        {% if serveur.stockageType != null %}
-                                                            {{ serveur.stockageType }}
-                                                        {% else %}
-                                                            <span class="badge text-bg-danger">N/A</span>
-                                                        {% endif %}
-                                                    </td>
-                                                    <td class="text-nowrap os">
-                                                        {% if serveur.getSystemeExploitation != null %}
-                                                            {{ serveur.getSystemeExploitation.nom }}
-                                                        {% else %}
-                                                            <span class="badge text-bg-danger">N/A</span>
-                                                        {% endif %}
-                                                    </td>
-                                                    <td class="text-nowrap physique">
+                                                    <td class="text-nowrap">
                                                         {% if serveur.physique == 1 %}
-                                                            <span class="badge text-bg-info">Physique</span>
+                                                            <span class="badge bg-info">Physique</span>
                                                         {% else %}
-                                                            <span class="badge text-bg-info">Virtuel</span>
+                                                            <span class="badge bg-info">Virtuel</span>
                                                         {% endif %}
                                                     </td>
-                                                    <td class="text-nowrap numero_serie">
-                                                        {% if serveur.numeroSerie != null %}
-                                                            {{ serveur.numeroSerie }}
-                                                        {% else %}
-                                                            <span class="badge text-bg-danger">N/A</span>
-                                                        {% endif %}
+                                                    <td class="text-nowrap">
+                                                        {{ serveur.numeroSerie | default('<span class="badge bg-danger">N/A</span>') | raw }}
                                                     </td>
-                                                    <td class="text-nowrap emplacement">
-                                                        {{ serveur.getEmplacement.nom }}
+                                                    <td class="text-nowrap">
+                                                        {{ serveur.getEmplacement.nom | default('<span class="badge bg-danger">N/A</span>') | raw }}
                                                     </td>
-                                                    <td class="text-nowrap entreprise">
-                                                        {% if serveur.getEntreprise != null %}
-                                                            {{ serveur.getEntreprise.nom }}
-                                                        {% else %}
-                                                            <span class="badge text-bg-danger">N/A</span>
-                                                        {% endif %}
+                                                    <td class="text-nowrap">
+                                                        {{ serveur.getEntreprise.nom | default('<span class="badge bg-danger">N/A</span>') | raw }}
                                                     </td>
-                                                    <td class="text-nowrap entreprise">
-                                                        {% if serveur.getFournisseur != null %}
-                                                            {{ serveur.getFournisseur.nom }}
-                                                        {% else %}
-                                                            <span class="badge text-bg-danger">N/A</span>
-                                                        {% endif %}
+                                                    <td class="text-nowrap">
+                                                        {{ serveur.dateContrat | default('<span class="badge bg-danger">N/A</span>') | raw }}
                                                     </td>
-                                                    <td class="text-nowrap etat">
-                                                        {{ serveur.getEtat.nom }}
+                                                    <td class="text-nowrap">
+                                                        {{ serveur.dateAchat | default('<span class="badge bg-danger">N/A</span>') | raw }}
                                                     </td>
-                                                    <td class="text-nowrap date_contrat">
-                                                        {% if serveur.dateContrat != null %}
-                                                            {{ serveur.dateContrat }}
-                                                        {% else %}
-                                                            <span class="badge text-bg-danger">N/A</span>
-                                                        {% endif %}
+                                                    <td class="text-nowrap">
+                                                        {{ serveur.dateGarantie | default('<span class="badge bg-danger">N/A</span>') | raw }}
                                                     </td>
-                                                    <td class="text-nowrap date_achat">
-                                                        {% if serveur.dateAchat != null %}
-                                                            {{ serveur.dateAchat }}
-                                                        {% else %}
-                                                            <span class="badge text-bg-danger">N/A</span>
-                                                        {% endif %}
-                                                    </td>
-                                                    <td class="text-nowrap date_garantie">
-                                                        {% if serveur.dateGarantie != null %}
-                                                            {{ serveur.dateGarantie }}
-                                                        {% else %}
-                                                            <span class="badge text-bg-danger">N/A</span>
-                                                        {% endif %}
-                                                    </td>
-                                                    <td class="text-nowrap commentaire">
-                                                        {% if serveur.commentaire != null %}
-                                                            {{ serveur.commentaire }}
-                                                        {% else %}
-                                                            <span class="badge text-bg-danger">N/A</span>
-                                                        {% endif %}
+                                                    <td class="text-nowrap">
+                                                        {{ serveur.commentaire | default('<span class="badge bg-danger">N/A</span>') | raw }}
                                                     </td>
                                                     <td class="text-nowrap">
                                                         <a href="{{ path('admin.serveur.edit', {id: serveur.id}) }}" class="btn btn-primary btn-sm">
@@ -224,9 +143,12 @@
                                             {% endfor %}
                                         {% else %}
                                             <tr class="align-middle text-center">
-                                                <td colspan="12">Aucun serveur n'a été trouvé.</td>
+                                                <td colspan="13">Aucun serveur n'a été trouvé.</td>
                                             </tr>
                                         {% endif %}
+                                        <tr id="noResultsRow" class="align-middle text-center" style="display: none;">
+                                            <td colspan="13">Aucun serveur n'a été trouvé.</td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -245,4 +167,53 @@
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        // Script pour la recherche dans le tableau
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchBar = document.getElementById('searchInput');
+            const rows = document.querySelectorAll('.list tr');
+            const noResultsRow = document.getElementById('noResultsRow');
+            const btnCloseSearch = document.getElementById('btn-search-close');
+
+            searchBar.addEventListener('input', function(event) {
+                const searchTerm = event.target.value.toLowerCase();
+                let resultsFound = false;
+
+                rows.forEach(row => {
+                    const cells = row.querySelectorAll('td');
+                    let found = false;
+
+                    cells.forEach(cell => {
+                        if (cell.textContent.toLowerCase().includes(searchTerm)) {
+                            found = true;
+                        }
+                    });
+
+                    if (found) {
+                        row.style.display = '';
+                        resultsFound = true;
+                    } else {
+                        row.style.display = 'none';
+                    }
+
+                    if(btnCloseSearch) {
+                        btnCloseSearch.addEventListener('click', function() {
+                            searchBar.value = '';
+                            row.style.display = '';
+                            noResultsRow.style.display = 'none';
+                        });
+                    }
+                });
+
+                if (resultsFound) {
+                    noResultsRow.style.display = 'none';
+                } else {
+                    noResultsRow.style.display = '';
+                }
+            });
+        });
+    </script>
 {% endblock %}

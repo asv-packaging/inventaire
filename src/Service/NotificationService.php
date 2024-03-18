@@ -19,7 +19,7 @@ class NotificationService
      * @return void
      * Envoie une notification lorsque la date de fin de garantie d'un matériel arrive bientôt à expiration ou est arrivée à expiration
      */
-    public function sendNotification($materielClass, $materielNom)
+    public function sendNotification($materielClass, $materielNom): void
     {
         $currentDate = new \DateTimeImmutable('now');
 
@@ -135,7 +135,7 @@ class NotificationService
      * @return Notification[]|array|object[]
      * Récupère toutes les notifications non lues
      */
-    public function getNotifications()
+    public function getNotifications(): array
     {
         $notifications = $this->entityManager->getRepository(Notification::class)->findBy(
             ['isRead' => false],
@@ -149,7 +149,7 @@ class NotificationService
      * @return Notification[]|array|object[]
      * Récupère toutes les notifications
      */
-    public function getNotificationsAll()
+    public function getNotificationsAll(): array
     {
         $notifications = $this->entityManager->getRepository(Notification::class)->findBy(
             [],
@@ -163,7 +163,7 @@ class NotificationService
      * @return Notification[]|array|object[]
      * Récupère toutes les notifications lues
      */
-    public function getNotificationsRead()
+    public function getNotificationsRead(): array
     {
         $notifications = $this->entityManager->getRepository(Notification::class)->findBy(
             ['isRead' => true],
@@ -177,7 +177,7 @@ class NotificationService
      * @return Notification[]|array|object[]
      * Récupère toutes les notifications non lues
      */
-    public function getNotificationsNotRead()
+    public function getNotificationsNotRead(): array
     {
         $notifications = $this->entityManager->getRepository(Notification::class)->findBy(
             ['isRead' => false],
@@ -193,7 +193,7 @@ class NotificationService
      * @return void
      * Supprime les notifications d'un matériel
      */
-    public function deleteNotification($materielNom, $materielId)
+    public function deleteNotification($materielNom, $materielId): void
     {
         $identifiantBientot = "bientot_fin_garantie_".$materielNom."_".$materielId;
         $identifiantFin = "fin_garantie_".$materielNom."_".$materielId;

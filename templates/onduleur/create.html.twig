@@ -1,6 +1,6 @@
 {% extends 'gui/base.html.twig' %}
 
-{% block title %}Ajouter un écran | Inventaire{% endblock %}
+{% block title %}Création d'un onduleur{% endblock %}
 {% block stylesheets %}
     <link href="{{ asset('assets/vendors/flatpickr/flatpickr.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/vendors/select2/select2.min.css') }}" rel="stylesheet" />
@@ -11,14 +11,14 @@
     <div class="d-flex mb-4 mt-3">
         <span class="fa-stack me-2 ms-n1">
             <i class="fas fa-circle fa-stack text-300"></i>
-            <i class="fa-inverse fa-stack-1x text-danger fas fa-display"></i>
+            <i class="fa-inverse fa-stack-1x text-danger fas fa-car-battery"></i>
         </span>
         <div class="col">
             <h5 class="mb-0 text-danger position-relative">
-                <span class="bg-200 dark__bg-1100 pe-3">Écrans</span>
+                <span class="bg-200 dark__bg-1100 pe-3">Onduleurs</span>
                 <span class="border position-absolute top-50 translate-middle-y w-100 start-0 z-n1"></span>
             </h5>
-            <p class="mb-0">Cette page vous permet d'ajouter un écran.</p>
+            <p class="mb-0">Cette page vous permet de créer un onduleur.</p>
         </div>
     </div>
     <div class="row g-0">
@@ -32,34 +32,39 @@
             <div class="sticky-sidebar">
                 <div class="card mb-3">
                     <div class="card-header d-flex flex-between-center">
-                        <h5 class="mb-0">Ajouter un écran</h5>
-                        <a class="btn btn-falcon-default btn-sm" href="{{ path('admin.ecran.show') }}">
-                            Retour
+                        <h5 class="mb-0">
+                            <span class="fas fa-circle-plus"></span>
+                            &nbsp;Création d'un onduleur
+                        </h5>
+                        <a class="btn btn-primary btn-sm" href="{{ path('admin.onduleur.show') }}">
+                            <span class="fas fa-circle-left"></span>
+                            &nbsp;Retour
                         </a>
                     </div>
                     <div class="card-body bg-light">
-                        {{ form_start(ecranForm) }}
-                            {{ form_row(ecranForm.nom) }}
-                            {{ form_row(ecranForm.marque) }}
-                            {{ form_row(ecranForm.modele) }}
-                            {{ form_row(ecranForm.utilisateur) }}
-                            {{ form_row(ecranForm.emplacement) }}
-                            {{ form_row(ecranForm.fournisseur) }}
-                            {{ form_row(ecranForm.entreprise) }}
-                            {{ form_row(ecranForm.numero_serie) }}
-                            {{ form_row(ecranForm.etat) }}
-                            {{ form_row(ecranForm.date_installation) }}
-                            {{ form_row(ecranForm.date_achat) }}
-                            {{ form_row(ecranForm.date_garantie) }}
-                            {{ form_row(ecranForm.commentaire) }}
+                        {{ form_start(onduleurForm) }}
+                            {{ form_row(onduleurForm.nom) }}
+                            {{ form_row(onduleurForm.marque) }}
+                            {{ form_row(onduleurForm.modele) }}
+                            {{ form_row(onduleurForm.numero_serie) }}
+                            {{ form_row(onduleurForm.capacite) }}
+                            {{ form_row(onduleurForm.type_prise) }}
+                            {{ form_row(onduleurForm.emplacement) }}
+                            {{ form_row(onduleurForm.entreprise) }}
+                            {{ form_row(onduleurForm.fournisseur) }}
+                            {{ form_row(onduleurForm.etat) }}
+                            {{ form_row(onduleurForm.date_installation) }}
+                            {{ form_row(onduleurForm.date_achat) }}
+                            {{ form_row(onduleurForm.date_garantie) }}
+                            {{ form_row(onduleurForm.commentaire) }}
                             <label class="fw-medium">
                                 <a style="color: red">*</a>
                                 Champs obligatoires
                             </label>
                             <div class="d-flex justify-content-end">
-                                <button class="btn btn-primary me-1 mb-1" type="submit">Créer</button>
+                                <button class="btn btn-primary me-1 mb-1" type="submit">Sauvegarder</button>
                             </div>
-                        {{ form_end(ecranForm) }}
+                        {{ form_end(onduleurForm) }}
                     </div>
                 </div>
             </div>

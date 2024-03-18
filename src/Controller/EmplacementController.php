@@ -21,7 +21,7 @@ class EmplacementController extends AbstractController
      * @return Response
      * Permet d'afficher la liste des emplacements
      */
-    #[Route('', name: 'show')]
+    #[Route(name: 'show')]
     public function index(EmplacementRepository $emplacementRepository): Response
     {
         $emplacements = $emplacementRepository->findBy([], ['id' => 'DESC']);
@@ -36,9 +36,9 @@ class EmplacementController extends AbstractController
      * @param EntityManagerInterface $entityManager
      * @param Request $request
      * @return Response
-     * Permet d'ajouter un emplacement
+     * Permet de créer un emplacement
      */
-    #[Route('/ajouter', name: 'add')]
+    #[Route('/creer', name: 'create')]
     public function add(EntityManagerInterface $entityManager, Request $request): Response
     {
         $emplacement = new Emplacement();
@@ -52,12 +52,12 @@ class EmplacementController extends AbstractController
             $entityManager->persist($emplacement);
             $entityManager->flush();
 
-            $this->addFlash('success', "L'emplacement a bien été ajouté !");
+            $this->addFlash('success', "L'emplacement a été créé.");
 
             return $this->redirectToRoute('admin.emplacement.show');
         }
 
-        return $this->render('emplacement/add.html.twig', [
+        return $this->render('emplacement/create.html.twig', [
             'emplacementForm' => $emplacementForm->createView(),
             'menu_active' => $this->menu_active,
         ]);
@@ -82,7 +82,7 @@ class EmplacementController extends AbstractController
             $entityManager->persist($emplacement);
             $entityManager->flush();
 
-            $this->addFlash('success', "L'emplacement a bien été modifié !");
+            $this->addFlash('success', "L'emplacement a été modifié.");
 
             return $this->redirectToRoute('admin.emplacement.show');
         }
@@ -108,7 +108,7 @@ class EmplacementController extends AbstractController
             $entityManager->remove($emplacement);
             $entityManager->flush();
 
-            $this->addFlash('success', "L'emplacement a bien été supprimé !");
+            $this->addFlash('success', "L'emplacement a été supprimé.");
         }
 
         return $this->redirectToRoute('admin.emplacement.show');

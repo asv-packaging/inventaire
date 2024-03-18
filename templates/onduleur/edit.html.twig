@@ -1,6 +1,6 @@
 {% extends 'gui/base.html.twig' %}
 
-{% block title %}Éditer l'onduleur | Inventaire{% endblock %}
+{% block title %}Édition de l'onduleur{% endblock %}
 {% block stylesheets %}
     <link href="{{ asset('assets/vendors/flatpickr/flatpickr.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/vendors/select2/select2.min.css') }}" rel="stylesheet" />
@@ -31,11 +31,21 @@
             {% endfor %}
             <div class="sticky-sidebar">
                 <div class="card mb-3">
-                    <div class="card-header d-flex flex-between-center">
-                        <h5 class="mb-0">Éditer un onduleur</h5>
-                        <a class="btn btn-falcon-default btn-sm" href="{{ path('admin.onduleur.show') }}">
-                            Retour
-                        </a>
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">
+                            <span class="fas fa-edit"></span>
+                            &nbsp;Édition de l'onduleur
+                        </h5>
+                        <div>
+                            <a class="btn btn-primary btn-sm" href="#qrCodeImage">
+                                <span class="fas fa-qrcode"></span>
+                                &nbsp;Voir le Qr Code
+                            </a>
+                            <a class="btn btn-primary btn-sm" href="{{ path('admin.onduleur.show') }}">
+                                <span class="fas fa-circle-left"></span>
+                                &nbsp;Retour
+                            </a>
+                        </div>
                     </div>
                     <div class="card-body bg-light">
                         {{ form_start(onduleurForm) }}
@@ -53,19 +63,28 @@
                             {{ form_row(onduleurForm.date_achat) }}
                             {{ form_row(onduleurForm.date_garantie) }}
                             {{ form_row(onduleurForm.commentaire) }}
-                            <center>
-                                <label class="form-label">QR Code</label><br>
-                                <img src="{{ qrCodes }}" alt="" id="qrCodeImage" /><br>
-                                <button class="btn btn-primary me-1 mb-1" id="printButton">Imprimer le QR Code</button>
-                            </center>
                             <label class="fw-medium">
                                 <a style="color: red">*</a>
                                 Champs obligatoires
                             </label>
                             <div class="d-flex justify-content-end">
-                                <button class="btn btn-primary me-1 mb-1" type="submit">Éditer</button>
+                                <button class="btn btn-primary me-1 mb-1" type="submit">Sauvegarder</button>
                             </div>
                         {{ form_end(onduleurForm) }}
+                    </div>
+                </div>
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <h5 class="mb-0">
+                            <span class="fas fa-qrcode"></span>
+                            &nbsp;QR Code
+                        </h5>
+                    </div>
+                    <div class="card-body bg-light">
+                        <center>
+                            <img src="{{ qrCodes }}" alt="" id="qrCodeImage" /><br><br>
+                            <button class="btn btn-primary me-1 mb-1" id="printButton">Imprimer le QR Code</button>
+                        </center>
                     </div>
                 </div>
             </div>
@@ -76,28 +95,26 @@
     <script src="{{ asset('assets/vendors/select2/select2.min.js') }}"></script>
     <script src="{{ asset('assets/js/flatpickr.js') }}"></script>
     <script>
-        // Récupére une référence vers le bouton
-        const printButton = document.getElementById('printButton');
+        // Script pour imprimer le QR Code
+        document.addEventListener('DOMContentLoaded', function() {
+            const printButton = document.getElementById('printButton');
+            const qrCodesContent = "{{ qrCodes }}";
 
-        // Attache un gestionnaire d'événements au clic sur le bouton
-        printButton.addEventListener('click', function(event) {
-            event.preventDefault();
+            printButton.addEventListener('click', function(event) {
+                event.preventDefault();
 
-            // Créer un objet d'impression
-            const printWindow = window.open('', '', 'width=600,height=600');
+                const printWindow = window.open('', '_blank');
 
-            // Insére l'image dans la fenêtre d'impression
-            printWindow.document.open();
-            printWindow.document.write('<html><body>');
-            printWindow.document.write('<img src="' + qrCodeImage.src + '" />');
-            printWindow.document.write('</body></html>');
-            printWindow.document.close();
+                printWindow.document.write('<!DOCTYPE html><html><head><title>Qr Code</title><style>@media print { body { margin: 0; padding: 0; } @page { margin: 0; size: auto; } }</style></head><body>');
+                printWindow.document.write('<div style="margin-top: 20px;"></div>');
+                printWindow.document.write('<img src="' + qrCodesContent + '" alt="QR Code" />');
+                printWindow.document.write('</body></html>');
+                printWindow.document.close();
 
-            // Attends que l'image soit chargée, puis déclenche l'impression
-            printWindow.onload = function() {
                 printWindow.print();
+
                 printWindow.close();
-            };
+            });
         });
     </script>
 {% endblock %}

@@ -33,7 +33,7 @@ class TabletteController extends AbstractController
      * @return Response
      * Permet d'afficher la liste des tablettes
      */
-    #[Route('', name: 'show')]
+    #[Route(name: 'show')]
     public function index(TabletteRepository $tabletteRepository): Response
     {
         $tablettes = $tabletteRepository->findBy([], ['id' => 'DESC']);
@@ -115,10 +115,10 @@ class TabletteController extends AbstractController
      * @param EntityManagerInterface $entityManager
      * @param Request $request
      * @return Response
-     * Permet d'ajouter une tablette
+     * Permet de créer une tablette
      */
-    #[Route('/ajouter', name: 'add')]
-    public function add(EntityManagerInterface $entityManager, Request $request): Response
+    #[Route('/creer', name: 'create')]
+    public function create(EntityManagerInterface $entityManager, Request $request): Response
     {
         $tablette = new Tablette();
 
@@ -131,12 +131,12 @@ class TabletteController extends AbstractController
             $entityManager->persist($tablette);
             $entityManager->flush();
 
-            $this->addFlash('success', "La tablette a bien été ajoutée !");
+            $this->addFlash('success', "La tablette a été créée.");
 
             return $this->redirectToRoute('admin.tablette.show');
         }
 
-        return $this->render('tablette/add.html.twig', [
+        return $this->render('tablette/create.html.twig', [
             'tabletteForm' => $tabletteForm->createView(),
             'menu_active' => $this->menu_active,
         ]);
@@ -187,7 +187,7 @@ class TabletteController extends AbstractController
             $entityManager->persist($tablette);
             $entityManager->flush();
 
-            $this->addFlash('success', "La tablette a bien été modifiée !");
+            $this->addFlash('success', "La tablette a été modifiée.");
 
             return $this->redirectToRoute('admin.tablette.show');
         }
@@ -217,7 +217,7 @@ class TabletteController extends AbstractController
             $entityManager->remove($tablette);
             $entityManager->flush();
 
-            $this->addFlash('success', "La tablette a bien été supprimée !");
+            $this->addFlash('success', "La tablette a été supprimée.");
         }
 
         return $this->redirectToRoute('admin.tablette.show');

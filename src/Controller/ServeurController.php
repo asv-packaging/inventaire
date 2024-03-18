@@ -33,7 +33,7 @@ class ServeurController extends AbstractController
      * @return Response
      * Permet d'afficher la liste des serveurs
      */
-    #[Route('', name: 'show')]
+    #[Route(name: 'show')]
     public function index(ServeurRepository $serveurRepository): Response
     {
         $serveurs = $serveurRepository->findBy([], ['id' => 'DESC']);
@@ -120,10 +120,10 @@ class ServeurController extends AbstractController
      * @param EntityManagerInterface $entityManager
      * @param Request $request
      * @return Response
-     * Permet d'ajouter un serveur
+     * Permet de créer un serveur
      */
-    #[Route('/ajouter', name: 'add')]
-    public function add(EntityManagerInterface $entityManager, Request $request): Response
+    #[Route('/creer', name: 'create')]
+    public function create(EntityManagerInterface $entityManager, Request $request): Response
     {
         $serveur = new Serveur();
 
@@ -136,12 +136,12 @@ class ServeurController extends AbstractController
             $entityManager->persist($serveur);
             $entityManager->flush();
 
-            $this->addFlash('success', "Le serveur a bien été ajouté !");
+            $this->addFlash('success', "Le serveur a été créé.");
 
             return $this->redirectToRoute('admin.serveur.show');
         }
 
-        return $this->render('serveur/add.html.twig', [
+        return $this->render('serveur/create.html.twig', [
             'serveurForm' => $serveurForm->createView(),
             'menu_active' => $this->menu_active,
         ]);
@@ -192,7 +192,7 @@ class ServeurController extends AbstractController
             $entityManager->persist($serveur);
             $entityManager->flush();
 
-            $this->addFlash('success', "Le serveur a bien été modifié !");
+            $this->addFlash('success', "Le serveur a été modifié.");
 
             return $this->redirectToRoute('admin.serveur.show');
         }
@@ -222,7 +222,7 @@ class ServeurController extends AbstractController
             $entityManager->remove($serveur);
             $entityManager->flush();
 
-            $this->addFlash('success', "Le serveur a bien été supprimé !");
+            $this->addFlash('success', "Le serveur a été supprimé.");
         }
 
         return $this->redirectToRoute('admin.serveur.show');

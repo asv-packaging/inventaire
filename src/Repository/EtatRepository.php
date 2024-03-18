@@ -39,6 +39,14 @@ class EtatRepository extends ServiceEntityRepository
         }
     }
 
+    public function countEtats(): int
+    {
+        return $this->createQueryBuilder('e')
+            ->select('count(e.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
 //    /**
 //     * @return Statut[] Returns an array of Statut objects
 //     */

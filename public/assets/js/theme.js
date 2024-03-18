@@ -631,7 +631,7 @@ var BulkSelect = /*#__PURE__*/function () {
 }();
 
 function bulkSelectInit() {
-  var bulkSelects = document.querySelectorAll('[data-bulk-select');
+  var bulkSelects = document.querySelectorAll('[data-bulk-select]');
 
   if (bulkSelects.length) {
     bulkSelects.forEach(function (el) {

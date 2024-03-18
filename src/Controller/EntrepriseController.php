@@ -21,7 +21,7 @@ class EntrepriseController extends AbstractController
      * @return Response
      * Permet d'afficher la liste des entreprises (sites)
      */
-    #[Route('', name: 'show')]
+    #[Route(name: 'show')]
     public function index(EntrepriseRepository $entrepriseRepository): Response
     {
         $entreprises = $entrepriseRepository->findBy([], ['id' => 'DESC']);
@@ -36,10 +36,10 @@ class EntrepriseController extends AbstractController
      * @param EntityManagerInterface $entityManager
      * @param Request $request
      * @return Response
-     * Permet d'ajouter une entreprise (site)
+     * Permet de créer une entreprise (site)
      */
-    #[Route('/ajouter', name: 'add')]
-    public function add(EntityManagerInterface $entityManager, Request $request): Response
+    #[Route('/creer', name: 'create')]
+    public function create(EntityManagerInterface $entityManager, Request $request): Response
     {
         $entreprise = new Entreprise();
 
@@ -52,12 +52,12 @@ class EntrepriseController extends AbstractController
             $entityManager->persist($entreprise);
             $entityManager->flush();
 
-            $this->addFlash('success', "Le site a bien été ajouté !");
+            $this->addFlash('success', "Le site a été créé.");
 
             return $this->redirectToRoute('admin.entreprise.show');
         }
 
-        return $this->render('entreprise/add.html.twig', [
+        return $this->render('entreprise/create.html.twig', [
             'entrepriseForm' => $entrepriseForm->createView(),
             'menu_active' => $this->menu_active,
         ]);
@@ -82,7 +82,7 @@ class EntrepriseController extends AbstractController
             $entityManager->persist($entreprise);
             $entityManager->flush();
 
-            $this->addFlash('success', "Le site a bien été modifié !");
+            $this->addFlash('success', "Le site a été modifié.");
 
             return $this->redirectToRoute('admin.entreprise.show');
         }
@@ -108,7 +108,7 @@ class EntrepriseController extends AbstractController
             $entityManager->remove($entreprise);
             $entityManager->flush();
 
-            $this->addFlash('success', "Le site a bien été supprimé !");
+            $this->addFlash('success', "Le site a été supprimé.");
         }
 
         return $this->redirectToRoute('admin.entreprise.show');

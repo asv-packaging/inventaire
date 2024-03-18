@@ -25,7 +25,7 @@ class TelephonePortableController extends AbstractController
      * @return Response
      * Permet d'afficher la liste des téléphones portables
      */
-    #[Route('', name: 'show')]
+    #[Route(name: 'show')]
     public function index(TelephoneRepository $telephonePortableRepository): Response
     {
         $telephones = $telephonePortableRepository->findBy([], ['id' => 'DESC']);
@@ -109,8 +109,8 @@ class TelephonePortableController extends AbstractController
      * @return Response
      * Permet d'ajouter un téléphone portable
      */
-    #[Route('/ajouter', name: 'add')]
-    public function add(EntityManagerInterface $entityManager, Request $request): Response
+    #[Route('/creer', name: 'create')]
+    public function create(EntityManagerInterface $entityManager, Request $request): Response
     {
         $telephone = new TelephonePortable();
 
@@ -123,12 +123,12 @@ class TelephonePortableController extends AbstractController
             $entityManager->persist($telephone);
             $entityManager->flush();
 
-            $this->addFlash('success', "Le téléphone portable a bien été ajouté !");
+            $this->addFlash('success', "Le téléphone portable a été créé.");
 
             return $this->redirectToRoute('admin.telephone_portable.show');
         }
 
-        return $this->render('telephone_portable/add.html.twig', [
+        return $this->render('telephone_portable/create.html.twig', [
             'telephoneForm' => $telephoneForm->createView(),
             'menu_active' => $this->menu_active,
         ]);
@@ -156,7 +156,7 @@ class TelephonePortableController extends AbstractController
             $entityManager->persist($telephone);
             $entityManager->flush();
 
-            $this->addFlash('success', "Le téléphone portable a bien été modifié !");
+            $this->addFlash('success', "Le téléphone portable a été modifié.");
 
             return $this->redirectToRoute('admin.telephone_portable.show');
         }
@@ -185,7 +185,7 @@ class TelephonePortableController extends AbstractController
             $entityManager->remove($telephone);
             $entityManager->flush();
 
-            $this->addFlash('success', "Le téléphone portable a bien été supprimé !");
+            $this->addFlash('success', "Le téléphone portable a été supprimé.");
         }
 
         return $this->redirectToRoute('admin.telephone_portable.show');

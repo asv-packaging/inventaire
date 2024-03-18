@@ -21,7 +21,7 @@ class FournisseurController extends AbstractController
      * @return Response
      * Permet d'afficher la liste des fournisseurs
      */
-    #[Route('', name: 'show')]
+    #[Route(name: 'show')]
     public function index(FournisseurRepository $fournisseurRepository): Response
     {
         $fournisseurs = $fournisseurRepository->findBy([], ['id' => 'DESC']);
@@ -36,10 +36,10 @@ class FournisseurController extends AbstractController
      * @param EntityManagerInterface $entityManager
      * @param Request $request
      * @return Response
-     * Permet d'ajouter un fournisseur
+     * Permet de créer un fournisseur
      */
-    #[Route('/ajouter', name: 'add')]
-    public function add(EntityManagerInterface $entityManager, Request $request): Response
+    #[Route('/creer', name: 'create')]
+    public function create(EntityManagerInterface $entityManager, Request $request): Response
     {
         $fournisseur = new Fournisseur();
 
@@ -52,12 +52,12 @@ class FournisseurController extends AbstractController
             $entityManager->persist($fournisseur);
             $entityManager->flush();
 
-            $this->addFlash('success', "Le fournisseur a bien été ajouté !");
+            $this->addFlash('success', "Le fournisseur a été ajouté.");
 
             return $this->redirectToRoute('admin.fournisseur.show');
         }
 
-        return $this->render('fournisseur/add.html.twig', [
+        return $this->render('fournisseur/create.html.twig', [
             'fournisseurForm' => $fournisseurForm->createView(),
             'menu_active' => $this->menu_active,
         ]);
@@ -82,7 +82,7 @@ class FournisseurController extends AbstractController
             $entityManager->persist($fournisseur);
             $entityManager->flush();
 
-            $this->addFlash('success', "Le fournisseur a bien été modifié !");
+            $this->addFlash('success', "Le fournisseur a été modifié.");
 
             return $this->redirectToRoute('admin.fournisseur.show');
         }
@@ -108,7 +108,7 @@ class FournisseurController extends AbstractController
             $entityManager->remove($fournisseur);
             $entityManager->flush();
 
-            $this->addFlash('success', "Le fournisseur a bien été supprimé !");
+            $this->addFlash('success', "Le fournisseur a été supprimé.");
         }
 
         return $this->redirectToRoute('admin.fournisseur.show');

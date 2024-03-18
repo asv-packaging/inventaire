@@ -39,6 +39,14 @@ class TabletteRepository extends ServiceEntityRepository
         }
     }
 
+    public function countTablettes(): int
+    {
+        return $this->createQueryBuilder('t')
+            ->select('count(t.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
 //    /**
 //     * @return Tablette[] Returns an array of Tablette objects
 //     */

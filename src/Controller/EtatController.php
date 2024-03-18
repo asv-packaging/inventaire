@@ -21,7 +21,7 @@ class EtatController extends AbstractController
      * @return Response
      * Permet d'afficher la liste des états
      */
-    #[Route('', name: 'show')]
+    #[Route(name: 'show')]
     public function index(EtatRepository $etatRepository): Response
     {
         $etats = $etatRepository->findBy([], ['id' => 'DESC']);
@@ -38,8 +38,8 @@ class EtatController extends AbstractController
      * @return Response
      * Permet d'ajouter un état
      */
-    #[Route('/ajouter', name: 'add')]
-    public function add(EntityManagerInterface $entityManager, Request $request): Response
+    #[Route('/creer', name: 'create')]
+    public function create(EntityManagerInterface $entityManager, Request $request): Response
     {
         $etat = new Etat();
 
@@ -52,12 +52,12 @@ class EtatController extends AbstractController
             $entityManager->persist($etat);
             $entityManager->flush();
 
-            $this->addFlash('success', "L'état a bien été ajouté !");
+            $this->addFlash('success', "L'état a été créé.");
 
             return $this->redirectToRoute('admin.etat.show');
         }
 
-        return $this->render('etat/add.html.twig', [
+        return $this->render('etat/create.html.twig', [
             'etatForm' => $etatForm->createView(),
             'menu_active' => $this->menu_active,
         ]);
@@ -82,7 +82,7 @@ class EtatController extends AbstractController
             $entityManager->persist($etat);
             $entityManager->flush();
 
-            $this->addFlash('success', "L'état a bien été modifié !");
+            $this->addFlash('success', "L'état a été modifié.");
 
             return $this->redirectToRoute('admin.etat.show');
         }
@@ -108,7 +108,7 @@ class EtatController extends AbstractController
             $entityManager->remove($etat);
             $entityManager->flush();
 
-            $this->addFlash('success', "L'état a bien été supprimé !");
+            $this->addFlash('success', "L'état a été supprimé.");
         }
 
         return $this->redirectToRoute('admin.etat.show');

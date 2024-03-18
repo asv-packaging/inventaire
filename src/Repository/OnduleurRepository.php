@@ -39,6 +39,14 @@ class OnduleurRepository extends ServiceEntityRepository
         }
     }
 
+    public function countOnduleurs(): int
+    {
+        return $this->createQueryBuilder('o')
+            ->select('count(o.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
 //    /**
 //     * @return Onduleur[] Returns an array of Onduleur objects
 //     */

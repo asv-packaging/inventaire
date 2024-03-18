@@ -39,6 +39,14 @@ class StockageRepository extends ServiceEntityRepository
         }
     }
 
+    public function countStockages(): int
+    {
+        return $this->createQueryBuilder('s')
+            ->select('count(s.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
 //    /**
 //     * @return Stockage[] Returns an array of Stockage objects
 //     */

@@ -39,6 +39,14 @@ class EcranRepository extends ServiceEntityRepository
         }
     }
 
+    public function countEcrans(): int
+    {
+        return $this->createQueryBuilder('e')
+            ->select('count(e.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
 //    /**
 //     * @return Ecran[] Returns an array of Ecran objects
 //     */

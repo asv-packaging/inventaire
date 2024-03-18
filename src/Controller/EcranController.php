@@ -24,11 +24,11 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 
 #[Route('/gestion/ecrans', name: 'admin.ecran.')]
 class EcranController extends AbstractController
 {
-    private $repository;
     private $menu_active = "ecran";
 
     /**
@@ -36,7 +36,7 @@ class EcranController extends AbstractController
      * @return Response
      * Permet d'afficher la liste des écrans
      */
-    #[Route('', name: 'show')]
+    #[Route(name: 'show')]
     public function index(EcranRepository $ecranRepository): Response
     {
         $ecrans = $ecranRepository->findBy([], ['id' => 'DESC']);
@@ -107,7 +107,7 @@ class EcranController extends AbstractController
         }
         else
         {
-            $this->addFlash('danger', "Vous ne pouvez pas exporter les données car aucun écran n'a été trouvé !");
+            $this->addFlash('danger', "Vous ne pouvez pas exporter les données car aucun écran n'a été trouvé.");
 
             return $this->redirectToRoute('admin.ecran.show');
         }
@@ -117,10 +117,10 @@ class EcranController extends AbstractController
      * @param EntityManagerInterface $entityManager
      * @param Request $request
      * @return Response
-     * Permet d'ajouter un écran
+     * Permet de créer un écran
      */
-    #[Route('/ajouter', name: 'add')]
-    public function add(EntityManagerInterface $entityManager, Request $request): Response
+    #[Route('/creer', name: 'create')]
+    public function create(EntityManagerInterface $entityManager, Request $request): Response
     {
         $ecran = new Ecran();
 
@@ -133,12 +133,12 @@ class EcranController extends AbstractController
             $entityManager->persist($ecran);
             $entityManager->flush();
 
-            $this->addFlash('success', "L'écran a bien été ajouté !");
+            $this->addFlash('success', "L'écran a été créé.");
 
             return $this->redirectToRoute('admin.ecran.show');
         }
 
-        return $this->render('ecran/add.html.twig', [
+        return $this->render('ecran/create.html.twig', [
             'ecranForm' => $ecranForm->createView(),
             'menu_active' => $this->menu_active,
         ]);
@@ -189,7 +189,7 @@ class EcranController extends AbstractController
             $entityManager->persist($ecran);
             $entityManager->flush();
 
-            $this->addFlash('success', "L'écran a bien été modifié !");
+            $this->addFlash('success', "L'écran a été modifié.");
 
             return $this->redirectToRoute('admin.ecran.show');
         }
@@ -219,7 +219,7 @@ class EcranController extends AbstractController
             $entityManager->remove($ecran);
             $entityManager->flush();
 
-            $this->addFlash('success', "L'écran a bien été supprimé !");
+            $this->addFlash('success', "L'écran a été supprimé.");
         }
 
         return $this->redirectToRoute('admin.ecran.show');

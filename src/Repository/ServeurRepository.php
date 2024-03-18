@@ -39,6 +39,14 @@ class ServeurRepository extends ServiceEntityRepository
         }
     }
 
+    public function countServeurs(): int
+    {
+        return $this->createQueryBuilder('s')
+            ->select('count(s.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
 //    /**
 //     * @return Serveur[] Returns an array of Serveur objects
 //     */

@@ -39,6 +39,14 @@ class PcPortableRepository extends ServiceEntityRepository
         }
     }
 
+    public function countPcPortables(): int
+    {
+        return $this->createQueryBuilder('p')
+            ->select('count(p.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
 //    /**
 //     * @return PcPortable[] Returns an array of PcPortable objects
 //     */

@@ -1,6 +1,6 @@
 {% extends 'gui/base.html.twig' %}
 
-{% block title %}Ajouter une imprimante | Inventaire{% endblock %}
+{% block title %}Création d'un téléphone portable{% endblock %}
 {% block stylesheets %}
     <link href="{{ asset('assets/vendors/flatpickr/flatpickr.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/vendors/select2/select2.min.css') }}" rel="stylesheet" />
@@ -11,14 +11,14 @@
     <div class="d-flex mb-4 mt-3">
         <span class="fa-stack me-2 ms-n1">
             <i class="fas fa-circle fa-stack text-300"></i>
-            <i class="fa-inverse fa-stack-1x text-danger fas fa-print"></i>
+            <i class="fa-inverse fa-stack-1x text-danger fas fa-mobile-screen-button"></i>
         </span>
         <div class="col">
             <h5 class="mb-0 text-danger position-relative">
-                <span class="bg-200 dark__bg-1100 pe-3">Imprimantes</span>
+                <span class="bg-200 dark__bg-1100 pe-3">Téléphones portables</span>
                 <span class="border position-absolute top-50 translate-middle-y w-100 start-0 z-n1"></span>
             </h5>
-            <p class="mb-0">Cette page vous permet d'ajouter une imprimante.</p>
+            <p class="mb-0">Cette page vous permet de créer un téléphone portable.</p>
         </div>
     </div>
     <div class="row g-0">
@@ -32,35 +32,39 @@
             <div class="sticky-sidebar">
                 <div class="card mb-3">
                     <div class="card-header d-flex flex-between-center">
-                        <h5 class="mb-0">Ajouter une imprimante</h5>
-                        <a class="btn btn-falcon-default btn-sm" href="{{ path('admin.imprimante.show') }}">
-                            Retour
+                        <h5 class="mb-0">
+                            <span class="fas fa-circle-plus"></span>
+                            &nbsp;Création d'un téléphone portable
+                        </h5>
+                        <a class="btn btn-primary btn-sm" href="{{ path('admin.telephone_portable.show') }}">
+                            <span class="fas fa-circle-left"></span>
+                            &nbsp;Retour
                         </a>
                     </div>
                     <div class="card-body bg-light">
-                        {{ form_start(imprimanteForm) }}
-                            {{ form_row(imprimanteForm.nom) }}
-                            {{ form_row(imprimanteForm.marque) }}
-                            {{ form_row(imprimanteForm.modele) }}
-                            {{ form_row(imprimanteForm.ip) }}
-                            {{ form_row(imprimanteForm.numero_serie) }}
-                            {{ form_row(imprimanteForm.emplacement) }}
-                            {{ form_row(imprimanteForm.entreprise) }}
-                            {{ form_row(imprimanteForm.fournisseur) }}
-                            {{ form_row(imprimanteForm.etat) }}
-                            {{ form_row(imprimanteForm.contrat) }}
-                            {{ form_row(imprimanteForm.date_installation) }}
-                            {{ form_row(imprimanteForm.date_achat) }}
-                            {{ form_row(imprimanteForm.date_garantie) }}
-                            {{ form_row(imprimanteForm.commentaire) }}
+                        {{ form_start(telephoneForm) }}
+                            {{ form_row(telephoneForm.ligne) }}
+                            {{ form_row(telephoneForm.marque) }}
+                            {{ form_row(telephoneForm.modele) }}
+                            {{ form_row(telephoneForm.utilisateur) }}
+                            {{ form_row(telephoneForm.imei1) }}
+                            {{ form_row(telephoneForm.imei2) }}
+                            {{ form_row(telephoneForm.numero_serie) }}
+                            {{ form_row(telephoneForm.entreprise) }}
+                            {{ form_row(telephoneForm.fournisseur) }}
+                            {{ form_row(telephoneForm.etat) }}
+                            {{ form_row(telephoneForm.date_installation) }}
+                            {{ form_row(telephoneForm.date_achat) }}
+                            {{ form_row(telephoneForm.date_garantie) }}
+                            {{ form_row(telephoneForm.commentaire) }}
                             <label class="fw-medium">
                                 <a style="color: red">*</a>
                                 Champs obligatoires
                             </label>
                             <div class="d-flex justify-content-end">
-                                <button class="btn btn-primary me-1 mb-1" type="submit">Créer</button>
+                                <button class="btn btn-primary me-1 mb-1" type="submit">Sauvegarder</button>
                             </div>
-                        {{ form_end(imprimanteForm) }}
+                        {{ form_end(telephoneForm) }}
                     </div>
                 </div>
             </div>

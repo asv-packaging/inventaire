@@ -39,6 +39,14 @@ class ImprimanteRepository extends ServiceEntityRepository
         }
     }
 
+    public function countImprimantes(): int
+    {
+        return $this->createQueryBuilder('i')
+            ->select('count(i.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
 //    /**
 //     * @return Imprimante[] Returns an array of Imprimante objects
 //     */

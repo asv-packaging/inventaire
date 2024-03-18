@@ -24,7 +24,7 @@ class UtilisateurController extends AbstractController
      * @return Response
      * Permet d'afficher la liste des utilisateurs
      */
-    #[Route('', name: 'show')]
+    #[Route(name: 'show')]
     public function index(UtilisateurRepository $utilisateurRepository): Response
     {
         $utilisateurs = $utilisateurRepository->findBy([], ['id' => 'DESC']);

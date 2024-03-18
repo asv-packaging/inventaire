@@ -21,7 +21,7 @@ class StockageController extends AbstractController
      * @return Response
      * Permet d'afficher la liste des types de stockage
      */
-    #[Route('', name: 'show')]
+    #[Route(name: 'show')]
     public function index(StockageRepository $stockageRepository): Response
     {
         $stockages = $stockageRepository->findBy([], ['id' => 'DESC']);
@@ -36,10 +36,10 @@ class StockageController extends AbstractController
      * @param EntityManagerInterface $entityManager
      * @param Request $request
      * @return Response
-     * Permet d'ajouter un type de stockage
+     * Permet de créer un type de stockage
      */
-    #[Route('/ajouter', name: 'add')]
-    public function add(EntityManagerInterface $entityManager, Request $request): Response
+    #[Route('/creer', name: 'create')]
+    public function create(EntityManagerInterface $entityManager, Request $request): Response
     {
         $stockage = new Stockage();
 
@@ -52,12 +52,12 @@ class StockageController extends AbstractController
             $entityManager->persist($stockage);
             $entityManager->flush();
 
-            $this->addFlash('success', "Le type de stockage a bien été ajouté !");
+            $this->addFlash('success', "Le type de stockage a été créé.");
 
             return $this->redirectToRoute('admin.stockage.show');
         }
 
-        return $this->render('stockage/add.html.twig', [
+        return $this->render('stockage/create.html.twig', [
             'stockageForm' => $stockageForm->createView(),
             'menu_active' => $this->menu_active,
         ]);
@@ -82,7 +82,7 @@ class StockageController extends AbstractController
             $entityManager->persist($stockage);
             $entityManager->flush();
 
-            $this->addFlash('success', "Le type de stockage a bien été modifié !");
+            $this->addFlash('success', "Le type de stockage a été modifié.");
 
             return $this->redirectToRoute('admin.stockage.show');
         }
@@ -108,7 +108,7 @@ class StockageController extends AbstractController
             $entityManager->remove($stockage);
             $entityManager->flush();
 
-            $this->addFlash('success', "Le type de stockage a bien été supprimé !");
+            $this->addFlash('success', "Le type de stockage a été supprimé.");
         }
 
         return $this->redirectToRoute('admin.stockage.show');

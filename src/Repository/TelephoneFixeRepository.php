@@ -39,6 +39,14 @@ class TelephoneFixeRepository extends ServiceEntityRepository
         }
     }
 
+    public function countTelephoneFixes(): int
+    {
+        return $this->createQueryBuilder('t')
+            ->select('count(t.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
 //    /**
 //     * @return TelephoneFixe[] Returns an array of TelephoneFixe objects
 //     */

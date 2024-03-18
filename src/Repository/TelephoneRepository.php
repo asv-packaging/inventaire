@@ -39,6 +39,14 @@ class TelephoneRepository extends ServiceEntityRepository
         }
     }
 
+    public function countTelephonePortables(): int
+    {
+        return $this->createQueryBuilder('t')
+            ->select('count(t.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
 //    /**
 //     * @return Telephone[] Returns an array of Telephone objects
 //     */
