@@ -1,10 +1,10 @@
 server := "root@192.168.123.80"
-domain := "inventaire"
+domain := inventaire
 
 .PHONY: install deploy
 
 deploy:
-	ssh -A $(server)$ 'cd /var/www/$(domain) && git pull origin main && make install'
+	ssh -A $(server) 'cd /var/www/$(domain) && git pull origin developpement && make install'
 
 install: vendor/autoload.php
 	php bin/console doctrine:migrations:migrate -n
