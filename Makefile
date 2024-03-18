@@ -1,12 +1,12 @@
-server := "root@192.168.123.80"
-site := "inventaire"
+server := "user@mondomain.ltd"
+domain := "mondomain.ltd"
 
-.PHONY: deploy
+.PHONY: install deploy
 
 deploy:
-	ssh -A $(server)$ 'cd /var/www/$(site) && git pull origin developpement && make install'
+	ssh -A $(server)$ 'cd sites/$(domain) && git pull origin main && make install'
 
-install:
+install: vendor/autoload.php
 	php bin/console doctrine:migrations:migrate -n
 	composer dump-env prod
 	php bin/console cache:clear
