@@ -1,6 +1,6 @@
 {% extends 'gui/base.html.twig' %}
 
-{% block title %}Ajouter un type de stockage | Inventaire{% endblock %}
+{% block title %}Création d'un type de stockage{% endblock %}
 
 {% block body %}
     <div class="d-flex mb-4 mt-3">
@@ -13,7 +13,7 @@
                 <span class="bg-200 dark__bg-1100 pe-3">Types de stockage</span>
                 <span class="border position-absolute top-50 translate-middle-y w-100 start-0 z-n1"></span>
             </h5>
-            <p class="mb-0">Cette page vous permet d'ajouter un type de stockage.</p>
+            <p class="mb-0">Cette page vous permet de créer un type de stockage.</p>
         </div>
     </div>
     <div class="row g-0">
@@ -26,10 +26,14 @@
             {% endfor %}
             <div class="sticky-sidebar">
                 <div class="card mb-3">
-                    <div class="card-header d-flex flex-between-center">
-                        <h5 class="mb-0">Ajouter un type de stockage</h5>
-                        <a class="btn btn-falcon-default btn-sm" href="{{ path('admin.stockage.show') }}">
-                            Retour
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">
+                            <span class="fas fa-circle-plus"></span>
+                            &nbsp;Création d'un type de stockage
+                        </h5>
+                        <a class="btn btn-primary btn-sm" href="{{ path('admin.stockage.show') }}">
+                            <span class="fas fa-circle-left"></span>
+                            &nbsp;Retour
                         </a>
                     </div>
                     <div class="card-body bg-light">
@@ -40,7 +44,7 @@
                                 Champs obligatoires
                             </label>
                             <div class="d-flex justify-content-end">
-                                <button class="btn btn-primary me-1 mb-1" type="submit">Créer</button>
+                                <button class="btn btn-primary me-1 mb-1" type="submit">Sauvegarder</button>
                             </div>
                         {{ form_end(stockageForm) }}
                     </div>
