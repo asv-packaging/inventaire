@@ -1,6 +1,6 @@
 {% extends 'gui/base.html.twig' %}
 
-{% block title %}Utilisateurs | Inventaire{% endblock %}
+{% block title %}Gestion des utilisateurs{% endblock %}
 
 {% block body %}
     <div class="d-flex mb-4 mt-3">
@@ -13,7 +13,7 @@
                 <span class="bg-200 dark__bg-1100 pe-3">Utilisateurs</span>
                 <span class="border position-absolute top-50 translate-middle-y w-100 start-0 z-n1"></span>
             </h5>
-            <p class="mb-0">Cette page vous permet de voir tous les utilisateurs.</p>
+            <p class="mb-0">Cette page vous permet de gérer tous les utilisateurs.</p>
         </div>
     </div>
     <div class="row g-0">
@@ -32,33 +32,42 @@
             {% endfor %}
             <div class="sticky-sidebar">
                 <div class="card mb-3">
-                    <div class="card-header d-flex flex-between-center">
-                        <h5 class="mb-0">Tous les utilisateurs</h5>
-                        <a class="btn btn-falcon-default btn-sm" href="{{ path('admin.utilisateur.add') }}">
-                            Ajouter
-                        </a>
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">
+                            <span class="fas fa-users"></span>
+                            &nbsp;Gestion des utilisateurs
+                        </h5>
+                        <div>
+                            <a class="btn btn-primary btn-sm" href="{{ path('admin.utilisateur.create') }}">
+                                <span class="fas fa-circle-plus"></span>
+                                &nbsp;Créer un utilisateur
+                            </a>
+                            {% if utilisateurs | length != 0 %}
+                                <a class="btn btn-primary btn-sm me-2" href="{{ path('admin.utilisateur.export') }}">
+                                    <span class="fas fa-file-export"></span>
+                                    &nbsp;Exporter
+                                </a>
+                            {% endif %}
+                        </div>
                     </div>
                     <div class="card-body bg-light">
-                        <div id="table_utilisateur" data-list='{"valueNames":["nom","email","site"],"page":20,"pagination":true}'>
+                        <div id="table_utilisateurs">
                             <div class="row justify-content-end g-0">
-                                <div class="col-auto col-sm-5 mb-3">
+                                <div class="col-auto mb-3">
                                     <div class="input-group">
-                                        <input class="form-control form-control-sm shadow-none search" type="search" placeholder="Rechercher..." aria-label="search" pattern="-*" />
-                                        <div class="input-group-text bg-transparent">
-                                            <span class="fa fa-search fs--1 text-600"></span>
+                                        <div class="search-box">
+                                            <input id="searchInput" class="form-control search-input" type="search" placeholder="Rechercher..." aria-label="Rechercher" />
+                                            <span class="fas fa-search search-box-icon"></span>
+                                            <div class="btn-close-falcon-container position-absolute end-0 top-50 translate-middle" data-bs-dismiss="search">
+                                                <button class="btn btn-link btn-close-falcon p-0" id="btn-search-close" aria-label="Close"></button>
+                                            </div>
                                         </div>
-                                        {% if utilisateurs | length != 0 %}
-                                            &nbsp;&nbsp;
-                                            <a class="btn btn-falcon-default btn-sm" href="{{ path('admin.utilisateur.export') }}">
-                                                Exporter
-                                            </a>
-                                        {% endif %}
                                     </div>
                                 </div>
                             </div>
                             <div class="table-responsive scrollbar">
                                 <table class="table overflow-hidden">
-                                    <thead>
+                                    <thead class="bg-200 text-900">
                                         <tr>
                                             <th class="align-middle text-center">#</th>
                                             <th class="align-middle text-center">Nom & Prénom</th>
@@ -107,17 +116,11 @@
                                                 <td colspan="5">Aucun utilisateur n'a été trouvé.</td>
                                             </tr>
                                         {% endif %}
+                                        <tr id="noResultsRow" class="align-middle text-center" style="display: none;">
+                                            <td colspan="5">Aucun utilisateur n'a été trouvé.</td>
+                                        </tr>
                                     </tbody>
                                 </table>
-                            </div>
-                            <div class="d-flex justify-content-center mt-3">
-                                <button class="btn btn-sm btn-falcon-default me-1" type="button" title="Précédent" data-list-pagination="prev">
-                                    <span class="fas fa-chevron-left"></span>
-                                </button>
-                                <ul class="pagination mb-0"></ul>
-                                <button class="btn btn-sm btn-falcon-default ms-1" type="button" title="Suivant" data-list-pagination="next">
-                                    <span class="fas fa-chevron-right"></span>
-                                </button>
                             </div>
                         </div>
                     </div>
@@ -125,4 +128,53 @@
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        // Script pour la recherche dans le tableau
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchBar = document.getElementById('searchInput');
+            const rows = document.querySelectorAll('.list tr');
+            const noResultsRow = document.getElementById('noResultsRow');
+            const btnCloseSearch = document.getElementById('btn-search-close');
+
+            searchBar.addEventListener('input', function(event) {
+                const searchTerm = event.target.value.toLowerCase();
+                let resultsFound = false;
+
+                rows.forEach(row => {
+                    const cells = row.querySelectorAll('td');
+                    let found = false;
+
+                    cells.forEach(cell => {
+                        if (cell.textContent.toLowerCase().includes(searchTerm)) {
+                            found = true;
+                        }
+                    });
+
+                    if (found) {
+                        row.style.display = '';
+                        resultsFound = true;
+                    } else {
+                        row.style.display = 'none';
+                    }
+
+                    if(btnCloseSearch) {
+                        btnCloseSearch.addEventListener('click', function() {
+                            searchBar.value = '';
+                            row.style.display = '';
+                            noResultsRow.style.display = 'none';
+                        });
+                    }
+                });
+
+                if (resultsFound) {
+                    noResultsRow.style.display = 'none';
+                } else {
+                    noResultsRow.style.display = '';
+                }
+            });
+        });
+    </script>
 {% endblock %}

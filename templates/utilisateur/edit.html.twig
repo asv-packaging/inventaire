@@ -1,6 +1,6 @@
 {% extends 'gui/base.html.twig' %}
 
-{% block title %}Éditer l'utilisateur | Inventaire{% endblock %}
+{% block title %}Édition de l'utilisateur{% endblock %}
 {% block stylesheets %}
     <link href="{{ asset('assets/vendors/select2/select2.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/vendors/select2-bootstrap-5-theme/select2-bootstrap-5-theme.min.css') }}" rel="stylesheet" />
@@ -31,9 +31,13 @@
             <div class="sticky-sidebar">
                 <div class="card mb-3">
                     <div class="card-header d-flex flex-between-center">
-                        <h5 class="mb-0">Éditer un utilisateur</h5>
-                        <a class="btn btn-falcon-default btn-sm" href="{{ path('admin.utilisateur.show') }}">
-                            Retour
+                        <h5 class="mb-0">
+                            <span class="fas fa-edit"></span>
+                            &nbsp;Édition de l'utilisateur
+                        </h5>
+                        <a class="btn btn-primary btn-sm" href="{{ path('admin.utilisateur.show') }}">
+                            <span class="fas fa-circle-left"></span>
+                            &nbsp;Retour
                         </a>
                     </div>
                     <div class="card-body bg-light">
@@ -47,7 +51,7 @@
                                 Champs obligatoires
                             </label>
                             <div class="d-flex justify-content-end">
-                                <button class="btn btn-primary me-1 mb-1" type="submit">Éditer</button>
+                                <button class="btn btn-primary me-1 mb-1" type="submit">Sauvegarder</button>
                             </div>
                         {{ form_end(utilisateurForm) }}
                     </div>

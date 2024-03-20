@@ -96,10 +96,10 @@ class UtilisateurController extends AbstractController
      * @param EntityManagerInterface $entityManager
      * @param Request $request
      * @return Response
-     * Permet d'ajouter un utilisateur
+     * Permet de créer un utilisateur
      */
-    #[Route('/ajouter', name: 'add')]
-    public function add(EntityManagerInterface $entityManager, Request $request): Response
+    #[Route('/creer', name: 'create')]
+    public function create(EntityManagerInterface $entityManager, Request $request): Response
     {
         $utilisateur = new Utilisateur();
 
@@ -112,12 +112,12 @@ class UtilisateurController extends AbstractController
             $entityManager->persist($utilisateur);
             $entityManager->flush();
 
-            $this->addFlash('success', "L'utilisateur a bien été ajouté !");
+            $this->addFlash('success', "L'utilisateur a été créé.");
 
             return $this->redirectToRoute('admin.utilisateur.show');
         }
 
-        return $this->render('utilisateur/add.html.twig', [
+        return $this->render('utilisateur/create.html.twig', [
             'utilisateurForm' => $utilisateurForm->createView(),
             'menu_active' => $this->menu_active,
         ]);
@@ -142,7 +142,7 @@ class UtilisateurController extends AbstractController
             $entityManager->persist($utilisateur);
             $entityManager->flush();
 
-            $this->addFlash('success', "L'utilisateur a bien été modifié !");
+            $this->addFlash('success', "L'utilisateur a été modifié.");
 
             return $this->redirectToRoute('admin.utilisateur.show');
         }
@@ -168,7 +168,7 @@ class UtilisateurController extends AbstractController
             $entityManager->remove($utilisateur);
             $entityManager->flush();
 
-            $this->addFlash('success', "L'utilisateur a bien été supprimé !");
+            $this->addFlash('success', "L'utilisateur a été supprimé.");
         }
 
         return $this->redirectToRoute('admin.utilisateur.show');
