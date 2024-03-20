@@ -2,6 +2,7 @@
 
 {% block title %}Gestion des utilisateurs{% endblock %}
 
+
 {% block body %}
     <div class="d-flex mb-4 mt-3">
         <span class="fa-stack me-2 ms-n1">
@@ -80,7 +81,7 @@
                                         {% if utilisateurs | length != 0 %}
                                             {% for utilisateur in utilisateurs %}
                                                 <tr class="align-middle text-center">
-                                                    <td class="text-nowrap">{{ loop.revindex }}</td>
+                                                    <td class="text-nowrap">{{ utilisateur.id }}</td>
                                                     <td class="text-nowrap nom">{{ utilisateur.nom }} {{ utilisateur.prenom }}</td>
                                                     <td class="text-nowrap email">
                                                         {% if utilisateur.email != null %}
@@ -121,6 +122,9 @@
                                         </tr>
                                     </tbody>
                                 </table>
+                            </div>
+                            <div class="d-flex justify-content-center align-items-center">
+                                {{ knp_pagination_render(utilisateurs) }}
                             </div>
                         </div>
                     </div>

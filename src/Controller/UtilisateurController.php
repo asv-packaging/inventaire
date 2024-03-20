@@ -7,6 +7,7 @@ use App\Form\UtilisateurFormType;
 use App\Repository\UtilisateurRepository;
 use App\Service\ExcelExportService;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,13 +22,23 @@ class UtilisateurController extends AbstractController
 
     /**
      * @param UtilisateurRepository $utilisateurRepository
+     * @param PaginatorInterface $paginator
+     * @param Request $request
      * @return Response
      * Permet d'afficher la liste des utilisateurs
      */
-    #[Route(name: 'show')]
-    public function index(UtilisateurRepository $utilisateurRepository): Response
+    #[Route('', name: 'show')]
+    public function index(UtilisateurRepository $utilisateurRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        $utilisateurs = $utilisateurRepository->findBy([], ['id' => 'DESC']);
+        $utilisateursRepo = $utilisateurRepository->findBy([], ['id' => 'DESC']);
+
+        $utilisateurs = $paginator->paginate(
+            $utilisateursRepo,
+            $request->query->getInt('page', 1),
+            10
+        );
+
+        $utilisateurs->setUsedRoute('admin.utilisateur.show');
 
         return $this->render('utilisateur/show.html.twig', [
             'utilisateurs' => $utilisateurs,
