@@ -1,0 +1,73 @@
+{% if pageCount > 1 %}
+    <nav>
+        {% set classAlign = (align is not defined) ? '' : align=='center' ? ' justify-content-center' : (align=='right' ? ' justify-content-end' : '') %}
+        {% set classSize = (size is not defined) ? '' : size=='large' ? ' pagination-lg' : (size=='small' ? ' pagination-sm' : '') %}
+        <ul class="pagination{{ classAlign }}{{ classSize }}">
+
+            {% if previous is defined %}
+                <li class="page-item">
+                    <a class="btn btn-falcon-default me-2" rel="prev" href="{{ path(route, query|merge({(pageParameterName): previous})) }}"><span class="fas fa-chevron-left"></span>&nbsp;{{ 'label_previous'|trans({}, 'KnpPaginatorBundle') }}</a>
+                </li>
+            {% else %}
+                <li class="page-item disabled">
+                    <span class="btn btn-falcon-default me-2 disabled"><span class="fas fa-chevron-left"></span>&nbsp;{{ 'label_previous'|trans({}, 'KnpPaginatorBundle') }}</span>
+                </li>
+            {% endif %}
+
+            {% if startPage > 1 %}
+                <li class="page-item">
+                    <a class="btn btn-falcon-default me-2" href="{{ path(route, query|merge({(pageParameterName): 1})) }}">1</a>
+                </li>
+                {% if startPage == 3 %}
+                    <li class="page-item">
+                        <a class="btn btn-falcon-default me-2" href="{{ path(route, query|merge({(pageParameterName): 2})) }}">2</a>
+                    </li>
+                {% elseif startPage != 2 %}
+                    <li class="page-item disabled">
+                        <span class="btn btn-falcon-default me-2 disabled">&hellip;</span>
+                    </li>
+                {% endif %}
+            {% endif %}
+
+            {% for page in pagesInRange %}
+                {% if page != current %}
+                    <li class="page-item">
+                        <a class="btn btn-falcon-default me-2" href="{{ path(route, query|merge({(pageParameterName): page})) }}">{{ page }}</a>
+                    </li>
+                {% else %}
+                    <li class="page-item active">
+                        <span class="btn btn-primary me-1">{{ page }}</span>
+                    </li>
+                {% endif %}
+
+            {% endfor %}
+
+            {% if pageCount > endPage %}
+                {% if pageCount > (endPage + 1) %}
+                    {% if pageCount > (endPage + 2) %}
+                        <li class="page-item disabled">
+                            <span class="btn btn-falcon-default me-2 disabled">&hellip;</span>
+                        </li>
+                    {% else %}
+                        <li class="page-item">
+                            <a class="btn btn-falcon-default me-2" href="{{ path(route, query|merge({(pageParameterName): (pageCount - 1)})) }}">{{ pageCount -1 }}</a>
+                        </li>
+                    {% endif %}
+                {% endif %}
+                <li class="page-item">
+                    <a class="btn btn-falcon-default me-2" href="{{ path(route, query|merge({(pageParameterName): pageCount})) }}">{{ pageCount }}</a>
+                </li>
+            {% endif %}
+
+            {% if next is defined %}
+                <li class="page-item">
+                    <a class="btn btn-falcon-default me-2" rel="next" href="{{ path(route, query|merge({(pageParameterName): next})) }}">{{ 'label_next'|trans({}, 'KnpPaginatorBundle') }}&nbsp;<span class="fas fa-chevron-right"></span></a>
+                </li>
+            {% else %}
+                <li  class="page-item disabled">
+                    <span class="btn btn-falcon-default me-2 disabled">{{ 'label_next'|trans({}, 'KnpPaginatorBundle') }}&nbsp;<span class="fas fa-chevron-right"></span></span>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+{% endif %}

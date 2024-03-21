@@ -7,4 +7,4 @@ knp_paginator:
     distinct: true                 # Permet de filtrer les doublons sur les paginations jointes
 
   template:
-    pagination: '@KnpPaginator/Pagination/bootstrap_v5_pagination.html.twig' # Template Twig pour la pagination
+    pagination: 'gui/pagination/index.html.twig' # Template Twig pour la pagination
