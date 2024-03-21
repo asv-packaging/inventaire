@@ -38,8 +38,6 @@ class UtilisateurController extends AbstractController
             10
         );
 
-        $utilisateurs->setUsedRoute('admin.utilisateur.show');
-
         return $this->render('utilisateur/show.html.twig', [
             'utilisateurs' => $utilisateurs,
             'menu_active' => $this->menu_active,

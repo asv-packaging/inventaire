@@ -82,20 +82,14 @@
                                             {% for utilisateur in utilisateurs %}
                                                 <tr class="align-middle text-center">
                                                     <td class="text-nowrap">{{ utilisateur.id }}</td>
-                                                    <td class="text-nowrap nom">{{ utilisateur.nom }} {{ utilisateur.prenom }}</td>
-                                                    <td class="text-nowrap email">
-                                                        {% if utilisateur.email != null %}
-                                                            {{ utilisateur.email }}
-                                                        {% else %}
-                                                            <span class="badge text-bg-danger">N/A</span>
-                                                        {% endif %}
+                                                    <td class="text-nowrap">
+                                                        <a href="{{ path('admin.utilisateur.edit', {id: utilisateur.id}) }}"><b>{{ utilisateur.nom }} {{ utilisateur.prenom }}</b></a>
                                                     </td>
-                                                    <td class="text-nowrap site">
-                                                        {% if utilisateur.getEntreprise != null %}
-                                                            {{ utilisateur.getEntreprise.nom }}
-                                                        {% else %}
-                                                            <span class="badge text-bg-danger">N/A</span>
-                                                        {% endif %}
+                                                    <td class="text-nowrap">
+                                                        {{ utilisateur.email | default('<span class="badge bg-danger">N/A</span>') | raw }}
+                                                    </td>
+                                                    <td class="text-nowrap">
+                                                        {{ utilisateur.getEntreprise.nom | default('<span class="badge bg-danger">N/A</span>') | raw }}
                                                     </td>
                                                     <td class="text-nowrap">
                                                         <a href="{{ path('admin.utilisateur.edit', {id: utilisateur.id}) }}" class="btn btn-primary btn-sm">
