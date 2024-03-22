@@ -17,6 +17,7 @@ use Endroid\QrCode\Encoding\Encoding;
 use Endroid\QrCode\ErrorCorrectionLevel\ErrorCorrectionLevelLow;
 use Endroid\QrCode\QrCode;
 use Endroid\QrCode\Color\Color;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -33,13 +34,21 @@ class EcranController extends AbstractController
 
     /**
      * @param EcranRepository $ecranRepository
+     * @param PaginatorInterface $paginator
+     * @param Request $request
      * @return Response
      * Permet d'afficher la liste des écrans
      */
     #[Route(name: 'show')]
-    public function index(EcranRepository $ecranRepository): Response
+    public function index(EcranRepository $ecranRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        $ecrans = $ecranRepository->findBy([], ['id' => 'DESC']);
+        $ecransRepo = $ecranRepository->findBy([], ['id' => 'DESC']);
+
+        $ecrans = $paginator->paginate(
+            $ecransRepo,
+            $request->query->getInt('page', 1),
+            10
+        );
 
         return $this->render('ecran/show.html.twig', [
             'ecrans' => $ecrans,

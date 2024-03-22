@@ -15,6 +15,7 @@ use Endroid\QrCode\Label\Font\NotoSans;
 use Endroid\QrCode\Label\Label;
 use Endroid\QrCode\QrCode;
 use Endroid\QrCode\Writer\PngWriter;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,13 +31,21 @@ class ImprimanteController extends AbstractController
 
     /**
      * @param ImprimanteRepository $imprimanteRepository
+     * @param PaginatorInterface $paginator
+     * @param Request $request
      * @return Response
      * Permet d'afficher la liste des imprimantes
      */
     #[Route(name: 'show')]
-    public function index(ImprimanteRepository $imprimanteRepository): Response
+    public function index(ImprimanteRepository $imprimanteRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        $imprimantes = $imprimanteRepository->findBy([], ['id' => 'DESC']);
+        $imprimantesRepo = $imprimanteRepository->findBy([], ['id' => 'DESC']);
+
+        $imprimantes = $paginator->paginate(
+            $imprimantesRepo,
+            $request->query->getInt('page', 1),
+            10
+        );
 
         return $this->render('imprimante/show.html.twig', [
             'imprimantes' => $imprimantes,
