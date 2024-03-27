@@ -15,6 +15,7 @@ use Endroid\QrCode\Label\Font\NotoSans;
 use Endroid\QrCode\Label\Label;
 use Endroid\QrCode\QrCode;
 use Endroid\QrCode\Writer\PngWriter;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,13 +31,21 @@ class ServeurController extends AbstractController
 
     /**
      * @param ServeurRepository $serveurRepository
+     * @param PaginatorInterface $paginator
+     * @param Request $request
      * @return Response
      * Permet d'afficher la liste des serveurs
      */
     #[Route(name: 'show')]
-    public function index(ServeurRepository $serveurRepository): Response
+    public function index(ServeurRepository $serveurRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        $serveurs = $serveurRepository->findBy([], ['id' => 'DESC']);
+        $serveursRepo = $serveurRepository->findBy([], ['id' => 'DESC']);
+
+        $serveurs = $paginator->paginate(
+            $serveursRepo,
+            $request->query->getInt('page', 1),
+            10
+        );
 
         return $this->render('serveur/show.html.twig', [
             'serveurs' => $serveurs,

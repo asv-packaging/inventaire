@@ -51,7 +51,7 @@
                         </div>
                     </div>
                     <div class="card-body bg-light">
-                        <div id="table_serveurs" data-list='{"page":20,"pagination":true}'>
+                        <div id="table_serveurs">
                             <div class="row justify-content-end g-0">
                                 <div class="col-auto mb-3">
                                     <div class="input-group">
@@ -88,7 +88,7 @@
                                         {% if serveurs | length != 0 %}
                                             {% for serveur in serveurs %}
                                                 <tr class="align-middle text-center">
-                                                    <td class="text-nowrap">{{ loop.revindex }}</td>
+                                                    <td class="text-nowrap">{{ serveur.id }}</td>
                                                     <td class="text-nowrap">
                                                         <a href="{{ path('admin.serveur.edit', {id: serveur.id}) }}"><b>{{ serveur.nom }}</b></a>
                                                     </td>
@@ -152,14 +152,8 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="d-flex justify-content-center mt-3">
-                                <button class="btn btn-sm btn-falcon-default me-1" type="button" title="Précédent" data-list-pagination="prev">
-                                    <span class="fas fa-chevron-left"></span>
-                                </button>
-                                <ul class="pagination mb-0"></ul>
-                                <button class="btn btn-sm btn-falcon-default ms-1" type="button" title="Suivant" data-list-pagination="next">
-                                    <span class="fas fa-chevron-right"></span>
-                                </button>
+                            <div class="d-flex justify-content-center align-items-center">
+                                {{ knp_pagination_render(serveurs) }}
                             </div>
                         </div>
                     </div>

@@ -51,7 +51,7 @@
                         </div>
                     </div>
                     <div class="card-body bg-light">
-                        <div id="table_telephone_fixes" data-list='{"page":20,"pagination":true}'>
+                        <div id="table_telephone_fixes">
                             <div class="row justify-content-end g-0">
                                 <div class="col-auto mb-3">
                                     <div class="input-group">
@@ -88,7 +88,7 @@
                                         {% if telephones | length != 0 %}
                                             {% for telephone in telephones %}
                                                 <tr class="align-middle text-center">
-                                                    <td class="text-nowrap">{{ loop.revindex }}</td>
+                                                    <td class="text-nowrap">{{ telephone.id }}</td>
                                                     <td class="text-nowrap">
                                                         {% if telephone.ligne != null %}
                                                             <a href="{{ path('admin.telephone_fixe.edit', {id: telephone.id}) }}"><b>{{ telephone.ligne }}</b></a>
@@ -162,14 +162,8 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="d-flex justify-content-center mt-3">
-                                <button class="btn btn-sm btn-falcon-default me-1" type="button" title="Précédent" data-list-pagination="prev">
-                                    <span class="fas fa-chevron-left"></span>
-                                </button>
-                                <ul class="pagination mb-0"></ul>
-                                <button class="btn btn-sm btn-falcon-default ms-1" type="button" title="Suivant" data-list-pagination="next">
-                                    <span class="fas fa-chevron-right"></span>
-                                </button>
+                            <div class="d-flex justify-content-center align-items-center">
+                                {{ knp_pagination_render(telephones) }}
                             </div>
                         </div>
                     </div>

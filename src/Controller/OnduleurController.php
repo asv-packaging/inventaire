@@ -15,6 +15,7 @@ use Endroid\QrCode\Label\Font\NotoSans;
 use Endroid\QrCode\Label\Label;
 use Endroid\QrCode\QrCode;
 use Endroid\QrCode\Writer\PngWriter;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,13 +31,21 @@ class OnduleurController extends AbstractController
 
     /**
      * @param OnduleurRepository $onduleurRepository
+     * @param PaginatorInterface $paginator
+     * @param Request $request
      * @return Response
      * Permet d'afficher la liste des onduleurs
      */
     #[Route(name: 'show')]
-    public function index(OnduleurRepository $onduleurRepository): Response
+    public function index(OnduleurRepository $onduleurRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        $onduleurs = $onduleurRepository->findBy([], ['id' => 'DESC']);
+        $onduleursRepo = $onduleurRepository->findBy([], ['id' => 'DESC']);
+
+        $onduleurs = $paginator->paginate(
+            $onduleursRepo,
+            $request->query->getInt('page', 1),
+            10
+        );
 
         return $this->render('onduleur/show.html.twig', [
             'onduleurs' => $onduleurs,

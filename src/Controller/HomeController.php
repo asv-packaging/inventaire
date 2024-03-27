@@ -16,7 +16,7 @@ use App\Repository\StockageRepository;
 use App\Repository\SystemeExploitationRepository;
 use App\Repository\TabletteRepository;
 use App\Repository\TelephoneFixeRepository;
-use App\Repository\TelephoneRepository;
+use App\Repository\TelephonePortableRepository;
 use App\Repository\UtilisateurRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
@@ -32,11 +32,11 @@ class HomeController extends AbstractController
 
     #[Route('/accueil', name: 'admin.home')]
     public function index(
-        Security $security, EcranRepository $ecranRepository, ImprimanteRepository $imprimanteRepository, OnduleurRepository $onduleurRepository,
-        PcFixeRepository $pcFixeRepository, PcPortableRepository $pcPortableRepository, ServeurRepository $serveurRepository,
-        TabletteRepository $tabletteRepository, TelephoneFixeRepository $telephoneFixeRepository, TelephoneRepository $telephonePortableRepository,
+        Security              $security, EcranRepository $ecranRepository, ImprimanteRepository $imprimanteRepository, OnduleurRepository $onduleurRepository,
+        PcFixeRepository      $pcFixeRepository, PcPortableRepository $pcPortableRepository, ServeurRepository $serveurRepository,
+        TabletteRepository    $tabletteRepository, TelephoneFixeRepository $telephoneFixeRepository, TelephonePortableRepository $telephonePortableRepository,
         EmplacementRepository $emplacementRepository, EtatRepository $etatRepository, FournisseurRepository $fournisseurRepository,
-        EntrepriseRepository $entrepriseRepository, SystemeExploitationRepository $systemeExploitationRepository, StockageRepository $stockageRepository,
+        EntrepriseRepository  $entrepriseRepository, SystemeExploitationRepository $systemeExploitationRepository, StockageRepository $stockageRepository,
         UtilisateurRepository $utilisateurRepository): Response
     {
         // Récupération des informations de l'utilisateur connecté

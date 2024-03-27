@@ -15,6 +15,7 @@ use Endroid\QrCode\Label\Font\NotoSans;
 use Endroid\QrCode\Label\Label;
 use Endroid\QrCode\QrCode;
 use Endroid\QrCode\Writer\PngWriter;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,13 +31,21 @@ class PcPortableController extends AbstractController
 
     /**
      * @param PcPortableRepository $pcPortableRepository
+     * @param PaginatorInterface $paginator
+     * @param Request $request
      * @return Response
      * Permet d'afficher la liste des PC Portables
      */
     #[Route(name: 'show')]
-    public function index(PcPortableRepository $pcPortableRepository): Response
+    public function index(PcPortableRepository $pcPortableRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        $pcPortables = $pcPortableRepository->findBy([], ['id' => 'DESC']);
+        $pcPortablesRepo = $pcPortableRepository->findBy([], ['id' => 'DESC']);
+
+        $pcPortables = $paginator->paginate(
+            $pcPortablesRepo,
+            $request->query->getInt('page', 1),
+            10
+        );
 
         return $this->render('pc_portable/show.html.twig', [
             'pcPortables' => $pcPortables,

@@ -14,7 +14,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method TelephonePortable[]    findAll()
  * @method TelephonePortable[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class TelephoneRepository extends ServiceEntityRepository
+class TelephonePortableRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {

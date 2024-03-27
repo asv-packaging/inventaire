@@ -15,6 +15,7 @@ use Endroid\QrCode\Label\Font\NotoSans;
 use Endroid\QrCode\Label\Label;
 use Endroid\QrCode\QrCode;
 use Endroid\QrCode\Writer\PngWriter;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,13 +31,21 @@ class TelephoneFixeController extends AbstractController
 
     /**
      * @param TelephoneFixeRepository $telephoneFixeRepository
+     * @param PaginatorInterface $paginator
+     * @param Request $request
      * @return Response
      * Permet d'afficher la liste des téléphones fixes
      */
     #[Route(name: 'show')]
-    public function index(TelephoneFixeRepository $telephoneFixeRepository): Response
+    public function index(TelephoneFixeRepository $telephoneFixeRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        $telephones = $telephoneFixeRepository->findBy([], ['id' => 'DESC']);
+        $telephonesRepo = $telephoneFixeRepository->findBy([], ['id' => 'DESC']);
+
+        $telephones = $paginator->paginate(
+            $telephonesRepo,
+            $request->query->getInt('page', 1),
+            10
+        );
 
         return $this->render('telephone_fixe/show.html.twig', [
             'telephones' => $telephones,

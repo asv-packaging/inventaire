@@ -2,11 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\TelephoneRepository;
+use App\Repository\TelephonePortableRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: TelephoneRepository::class)]
+#[ORM\Entity(repositoryClass: TelephonePortableRepository::class)]
 class TelephonePortable
 {
     #[ORM\Id]

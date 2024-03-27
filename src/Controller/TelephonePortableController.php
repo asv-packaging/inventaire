@@ -4,10 +4,11 @@ namespace App\Controller;
 
 use App\Entity\TelephonePortable;
 use App\Form\TelephonePortableFormType;
-use App\Repository\TelephoneRepository;
+use App\Repository\TelephonePortableRepository;
 use App\Service\ExcelExportService;
 use App\Service\NotificationService;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,14 +22,22 @@ class TelephonePortableController extends AbstractController
     private $menu_active = "telephone_portable";
 
     /**
-     * @param TelephoneRepository $telephonePortableRepository
+     * @param TelephonePortableRepository $telephonePortableRepository
+     * @param PaginatorInterface $paginator
+     * @param Request $request
      * @return Response
      * Permet d'afficher la liste des téléphones portables
      */
     #[Route(name: 'show')]
-    public function index(TelephoneRepository $telephonePortableRepository): Response
+    public function index(TelephonePortableRepository $telephonePortableRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        $telephones = $telephonePortableRepository->findBy([], ['id' => 'DESC']);
+        $telephonesRepo = $telephonePortableRepository->findBy([], ['id' => 'DESC']);
+
+        $telephones = $paginator->paginate(
+            $telephonesRepo,
+            $request->query->getInt('page', 1),
+            10
+        );
 
         return $this->render('telephone_portable/show.html.twig', [
             'telephones' => $telephones,
@@ -38,12 +47,12 @@ class TelephonePortableController extends AbstractController
 
     /**
      * @param ExcelExportService $excelExportService
-     * @param TelephoneRepository $repository
+     * @param TelephonePortableRepository $repository
      * @return Response
      * Permet d'exporter les données des téléphones portables au format Excel
      */
     #[Route('/exporter', name: 'export')]
-    public function exportDataToExcel(ExcelExportService $excelExportService, TelephoneRepository $repository): Response
+    public function exportDataToExcel(ExcelExportService $excelExportService, TelephonePortableRepository $repository): Response
     {
         $telephones = $repository->findAll();
 

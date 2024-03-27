@@ -15,6 +15,7 @@ use Endroid\QrCode\Label\Font\NotoSans;
 use Endroid\QrCode\Label\Label;
 use Endroid\QrCode\QrCode;
 use Endroid\QrCode\Writer\PngWriter;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,13 +33,21 @@ class PcFixeController extends AbstractController
 
     /**
      * @param PcFixeRepository $pcFixeRepository
+     * @param PaginatorInterface $paginator
+     * @param Request $request
      * @return Response
      * Permet d'afficher la liste des PC Fixes
      */
     #[Route(name: 'show')]
-    public function index(PcFixeRepository $pcFixeRepository): Response
+    public function index(PcFixeRepository $pcFixeRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        $pcFixes = $pcFixeRepository->findBy([], ['id' => 'DESC']);
+        $pcFixesRepo = $pcFixeRepository->findBy([], ['id' => 'DESC']);
+
+        $pcFixes = $paginator->paginate(
+            $pcFixesRepo,
+            $request->query->getInt('page', 1),
+            10
+        );
 
         return $this->render('pc_fixe/show.html.twig', [
             'pcFixes' => $pcFixes,

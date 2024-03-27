@@ -15,6 +15,7 @@ use Endroid\QrCode\Label\Font\NotoSans;
 use Endroid\QrCode\Label\Label;
 use Endroid\QrCode\QrCode;
 use Endroid\QrCode\Writer\PngWriter;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,13 +31,21 @@ class TabletteController extends AbstractController
 
     /**
      * @param TabletteRepository $tabletteRepository
+     * @param PaginatorInterface $paginator
+     * @param Request $request
      * @return Response
      * Permet d'afficher la liste des tablettes
      */
     #[Route(name: 'show')]
-    public function index(TabletteRepository $tabletteRepository): Response
+    public function index(TabletteRepository $tabletteRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        $tablettes = $tabletteRepository->findBy([], ['id' => 'DESC']);
+        $tablettesRepo = $tabletteRepository->findBy([], ['id' => 'DESC']);
+
+        $tablettes = $paginator->paginate(
+            $tablettesRepo,
+            $request->query->getInt('page', 1),
+            10
+        );
 
         return $this->render('tablette/show.html.twig', [
             'tablettes' => $tablettes,
