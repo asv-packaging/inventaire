@@ -105,6 +105,10 @@ class ImprimanteFormType extends AbstractType
                 'label_html' => true,
                 'class' => Emplacement::class,
                 'choice_label' => 'nom',
+                'query_builder' => function($er) {
+                    return $er->createQueryBuilder('e')
+                        ->orderBy('e.id', 'DESC');
+                },
                 'placeholder' => 'Choisir un emplacement',
                 'attr' => [
                     'class' => 'selectpicker',
@@ -116,6 +120,10 @@ class ImprimanteFormType extends AbstractType
                 'label_html' => true,
                 'class' => Etat::class,
                 'choice_label' => 'nom',
+                'query_builder' => function($er) {
+                    return $er->createQueryBuilder('e')
+                        ->orderBy('e.id', 'DESC');
+                },
                 'placeholder' => 'Choisir un état',
                 'attr' => [
                     'class' => 'selectpicker',
@@ -126,6 +134,10 @@ class ImprimanteFormType extends AbstractType
                 'label' => 'Fournisseur',
                 'class' => Fournisseur::class,
                 'choice_label' => 'nom',
+                'query_builder' => function($er) {
+                    return $er->createQueryBuilder('f')
+                        ->orderBy('f.id', 'DESC');
+                },
                 'placeholder' => 'Choisir un fournisseur',
                 'attr' => [
                     'class' => 'selectpicker',
@@ -136,6 +148,10 @@ class ImprimanteFormType extends AbstractType
                 'label' => 'Site',
                 'class' => Entreprise::class,
                 'choice_label' => 'nom',
+                'query_builder' => function($er) {
+                    return $er->createQueryBuilder('e')
+                        ->orderBy('e.id', 'DESC');
+                },
                 'placeholder' => 'Choisir un site',
                 'attr' => [
                     'class' => 'selectpicker',

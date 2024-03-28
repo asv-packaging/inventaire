@@ -106,6 +106,10 @@ class TelephoneFixeFormType extends AbstractType
                 'choice_label' => function(Utilisateur $utilisateur) {
                     return $utilisateur->getNom() . ' ' . $utilisateur->getPrenom();
                 },
+                'query_builder' => function($er) {
+                    return $er->createQueryBuilder('u')
+                        ->orderBy('u.id', 'DESC');
+                },
                 'required' => false,
                 'placeholder' => 'Choisir un utilisateur',
                 'attr' => [
@@ -115,6 +119,10 @@ class TelephoneFixeFormType extends AbstractType
             ->add('fournisseur', EntityType::class, [
                 'class' => Fournisseur::class,
                 'choice_label' => 'nom',
+                'query_builder' => function($er) {
+                    return $er->createQueryBuilder('f')
+                        ->orderBy('f.id', 'DESC');
+                },
                 'required' => false,
                 'placeholder' => 'Choisir un fournisseur',
                 'attr' => [
@@ -124,6 +132,10 @@ class TelephoneFixeFormType extends AbstractType
             ->add('emplacement', EntityType::class, [
                 'class' => Emplacement::class,
                 'choice_label' => 'nom',
+                'query_builder' => function($er) {
+                    return $er->createQueryBuilder('e')
+                        ->orderBy('e.id', 'DESC');
+                },
                 'required' => false,
                 'placeholder' => 'Choisir un emplacement',
                 'attr' => [
@@ -133,6 +145,10 @@ class TelephoneFixeFormType extends AbstractType
             ->add('etat', EntityType::class, [
                 'class' => Etat::class,
                 'choice_label' => 'nom',
+                'query_builder' => function($er) {
+                    return $er->createQueryBuilder('e')
+                        ->orderBy('e.id', 'DESC');
+                },
                 'required' => true,
                 'label' => 'État <span style="color: red">*</span>',
                 'label_html' => true,
@@ -144,6 +160,10 @@ class TelephoneFixeFormType extends AbstractType
             ->add('entreprise', EntityType::class, [
                 'class' => Entreprise::class,
                 'choice_label' => 'nom',
+                'query_builder' => function($er) {
+                    return $er->createQueryBuilder('e')
+                        ->orderBy('e.id', 'DESC');
+                },
                 'required' => true,
                 'label' => 'Site',
                 'placeholder' => 'Choisir un site',

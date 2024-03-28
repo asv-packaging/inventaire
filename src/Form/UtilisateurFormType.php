@@ -42,6 +42,10 @@ class UtilisateurFormType extends AbstractType
             ->add('entreprise', EntityType::class, [
                 'class' => Entreprise::class,
                 'choice_label' => 'nom',
+                'query_builder' => function($er) {
+                    return $er->createQueryBuilder('e')
+                        ->orderBy('e.id', 'DESC');
+                },
                 'label' => 'Site',
                 'attr' => [
                     'class' => 'selectpicker',

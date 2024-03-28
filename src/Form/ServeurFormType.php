@@ -140,6 +140,10 @@ class ServeurFormType extends AbstractType
                 'label_html' => true,
                 'class' => Emplacement::class,
                 'choice_label' => 'nom',
+                'query_builder' => function($er) {
+                    return $er->createQueryBuilder('e')
+                        ->orderBy('e.id', 'DESC');
+                },
                 'required' => true,
                 'placeholder' => 'Choisir un emplacement',
                 'attr' => [
@@ -151,6 +155,10 @@ class ServeurFormType extends AbstractType
                 'label_html' => true,
                 'class' => Etat::class,
                 'choice_label' => 'nom',
+                'query_builder' => function($er) {
+                    return $er->createQueryBuilder('e')
+                        ->orderBy('e.id', 'DESC');
+                },
                 'required' => true,
                 'placeholder' => 'Choisir un état',
                 'attr' => [
@@ -161,6 +169,10 @@ class ServeurFormType extends AbstractType
                 'label' => 'Type de stockage',
                 'class' => Stockage::class,
                 'choice_label' => 'nom',
+                'query_builder' => function($er) {
+                    return $er->createQueryBuilder('s')
+                        ->orderBy('s.id', 'DESC');
+                },
                 'required' => false,
                 'placeholder' => 'Choisir un type de stockage',
                 'attr' => [
@@ -183,6 +195,10 @@ class ServeurFormType extends AbstractType
                 'label' => 'Site',
                 'class' => Entreprise::class,
                 'choice_label' => 'nom',
+                'query_builder' => function($er) {
+                    return $er->createQueryBuilder('e')
+                        ->orderBy('e.id', 'DESC');
+                },
                 'required' => false,
                 'placeholder' => 'Choisir un site',
                 'attr' => [
@@ -193,6 +209,10 @@ class ServeurFormType extends AbstractType
                 'label' => 'Fournisseur',
                 'class' => Fournisseur::class,
                 'choice_label' => 'nom',
+                'query_builder' => function($er) {
+                    return $er->createQueryBuilder('f')
+                        ->orderBy('f.id', 'DESC');
+                },
                 'required' => false,
                 'placeholder' => 'Choisir un fournisseur',
                 'attr' => [

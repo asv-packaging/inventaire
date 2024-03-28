@@ -87,6 +87,10 @@ class EcranFormType extends AbstractType
                 'choice_label' => function(Utilisateur $utilisateur) {
                     return $utilisateur->getNom() . ' ' . $utilisateur->getPrenom();
                 },
+                'query_builder' => function($er) {
+                    return $er->createQueryBuilder('u')
+                        ->orderBy('u.id', 'DESC');
+                },
                 'placeholder' => 'Choisir un utilisateur',
                 'attr' => [
                     'class' => 'selectpicker',
@@ -98,6 +102,10 @@ class EcranFormType extends AbstractType
                 'label_html' => true,
                 'class' => Emplacement::class,
                 'choice_label' => 'nom',
+                'query_builder' => function($er) {
+                    return $er->createQueryBuilder('e')
+                        ->orderBy('e.id', 'DESC');
+                },
                 'placeholder' => 'Choisir un emplacement',
                 'attr' => [
                     'class' => 'selectpicker',
@@ -109,6 +117,10 @@ class EcranFormType extends AbstractType
                 'label_html' => true,
                 'class' => Etat::class,
                 'choice_label' => 'nom',
+                'query_builder' => function($er) {
+                    return $er->createQueryBuilder('e')
+                        ->orderBy('e.id', 'DESC');
+                },
                 'placeholder' => 'Choisir un état',
                 'attr' => [
                     'class' => 'selectpicker',
@@ -119,6 +131,10 @@ class EcranFormType extends AbstractType
                 'label' => 'Fournisseur',
                 'class' => Fournisseur::class,
                 'choice_label' => 'nom',
+                'query_builder' => function($er) {
+                    return $er->createQueryBuilder('f')
+                        ->orderBy('f.id', 'DESC');
+                },
                 'placeholder' => 'Choisir un fournisseur',
                 'attr' => [
                     'class' => 'selectpicker',
@@ -129,6 +145,10 @@ class EcranFormType extends AbstractType
                 'label' => 'Site',
                 'class' => Entreprise::class,
                 'choice_label' => 'nom',
+                'query_builder' => function($er) {
+                    return $er->createQueryBuilder('e')
+                        ->orderBy('e.id', 'DESC');
+                },
                 'placeholder' => 'Choisir un site',
                 'attr' => [
                     'class' => 'selectpicker',

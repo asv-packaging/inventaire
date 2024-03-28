@@ -171,6 +171,10 @@ class PcPortableFormType extends AbstractType
                 'label_html' => true,
                 'class' => Etat::class,
                 'choice_label' => 'nom',
+                'query_builder' => function($er) {
+                    return $er->createQueryBuilder('e')
+                        ->orderBy('e.id', 'DESC');
+                },
                 'placeholder' => 'Choisir un état',
                 'required' => true,
                 'attr' => [
@@ -181,6 +185,10 @@ class PcPortableFormType extends AbstractType
                 'label' => 'Type de stockage',
                 'class' => Stockage::class,
                 'choice_label' => 'nom',
+                'query_builder' => function($er) {
+                    return $er->createQueryBuilder('s')
+                        ->orderBy('s.id', 'DESC');
+                },
                 'placeholder' => 'Choisir un type de stockage',
                 'attr' => [
                     'class' => 'selectpicker',
@@ -191,6 +199,10 @@ class PcPortableFormType extends AbstractType
                 'label' => 'Site',
                 'class' => Entreprise::class,
                 'choice_label' => 'nom',
+                'query_builder' => function($er) {
+                    return $er->createQueryBuilder('e')
+                        ->orderBy('e.id', 'DESC');
+                },
                 'placeholder' => 'Choisir un site',
                 'attr' => [
                     'class' => 'selectpicker',
@@ -201,6 +213,10 @@ class PcPortableFormType extends AbstractType
                 'label' => 'Fournisseur',
                 'class' => Fournisseur::class,
                 'choice_label' => 'nom',
+                'query_builder' => function($er) {
+                    return $er->createQueryBuilder('f')
+                        ->orderBy('f.id', 'DESC');
+                },
                 'placeholder' => 'Choisir un fournisseur',
                 'attr' => [
                     'class' => 'selectpicker',
