@@ -6,6 +6,7 @@ use App\Entity\Stockage;
 use App\Form\StockageFormType;
 use App\Repository\StockageRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,9 +23,15 @@ class StockageController extends AbstractController
      * Permet d'afficher la liste des types de stockage
      */
     #[Route(name: 'show')]
-    public function index(StockageRepository $stockageRepository): Response
+    public function index(StockageRepository $stockageRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        $stockages = $stockageRepository->findBy([], ['id' => 'DESC']);
+        $stockagesRepo = $stockageRepository->findBy([], ['id' => 'DESC']);
+
+        $stockages = $paginator->paginate(
+            $stockagesRepo,
+            $request->query->getInt('page', 1),
+            10
+        );
 
         return $this->render('stockage/show.html.twig', [
             'stockages' => $stockages,

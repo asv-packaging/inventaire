@@ -6,6 +6,7 @@ use App\Entity\Etat;
 use App\Form\EtatFormType;
 use App\Repository\EtatRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,13 +19,21 @@ class EtatController extends AbstractController
 
     /**
      * @param EtatRepository $etatRepository
+     * @param PaginatorInterface $paginator
+     * @param Request $request
      * @return Response
      * Permet d'afficher la liste des états
      */
     #[Route(name: 'show')]
-    public function index(EtatRepository $etatRepository): Response
+    public function index(EtatRepository $etatRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        $etats = $etatRepository->findBy([], ['id' => 'DESC']);
+        $etatsRepo = $etatRepository->findBy([], ['id' => 'DESC']);
+
+        $etats = $paginator->paginate(
+            $etatsRepo,
+            $request->query->getInt('page', 1),
+            10
+        );
 
         return $this->render('etat/show.html.twig', [
             'etats' => $etats,

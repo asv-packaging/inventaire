@@ -86,7 +86,7 @@ class PcPortableController extends AbstractController
                     $pcPortable->getNumeroSerie() ?? 'N/A',
                     $pcPortable->getEmplacement()->getNom(),
                     $pcPortable->getEntreprise() !== null ? $pcPortable->getEntreprise()->getNom() : 'N/A',
-                    $pcPortable->getFournisseur()->getNom(),
+                    $pcPortable->getFournisseur() !== null ? $pcPortable->getFournisseur()->getNom() : 'N/A',
                     $pcPortable->getEtat()->getNom(),
                     $pcPortable->getDateInstallation() ?? 'N/A',
                     $pcPortable->getDateAchat() ?? 'N/A',

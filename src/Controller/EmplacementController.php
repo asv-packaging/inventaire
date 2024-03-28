@@ -6,6 +6,7 @@ use App\Entity\Emplacement;
 use App\Form\EmplacementFormType;
 use App\Repository\EmplacementRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,13 +19,21 @@ class EmplacementController extends AbstractController
 
     /**
      * @param EmplacementRepository $emplacementRepository
+     * @param PaginatorInterface $paginator
+     * @param Request $request
      * @return Response
      * Permet d'afficher la liste des emplacements
      */
     #[Route(name: 'show')]
-    public function index(EmplacementRepository $emplacementRepository): Response
+    public function index(EmplacementRepository $emplacementRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        $emplacements = $emplacementRepository->findBy([], ['id' => 'DESC']);
+        $emplacementsRepo = $emplacementRepository->findBy([], ['id' => 'DESC']);
+
+        $emplacements = $paginator->paginate(
+            $emplacementsRepo,
+            $request->query->getInt('page', 1),
+            10
+        );
 
         return $this->render('emplacement/show.html.twig', [
             'emplacements' => $emplacements,

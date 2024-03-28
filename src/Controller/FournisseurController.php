@@ -6,6 +6,7 @@ use App\Entity\Fournisseur;
 use App\Form\FournisseurFormType;
 use App\Repository\FournisseurRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,13 +19,21 @@ class FournisseurController extends AbstractController
 
     /**
      * @param FournisseurRepository $fournisseurRepository
+     * @param PaginatorInterface $paginator
+     * @param Request $request
      * @return Response
      * Permet d'afficher la liste des fournisseurs
      */
     #[Route(name: 'show')]
-    public function index(FournisseurRepository $fournisseurRepository): Response
+    public function index(FournisseurRepository $fournisseurRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        $fournisseurs = $fournisseurRepository->findBy([], ['id' => 'DESC']);
+        $fournisseursRepo = $fournisseurRepository->findBy([], ['id' => 'DESC']);
+
+        $fournisseurs = $paginator->paginate(
+            $fournisseursRepo,
+            $request->query->getInt('page', 1),
+            10
+        );
 
         return $this->render('fournisseur/show.html.twig', [
             'fournisseurs' => $fournisseurs,

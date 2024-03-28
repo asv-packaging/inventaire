@@ -141,6 +141,10 @@ class PcPortableFormType extends AbstractType
                 'choice_label' => function(Utilisateur $utilisateur) {
                     return $utilisateur->getNom() . ' ' . $utilisateur->getPrenom();
                 },
+                'query_builder' => function($er) {
+                    return $er->createQueryBuilder('u')
+                        ->orderBy('u.id', 'DESC');
+                },
                 'placeholder' => 'Choisir un utilisateur',
                 'required' => false,
                 'attr' => [
@@ -152,6 +156,10 @@ class PcPortableFormType extends AbstractType
                 'label_html' => true,
                 'class' => Emplacement::class,
                 'choice_label' => 'nom',
+                'query_builder' => function($er) {
+                    return $er->createQueryBuilder('e')
+                        ->orderBy('e.id', 'DESC');
+                },
                 'placeholder' => 'Choisir un emplacement',
                 'required' => true,
                 'attr' => [

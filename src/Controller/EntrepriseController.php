@@ -6,6 +6,7 @@ use App\Entity\Entreprise;
 use App\Form\EntrepriseFormType;
 use App\Repository\EntrepriseRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,13 +19,21 @@ class EntrepriseController extends AbstractController
 
     /**
      * @param EntrepriseRepository $entrepriseRepository
+     * @param PaginatorInterface $paginator
+     * @param Request $request
      * @return Response
      * Permet d'afficher la liste des entreprises (sites)
      */
     #[Route(name: 'show')]
-    public function index(EntrepriseRepository $entrepriseRepository): Response
+    public function index(EntrepriseRepository $entrepriseRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        $entreprises = $entrepriseRepository->findBy([], ['id' => 'DESC']);
+        $entreprisesRepo = $entrepriseRepository->findBy([], ['id' => 'DESC']);
+
+        $entreprises = $paginator->paginate(
+            $entreprisesRepo,
+            $request->query->getInt('page', 1),
+            10
+        );
 
         return $this->render('entreprise/show.html.twig', [
             'entreprises' => $entreprises,

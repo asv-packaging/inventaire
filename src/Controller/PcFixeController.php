@@ -88,7 +88,7 @@ class PcFixeController extends AbstractController
                     $pcFixe->getNumeroSerie() ?? 'N/A',
                     $pcFixe->getEmplacement()->getNom(),
                     $pcFixe->getEntreprise() !== null ? $pcFixe->getEntreprise()->getNom() : 'N/A',
-                    $pcFixe->getFournisseur()->getNom(),
+                    $pcFixe->getFournisseur() !== null ? $pcFixe->getFournisseur()->getNom() : 'N/A',
                     $pcFixe->getEtat()->getNom(),
                     $pcFixe->getDateInstallation() ?? 'N/A',
                     $pcFixe->getDateAchat() ?? 'N/A',
