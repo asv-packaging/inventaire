@@ -47,25 +47,29 @@ class EcranRepository extends ServiceEntityRepository
         {
             $queryBuilder
                 ->andWhere('e.'.$recherche.' LIKE :search')
-                ->setParameter('search', '%' . $search . '%');
+                ->setParameter('search', '%' . $search . '%')
+                ->orderBy('e.id', 'DESC');
         }
         elseif ($recherche === 'utilisateur_id')
         {
             $queryBuilder->join('e.utilisateur', 'u')
                 ->andWhere('u.nom LIKE :search OR u.prenom LIKE :search')
-                ->setParameter('search', '%' . $search . '%');
+                ->setParameter('search', '%' . $search . '%')
+                ->orderBy('e.id', 'DESC');
         }
         elseif ($recherche === 'emplacement_id')
         {
             $queryBuilder->join('e.emplacement', 'emp')
                 ->andWhere('emp.nom LIKE :search')
-                ->setParameter('search', '%' . $search . '%');
+                ->setParameter('search', '%' . $search . '%')
+                ->orderBy('e.id', 'DESC');
         }
         elseif ($recherche === 'entreprise_id')
         {
             $queryBuilder->join('e.entreprise', 'ent')
                 ->andWhere('ent.nom LIKE :search')
-                ->setParameter('search', '%' . $search . '%');
+                ->setParameter('search', '%' . $search . '%')
+                ->orderBy('e.id', 'DESC');
         }
 
         return $queryBuilder->getQuery();
