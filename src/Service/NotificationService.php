@@ -113,6 +113,7 @@ class NotificationService
                 $notificationFin->setCreatedAt(new \DateTimeImmutable('now'));
 
                 $this->entityManager->persist($notificationFin);
+                $this->entityManager->flush();
             }
             elseif ($interval->days <= 30 && !$existingNotificationBientot)
             {
@@ -125,10 +126,9 @@ class NotificationService
                 $notificationBientot->setCreatedAt(new \DateTimeImmutable('now'));
 
                 $this->entityManager->persist($notificationBientot);
+                $this->entityManager->flush();
             }
         }
-
-        $this->entityManager->flush();
     }
 
     /**
@@ -211,13 +211,13 @@ class NotificationService
         if ($notificationBientot)
         {
             $this->entityManager->remove($notificationBientot);
+            $this->entityManager->flush();
         }
 
         if ($notificationFin)
         {
             $this->entityManager->remove($notificationFin);
+            $this->entityManager->flush();
         }
-
-        $this->entityManager->flush();
     }
 }

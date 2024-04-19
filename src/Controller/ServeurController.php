@@ -39,7 +39,17 @@ class ServeurController extends AbstractController
     #[Route(name: 'show')]
     public function index(ServeurRepository $serveurRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        $serveursRepo = $serveurRepository->findBy([], ['id' => 'DESC']);
+        $recherche = $request->query->get('par');
+        $search = $request->query->get('q');
+
+        if ($recherche && $search)
+        {
+            $serveursRepo = $serveurRepository->findByCritere($recherche, $search);
+        }
+        else
+        {
+            $serveursRepo = $serveurRepository->findBy([], ['id' => 'DESC']);
+        }
 
         $serveurs = $paginator->paginate(
             $serveursRepo,

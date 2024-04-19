@@ -39,6 +39,32 @@ class ImprimanteRepository extends ServiceEntityRepository
         }
     }
 
+    public function findByCritere($recherche, $search)
+    {
+        $queryBuilder = $this->createQueryBuilder('e');
+
+        if ($recherche === 'nom' || $recherche === 'ip' || $recherche === 'contrat' || $recherche === 'numero_serie' || $recherche === 'date_installation' || $recherche === 'date_achat' || $recherche === 'date_garantie' || $recherche === 'commentaire')
+        {
+            $queryBuilder
+                ->andWhere('e.'.$recherche.' LIKE :search')
+                ->setParameter('search', '%' . $search . '%');
+        }
+        elseif ($recherche === 'emplacement_id')
+        {
+            $queryBuilder->join('e.emplacement', 'emp')
+                ->andWhere('emp.nom LIKE :search')
+                ->setParameter('search', '%' . $search . '%');
+        }
+        elseif ($recherche === 'entreprise_id')
+        {
+            $queryBuilder->join('e.entreprise', 'ent')
+                ->andWhere('ent.nom LIKE :search')
+                ->setParameter('search', '%' . $search . '%');
+        }
+
+        return $queryBuilder->getQuery();
+    }
+
     public function countImprimantes(): int
     {
         return $this->createQueryBuilder('i')

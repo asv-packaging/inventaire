@@ -39,7 +39,17 @@ class PcPortableController extends AbstractController
     #[Route(name: 'show')]
     public function index(PcPortableRepository $pcPortableRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        $pcPortablesRepo = $pcPortableRepository->findBy([], ['id' => 'DESC']);
+        $recherche = $request->query->get('par');
+        $search = $request->query->get('q');
+
+        if ($recherche && $search)
+        {
+            $pcPortablesRepo = $pcPortableRepository->findByCritere($recherche, $search);
+        }
+        else
+        {
+            $pcPortablesRepo = $pcPortableRepository->findBy([], ['id' => 'DESC']);
+        }
 
         $pcPortables = $paginator->paginate(
             $pcPortablesRepo,

@@ -39,7 +39,17 @@ class OnduleurController extends AbstractController
     #[Route(name: 'show')]
     public function index(OnduleurRepository $onduleurRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        $onduleursRepo = $onduleurRepository->findBy([], ['id' => 'DESC']);
+        $recherche = $request->query->get('par');
+        $search = $request->query->get('q');
+
+        if ($recherche && $search)
+        {
+            $onduleursRepo = $onduleurRepository->findByCritere($recherche, $search);
+        }
+        else
+        {
+            $onduleursRepo = $onduleurRepository->findBy([], ['id' => 'DESC']);
+        }
 
         $onduleurs = $paginator->paginate(
             $onduleursRepo,

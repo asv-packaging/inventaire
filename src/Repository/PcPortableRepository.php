@@ -39,6 +39,44 @@ class PcPortableRepository extends ServiceEntityRepository
         }
     }
 
+    public function findByCritere($recherche, $search)
+    {
+        $queryBuilder = $this->createQueryBuilder('e');
+
+        if ($recherche === 'nom' || $recherche === 'ip' || $recherche === 'numero_serie' || $recherche === 'date_installation' || $recherche === 'date_achat' || $recherche === 'date_garantie' || $recherche === 'commentaire')
+        {
+            $queryBuilder
+                ->andWhere('e.'.$recherche.' LIKE :search')
+                ->setParameter('search', '%' . $search . '%');
+        }
+        elseif($recherche === 'systeme_exploitation_id')
+        {
+            $queryBuilder->join('e.systeme_exploitation', 'se')
+                ->andWhere('se.nom LIKE :search')
+                ->setParameter('search', '%' . $search . '%');
+        }
+        elseif($recherche === 'utilisateur_id')
+        {
+            $queryBuilder->join('e.utilisateur', 'u')
+                ->andWhere('u.nom LIKE :search')
+                ->setParameter('search', '%' . $search . '%');
+        }
+        elseif ($recherche === 'emplacement_id')
+        {
+            $queryBuilder->join('e.emplacement', 'emp')
+                ->andWhere('emp.nom LIKE :search')
+                ->setParameter('search', '%' . $search . '%');
+        }
+        elseif ($recherche === 'entreprise_id')
+        {
+            $queryBuilder->join('e.entreprise', 'ent')
+                ->andWhere('ent.nom LIKE :search')
+                ->setParameter('search', '%' . $search . '%');
+        }
+
+        return $queryBuilder->getQuery();
+    }
+
     public function countPcPortables(): int
     {
         return $this->createQueryBuilder('p')

@@ -62,6 +62,11 @@ class HomeController extends AbstractController
         $stockage = $stockageRepository->countStockages();
         $utilisateurs = $utilisateurRepository->countUtilisateurs();
 
+//        $emplacementsRecherche = $emplacementRepository->findBy([], ['nom' => 'ASC']);
+//        $systemes_exploitationRecherche = $systemeExploitationRepository->findBy([], ['nom' => 'ASC']);
+//        $pc_fixesRecherche = $pcFixeRepository->findBy([], ['nom' => 'ASC']);
+
+
         return $this->render('home/index.html.twig', [
             'menu_active' => $this->menu_active,
             'utilisateur' => $utilisateur,
@@ -81,6 +86,9 @@ class HomeController extends AbstractController
             'systemes_exploitation' => $systemes_exploitation,
             'stockage' => $stockage,
             'utilisateurs' => $utilisateurs,
+//            'emplacementsRecherche' => $emplacementsRecherche,
+//            'systemes_exploitationRecherche' => $systemes_exploitationRecherche,
+//            'pc_fixesRecherche' => $pc_fixesRecherche
         ]);
     }
 }

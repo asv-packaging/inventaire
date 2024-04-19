@@ -2,6 +2,11 @@
 
 {% block title %}Accueil{% endblock %}
 
+{% block stylesheets %}
+    <link href="{{ asset('assets/vendors/select2/select2.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/vendors/select2-bootstrap-5-theme/select2-bootstrap-5-theme.min.css') }}" rel="stylesheet" />
+{% endblock %}
+
 {% block body %}
     <div class="d-flex mb-4 mt-3">
         <span class="fa-stack me-2 ms-n1">
@@ -288,6 +293,33 @@
                     </table>
                 </div>
             </div>
+{#            <div class="card mb-3">#}
+{#                <div class="card-header">#}
+{#                    <h5 class="mb-0">PC par emplacement & système d'exploitation</h5>#}
+{#                </div>#}
+{#                <div class="card-body bg-light">#}
+{#                    <select class="form-select">#}
+{#                        {% for emplacement in emplacementsRecherche %}#}
+{#                            {% set has_pc = false %}#}
+{#                            {% for systeme_exploitation in systemes_exploitationRecherche %}#}
+{#                                {% set pc_fixes_for_systeme = pc_fixesRecherche|filter(pc_fixe => pc_fixe.emplacement.id == emplacement.id and pc_fixe.systemeExploitation.id == systeme_exploitation.id) %}#}
+{#                                {% if pc_fixes_for_systeme|length > 0 %}#}
+{#                                    {% if not has_pc %}#}
+{#                                        <optgroup label="{{ emplacement.nom }}">#}
+{#                                            {% set has_pc = true %}#}
+{#                                        </optgroup>#}
+{#                                    {% endif %}#}
+{#                                    <optgroup label="{{ systeme_exploitation.nom }}">#}
+{#                                        {% for pc_fixe in pc_fixes_for_systeme %}#}
+{#                                            <option>{{ pc_fixe.nom }}</option>#}
+{#                                        {% endfor %}#}
+{#                                    </optgroup>#}
+{#                                {% endif %}#}
+{#                            {% endfor %}#}
+{#                        {% endfor %}#}
+{#                    </select>#}
+{#                </div>#}
+{#            </div>#}
         </div>
         <div class="col-lg-6 pe-lg-2">
             {% if notificationsNotRead is not empty %}
@@ -346,6 +378,7 @@
     </div>
 {% endblock %}
 {% block javascripts %}
+    <script src="{{ asset('assets/vendors/select2/select2.min.js') }}"></script>
     <script src="{{ asset('assets/js/echarts/echart-example.js') }}"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function () {

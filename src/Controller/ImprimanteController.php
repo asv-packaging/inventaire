@@ -39,7 +39,17 @@ class ImprimanteController extends AbstractController
     #[Route(name: 'show')]
     public function index(ImprimanteRepository $imprimanteRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        $imprimantesRepo = $imprimanteRepository->findBy([], ['id' => 'DESC']);
+        $recherche = $request->query->get('par');
+        $search = $request->query->get('q');
+
+        if ($recherche && $search)
+        {
+            $imprimantesRepo = $imprimanteRepository->findByCritere($recherche, $search);
+        }
+        else
+        {
+            $imprimantesRepo = $imprimanteRepository->findBy([], ['id' => 'DESC']);
+        }
 
         $imprimantes = $paginator->paginate(
             $imprimantesRepo,

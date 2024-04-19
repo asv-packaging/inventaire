@@ -31,7 +31,17 @@ class TelephonePortableController extends AbstractController
     #[Route(name: 'show')]
     public function index(TelephonePortableRepository $telephonePortableRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        $telephonesRepo = $telephonePortableRepository->findBy([], ['id' => 'DESC']);
+        $recherche = $request->query->get('par');
+        $search = $request->query->get('q');
+
+        if ($recherche && $search)
+        {
+            $telephonesRepo = $telephonePortableRepository->findByCritere($recherche, $search);
+        }
+        else
+        {
+            $telephonesRepo = $telephonePortableRepository->findBy([], ['id' => 'DESC']);
+        }
 
         $telephones = $paginator->paginate(
             $telephonesRepo,

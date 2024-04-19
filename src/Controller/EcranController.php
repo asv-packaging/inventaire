@@ -42,7 +42,17 @@ class EcranController extends AbstractController
     #[Route(name: 'show')]
     public function index(EcranRepository $ecranRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        $ecransRepo = $ecranRepository->findBy([], ['id' => 'DESC']);
+        $recherche = $request->query->get('par');
+        $search = $request->query->get('q');
+
+        if ($recherche && $search)
+        {
+            $ecransRepo = $ecranRepository->findByCritere($recherche, $search);
+        }
+        else
+        {
+            $ecransRepo = $ecranRepository->findBy([], ['id' => 'DESC']);
+        }
 
         $ecrans = $paginator->paginate(
             $ecransRepo,

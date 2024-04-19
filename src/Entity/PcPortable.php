@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\PcPortableRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: PcPortableRepository::class)]
 class PcPortable
@@ -15,6 +16,7 @@ class PcPortable
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Le nom ne doit pas être vide.')]
     private ?string $nom = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -29,10 +31,12 @@ class PcPortable
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotBlank(message: 'L\'emplacement ne doit pas être vide.')]
     private ?Emplacement $emplacement = null;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotBlank(message: 'L\'état ne doit pas être vide.')]
     private ?Etat $etat = null;
 
     #[ORM\Column(length: 255, nullable: true)]

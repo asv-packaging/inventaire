@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\ServeurRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ServeurRepository::class)]
 class Serveur
@@ -15,6 +16,7 @@ class Serveur
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Le nom ne doit pas être vide.')]
     private ?string $nom = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -25,10 +27,12 @@ class Serveur
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotBlank(message: 'L\'emplacement ne doit pas être vide.')]
     private ?Emplacement $emplacement = null;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotBlank(message: 'L\'état ne doit pas être vide.')]
     private ?Etat $etat = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -51,6 +55,7 @@ class Serveur
     private ?Stockage $stockage = null;
 
     #[ORM\Column]
+    #[Assert\NotNull(message: 'Le type ne doit pas être vide.')]
     private ?bool $physique = null;
 
     #[ORM\Column(length: 255, nullable: true)]

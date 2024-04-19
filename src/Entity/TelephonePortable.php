@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\TelephonePortableRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: TelephonePortableRepository::class)]
 class TelephonePortable
@@ -15,6 +16,7 @@ class TelephonePortable
     private ?int $id = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\NotBlank(message: 'La ligne ne doit pas être vide')]
     private ?string $ligne = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -29,6 +31,7 @@ class TelephonePortable
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotBlank(message: 'L\'état ne doit pas être vide')]
     private ?Etat $etat = null;
 
     #[ORM\Column(length: 255, nullable: true)]

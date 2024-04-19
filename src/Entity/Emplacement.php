@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\EmplacementRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: EmplacementRepository::class)]
 class Emplacement
@@ -14,6 +15,7 @@ class Emplacement
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Le nom ne doit pas être vide')]
     private ?string $nom = null;
 
     #[ORM\OneToMany(mappedBy: 'emplacement', targetEntity: TelephoneFixe::class, cascade: ['persist'])]

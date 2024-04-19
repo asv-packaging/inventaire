@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\TelephoneFixeRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: TelephoneFixeRepository::class)]
 class TelephoneFixe
@@ -39,10 +40,12 @@ class TelephoneFixe
     private ?Emplacement $emplacement = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotNull(message: 'Le type ne doit pas être vide')]
     private ?string $type = null;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotBlank(message: 'L\'état ne doit pas être vide')]
     private ?Etat $etat = null;
 
     #[ORM\Column(length: 255, nullable: true)]

@@ -39,7 +39,17 @@ class TabletteController extends AbstractController
     #[Route(name: 'show')]
     public function index(TabletteRepository $tabletteRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        $tablettesRepo = $tabletteRepository->findBy([], ['id' => 'DESC']);
+        $recherche = $request->query->get('par');
+        $search = $request->query->get('q');
+
+        if ($recherche && $search)
+        {
+            $tablettesRepo = $tabletteRepository->findByCritere($recherche, $search);
+        }
+        else
+        {
+            $tablettesRepo = $tabletteRepository->findBy([], ['id' => 'DESC']);
+        }
 
         $tablettes = $paginator->paginate(
             $tablettesRepo,

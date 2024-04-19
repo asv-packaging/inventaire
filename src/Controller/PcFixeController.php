@@ -41,7 +41,17 @@ class PcFixeController extends AbstractController
     #[Route(name: 'show')]
     public function index(PcFixeRepository $pcFixeRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        $pcFixesRepo = $pcFixeRepository->findBy([], ['id' => 'DESC']);
+        $recherche = $request->query->get('par');
+        $search = $request->query->get('q');
+
+        if ($recherche && $search)
+        {
+            $pcFixesRepo = $pcFixeRepository->findByCritere($recherche, $search);
+        }
+        else
+        {
+            $pcFixesRepo = $pcFixeRepository->findBy([], ['id' => 'DESC']);
+        }
 
         $pcFixes = $paginator->paginate(
             $pcFixesRepo,
