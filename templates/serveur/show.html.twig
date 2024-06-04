@@ -60,8 +60,8 @@
                                 <select class="selectpicker" name="par" id="par">
                                     <option value="nom" {% if selectedRecherche == 'nom' %} selected {% endif %}>Nom</option>
                                     <option value="ip" {% if selectedRecherche == 'ip' %} selected {% endif %}>IP</option>
-                                    <option value="physique" {% if selectedRecherche == 'physique' %} selected {% endif %}>Type</option>
                                     <option value="systeme_exploitation_id" {% if selectedRecherche == 'systeme_exploitation_id' %} selected {% endif %}>Système d'exploitation</option>
+                                    <option value="physique" {% if selectedRecherche == 'physique' %} selected {% endif %}>Type</option>
                                     <option value="numero_serie" {% if selectedRecherche == 'numero_serie' %} selected {% endif %}>Numéro de série</option>
                                     <option value="emplacement_id" {% if selectedRecherche == 'emplacement_id' %} selected {% endif %}>Emplacement</option>
                                     <option value="entreprise_id" {% if selectedRecherche == 'entreprise_id' %} selected {% endif %}>Site</option>
@@ -112,17 +112,17 @@
                                     <thead class="bg-200 text-900">
                                         <tr>
                                             <th class="align-middle text-center">#</th>
-                                            <th class="align-middle text-center">Nom</th>
-                                            <th class="align-middle text-center">IP</th>
-                                            <th class="align-middle text-center">Système d'exploitation</th>
-                                            <th class="align-middle text-center">Type</th>
-                                            <th class="align-middle text-center">Numéro de série</th>
-                                            <th class="align-middle text-center">Emplacement</th>
-                                            <th class="align-middle text-center">Site</th>
-                                            <th class="align-middle text-center">Date de contrat</th>
-                                            <th class="align-middle text-center">Date d'achat</th>
-                                            <th class="align-middle text-center">Date de garantie</th>
-                                            <th class="align-middle text-center">Commentaire</th>
+                                            <th class="align-middle text-center">{% if selectedRecherche == 'nom' %} <span class="badge bg-primary">Nom</span> {% else %} Nom {% endif %}</th>
+                                            <th class="align-middle text-center">{% if selectedRecherche == 'ip' %} <span class="badge bg-primary">IP</span> {% else %} IP {% endif %}</th>
+                                            <th class="align-middle text-center">{% if selectedRecherche == 'systeme_exploitation_id' %} <span class="badge bg-primary">Système d'exploitation</span> {% else %} Système d'exploitation {% endif %}</th>
+                                            <th class="align-middle text-center">{% if selectedRecherche == 'physique' %} <span class="badge bg-primary">Type</span> {% else %} Type {% endif %}</th>
+                                            <th class="align-middle text-center">{% if selectedRecherche == 'numero_serie' %} <span class="badge bg-primary">Numéro de série</span> {% else %} Numéro de série {% endif %}</th>
+                                            <th class="align-middle text-center">{% if selectedRecherche == 'emplacement_id' %} <span class="badge bg-primary">Emplacement</span> {% else %} Emplacement {% endif %}</th>
+                                            <th class="align-middle text-center">{% if selectedRecherche == 'entreprise_id' %} <span class="badge bg-primary">Site</span> {% else %} Site {% endif %}</th>
+                                            <th class="align-middle text-center">{% if selectedRecherche == 'date_contrat' %} <span class="badge bg-primary">Date de contrat</span> {% else %} Date de contrat {% endif %}</th>
+                                            <th class="align-middle text-center">{% if selectedRecherche == 'date_achat' %} <span class="badge bg-primary">Date d'achat</span> {% else %} Date d'achat {% endif %}</th>
+                                            <th class="align-middle text-center">{% if selectedRecherche == 'date_garantie' %} <span class="badge bg-primary">Date de garantie</span> {% else %} Date de garantie {% endif %}</th>
+                                            <th class="align-middle text-center">{% if selectedRecherche == 'commentaire' %} <span class="badge bg-primary">Commentaire</span> {% else %} Commentaire {% endif %}</th>
                                             <th class="align-middle text-center">Action</th>
                                         </tr>
                                     </thead>
@@ -166,7 +166,9 @@
                                                         {{ serveur.dateGarantie | default('<span class="badge bg-danger">N/A</span>') | raw }}
                                                     </td>
                                                     <td class="text-nowrap">
-                                                        {{ serveur.commentaire | default('<span class="badge bg-danger">N/A</span>') | raw }}
+                                                        <span class="d-inline-block text-truncate" style="max-width: 270px;">
+                                                            {{ serveur.commentaire | default('<span class="badge bg-danger">N/A</span>') | raw }}
+                                                        </span>
                                                     </td>
                                                     <td class="text-nowrap">
                                                         <a href="{{ path('admin.serveur.edit', {id: serveur.id}) }}" class="btn btn-primary btn-sm">

@@ -112,17 +112,17 @@
                                     <thead class="bg-200 text-900">
                                     <tr>
                                         <th class="align-middle text-center">#</th>
-                                        <th class="align-middle text-center">Nom</th>
-                                        <th class="align-middle text-center">IP</th>
-                                        <th class="align-middle text-center">Système d'exploitation</th>
-                                        <th class="align-middle text-center">Numéro de série</th>
-                                        <th class="align-middle text-center">Utilisateur</th>
-                                        <th class="align-middle text-center">Emplacement</th>
-                                        <th class="align-middle text-center">Site</th>
-                                        <th class="align-middle text-center">Date d'installation</th>
-                                        <th class="align-middle text-center">Date d'achat</th>
-                                        <th class="align-middle text-center">Date de garantie</th>
-                                        <th class="align-middle text-center">Commentaire</th>
+                                        <th class="align-middle text-center">{% if selectedRecherche == 'nom' %} <span class="badge bg-primary">Nom</span> {% else %} Nom {% endif %}</th>
+                                        <th class="align-middle text-center">{% if selectedRecherche == 'ip' %} <span class="badge bg-primary">IP</span> {% else %} IP {% endif %}</th>
+                                        <th class="align-middle text-center">{% if selectedRecherche == 'systeme_exploitation_id' %} <span class="badge bg-primary">Système d'exploitation</span> {% else %} Système d'exploitation {% endif %}</th>
+                                        <th class="align-middle text-center">{% if selectedRecherche == 'numero_serie' %} <span class="badge bg-primary">Numéro de série</span> {% else %} Numéro de série {% endif %}</th>
+                                        <th class="align-middle text-center">{% if selectedRecherche == 'utilisateur_id' %} <span class="badge bg-primary">Utilisateur</span> {% else %} Utilisateur {% endif %}</th>
+                                        <th class="align-middle text-center">{% if selectedRecherche == 'emplacement_id' %} <span class="badge bg-primary">Emplacement</span> {% else %} Emplacement {% endif %}</th>
+                                        <th class="align-middle text-center">{% if selectedRecherche == 'entreprise_id' %} <span class="badge bg-primary">Site</span> {% else %} Site {% endif %}</th>
+                                        <th class="align-middle text-center">{% if selectedRecherche == 'date_installation' %} <span class="badge bg-primary">Date d'installation</span> {% else %} Date d'installation {% endif %}</th>
+                                        <th class="align-middle text-center">{% if selectedRecherche == 'date_achat' %} <span class="badge bg-primary">Date d'achat</span> {% else %} Date d'achat {% endif %}</th>
+                                        <th class="align-middle text-center">{% if selectedRecherche == 'date_garantie' %} <span class="badge bg-primary">Date de garantie</span> {% else %} Date de garantie {% endif %}</th>
+                                        <th class="align-middle text-center">{% if selectedRecherche == 'commentaire' %} <span class="badge bg-primary">Commentaire</span> {% else %} Commentaire {% endif %}</th>
                                         <th class="align-middle text-center">Action</th>
                                     </tr>
                                     </thead>
@@ -162,7 +162,9 @@
                                                     {{ pcPortable.dateGarantie | default('<span class="badge bg-danger">N/A</span>') | raw }}
                                                 </td>
                                                 <td class="text-nowrap">
-                                                    {{ pcPortable.commentaire | default('<span class="badge bg-danger">N/A</span>') | raw }}
+                                                    <span class="d-inline-block text-truncate" style="max-width: 270px;">
+                                                            {{ pcPortable.commentaire | default('<span class="badge bg-danger">N/A</span>') | raw }}
+                                                    </span>
                                                 </td>
                                                 <td class="text-nowrap">
                                                     <a href="{{ path('admin.pc_portable.edit', {id: pcPortable.id}) }}" class="btn btn-primary btn-sm">

@@ -111,16 +111,16 @@
                                     <thead class="bg-200 text-900">
                                         <tr>
                                             <th class="align-middle text-center">#</th>
-                                            <th class="align-middle text-center">Nom</th>
-                                            <th class="align-middle text-center">Capacité</th>
-                                            <th class="align-middle text-center">Type de prise</th>
-                                            <th class="align-middle text-center">Numéro de série</th>
-                                            <th class="align-middle text-center">Emplacement</th>
-                                            <th class="align-middle text-center">Site</th>
-                                            <th class="align-middle text-center">Date d'installation</th>
-                                            <th class="align-middle text-center">Date d'achat</th>
-                                            <th class="align-middle text-center">Date de garantie</th>
-                                            <th class="align-middle text-center">Commentaire</th>
+                                            <th class="align-middle text-center">{% if selectedRecherche == 'nom' %} <span class="badge bg-primary">Nom</span> {% else %} Nom {% endif %}</th>
+                                            <th class="align-middle text-center">{% if selectedRecherche == 'capacite' %} <span class="badge bg-primary">Capacité</span> {% else %} Capacité {% endif %}</th>
+                                            <th class="align-middle text-center">{% if selectedRecherche == 'type_prise' %} <span class="badge bg-primary">Type de prise</span> {% else %} Type de prise {% endif %}</th>
+                                            <th class="align-middle text-center">{% if selectedRecherche == 'numero_serie' %} <span class="badge bg-primary">Numéro de série</span> {% else %} Numéro de série {% endif %}</th>
+                                            <th class="align-middle text-center">{% if selectedRecherche == 'emplacement_id' %} <span class="badge bg-primary">Emplacement</span> {% else %} Emplacement {% endif %}</th>
+                                            <th class="align-middle text-center">{% if selectedRecherche == 'entreprise_id' %} <span class="badge bg-primary">Site</span> {% else %} Site {% endif %}</th>
+                                            <th class="align-middle text-center">{% if selectedRecherche == 'date_installation' %} <span class="badge bg-primary">Date d'installation</span> {% else %} Date d'installation {% endif %}</th>
+                                            <th class="align-middle text-center">{% if selectedRecherche == 'date_achat' %} <span class="badge bg-primary">Date d'achat</span> {% else %} Date d'achat {% endif %}</th>
+                                            <th class="align-middle text-center">{% if selectedRecherche == 'date_garantie' %} <span class="badge bg-primary">Date de garantie</span> {% else %} Date de garantie {% endif %}</th>
+                                            <th class="align-middle text-center">{% if selectedRecherche == 'commentaire' %} <span class="badge bg-primary">Commentaire</span> {% else %} Commentaire {% endif %}</th>
                                             <th class="align-middle text-center">Action</th>
                                         </tr>
                                     </thead>
@@ -159,7 +159,9 @@
                                                         {{ onduleur.dateGarantie | default('<span class="badge bg-danger">N/A</span>') | raw }}
                                                     </td>
                                                     <td class="text-nowrap">
-                                                        {{ onduleur.commentaire | default('<span class="badge bg-danger">N/A</span>') | raw }}
+                                                        <span class="d-inline-block text-truncate" style="max-width: 270px;">
+                                                            {{ onduleur.commentaire | default('<span class="badge bg-danger">N/A</span>') | raw }}
+                                                        </span>
                                                     </td>
                                                     <td class="text-nowrap">
                                                         <a href="{{ path('admin.onduleur.edit', {id: onduleur.id}) }}" class="btn btn-primary btn-sm">

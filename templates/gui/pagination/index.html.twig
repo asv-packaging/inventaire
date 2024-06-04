@@ -6,11 +6,11 @@
 
             {% if previous is defined %}
                 <li class="page-item">
-                    <a class="btn btn-falcon-default me-2" rel="prev" href="{{ path(route, query|merge({(pageParameterName): previous})) }}"><span class="fas fa-chevron-left"></span>&nbsp;{{ 'label_previous'|trans({}, 'KnpPaginatorBundle') }}</a>
+                    <a class="btn btn-falcon-default me-2" rel="prev" href="{{ path(route, query|merge({(pageParameterName): previous})) }}"><span class="fas fa-chevron-left"></span></a>
                 </li>
             {% else %}
                 <li class="page-item disabled">
-                    <span class="btn btn-falcon-default me-2 disabled"><span class="fas fa-chevron-left"></span>&nbsp;{{ 'label_previous'|trans({}, 'KnpPaginatorBundle') }}</span>
+                    <span class="btn btn-falcon-default me-2 disabled"><span class="fas fa-chevron-left"></span></span>
                 </li>
             {% endif %}
 
@@ -61,11 +61,11 @@
 
             {% if next is defined %}
                 <li class="page-item">
-                    <a class="btn btn-falcon-default me-2" rel="next" href="{{ path(route, query|merge({(pageParameterName): next})) }}">{{ 'label_next'|trans({}, 'KnpPaginatorBundle') }}&nbsp;<span class="fas fa-chevron-right"></span></a>
+                    <a class="btn btn-falcon-default me-2" rel="next" href="{{ path(route, query|merge({(pageParameterName): next})) }}"><span class="fas fa-chevron-right"></span></a>
                 </li>
             {% else %}
                 <li  class="page-item disabled">
-                    <span class="btn btn-falcon-default me-2 disabled">{{ 'label_next'|trans({}, 'KnpPaginatorBundle') }}&nbsp;<span class="fas fa-chevron-right"></span></span>
+                    <span class="btn btn-falcon-default me-2 disabled"><span class="fas fa-chevron-right"></span></span>
                 </li>
             {% endif %}
         </ul>
