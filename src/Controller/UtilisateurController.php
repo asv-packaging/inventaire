@@ -30,7 +30,7 @@ class UtilisateurController extends AbstractController
     #[Route('', name: 'show')]
     public function index(UtilisateurRepository $utilisateurRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        $utilisateursRepo = $utilisateurRepository->findBy([], ['id' => 'DESC']);
+        $utilisateursRepo = $utilisateurRepository->findBy([], ['nom' => 'ASC']);
 
         $utilisateurs = $paginator->paginate(
             $utilisateursRepo,
