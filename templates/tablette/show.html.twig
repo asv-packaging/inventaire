@@ -126,9 +126,15 @@
                                     </thead>
                                     <tbody class="list">
                                         {% if tablettes | length != 0 %}
+
+                                            {% set globalIndex = total - (page - 1) * limit %}
+
                                             {% for tablette in tablettes %}
+
+                                                {% set currentIndex = globalIndex - (loop.index - 1) %}
+
                                                 <tr class="align-middle text-center">
-                                                    <td class="text-nowrap">{{ tablette.id }}</td>
+                                                    <td class="text-nowrap">{{ currentIndex }}</td>
                                                     <td class="text-nowrap">
                                                         <a href="{{ path('admin.tablette.edit', {id: tablette.id}) }}"><b>{{ tablette.nom }}</b></a>
                                                     </td>

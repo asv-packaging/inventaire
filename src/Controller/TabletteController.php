@@ -51,14 +51,22 @@ class TabletteController extends AbstractController
             $tablettesRepo = $tabletteRepository->findBy([], ['id' => 'DESC']);
         }
 
+        $page = $request->query->getInt('page', 1);
+        $limit = 10;
+
         $tablettes = $paginator->paginate(
             $tablettesRepo,
-            $request->query->getInt('page', 1),
-            10
+            $page,
+            $limit
         );
+
+        $total = $tablettes->getTotalItemCount();
 
         return $this->render('tablette/show.html.twig', [
             'tablettes' => $tablettes,
+            'page' => $page,
+            'limit' => $limit,
+            'total' => $total,
             'menu_active' => $this->menu_active,
         ]);
     }

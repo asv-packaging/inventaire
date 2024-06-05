@@ -128,9 +128,15 @@
                                     </thead>
                                     <tbody class="list">
                                     {% if pcPortables | length != 0 %}
+
+                                        {% set globalIndex = total - (page - 1) * limit %}
+
                                         {% for pcPortable in pcPortables %}
+
+                                            {% set currentIndex = globalIndex - (loop.index - 1) %}
+
                                             <tr class="align-middle text-center">
-                                                <td class="text-nowrap">{{ pcPortable.id }}</td>
+                                                <td class="text-nowrap">{{ currentIndex }}</td>
                                                 <td class="text-nowrap">
                                                     <a href="{{ path('admin.pc_portable.edit', {id: pcPortable.id}) }}"><b>{{ pcPortable.nom }}</b></a>
                                                 </td>

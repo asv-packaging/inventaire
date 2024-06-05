@@ -51,14 +51,22 @@ class ImprimanteController extends AbstractController
             $imprimantesRepo = $imprimanteRepository->findBy([], ['id' => 'DESC']);
         }
 
+        $page = $request->query->getInt('page', 1);
+        $limit = 10;
+
         $imprimantes = $paginator->paginate(
             $imprimantesRepo,
-            $request->query->getInt('page', 1),
-            10
+            $page,
+            $limit
         );
+
+        $total = $imprimantes->getTotalItemCount();
 
         return $this->render('imprimante/show.html.twig', [
             'imprimantes' => $imprimantes,
+            'page' => $page,
+            'limit' => $limit,
+            'total' => $total,
             'menu_active' => $this->menu_active,
         ]);
     }

@@ -126,9 +126,15 @@
                                     </thead>
                                     <tbody class="list">
                                         {% if imprimantes | length != 0 %}
+
+                                            {% set globalIndex = total - (page - 1) * limit %}
+
                                             {% for imprimante in imprimantes %}
+
+                                                {% set currentIndex = globalIndex - (loop.index - 1) %}
+
                                                 <tr class="align-middle text-center">
-                                                    <td class="text-nowrap">{{ imprimante.id }}</td>
+                                                    <td class="text-nowrap">{{ currentIndex }}</td>
                                                     <td class="text-nowrap">
                                                         <a href="{{ path('admin.imprimante.edit', {id: imprimante.id}) }}">
                                                             <b>{{ imprimante.nom }}</b>

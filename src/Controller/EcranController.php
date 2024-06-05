@@ -54,14 +54,22 @@ class EcranController extends AbstractController
             $ecransRepo = $ecranRepository->findBy([], ['id' => 'DESC']);
         }
 
+        $page = $request->query->getInt('page', 1);
+        $limit = 10;
+
         $ecrans = $paginator->paginate(
             $ecransRepo,
-            $request->query->getInt('page', 1),
-            10
+            $page,
+            $limit
         );
+
+        $total = $ecrans->getTotalItemCount();
 
         return $this->render('ecran/show.html.twig', [
             'ecrans' => $ecrans,
+            'page' => $page,
+            'limit' => $limit,
+            'total' => $total,
             'menu_active' => $this->menu_active,
         ]);
     }

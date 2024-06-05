@@ -128,9 +128,15 @@
                                     </thead>
                                     <tbody class="list">
                                         {% if telephones | length != 0 %}
+
+                                            {% set globalIndex = total - (page - 1) * limit %}
+
                                             {% for telephone in telephones %}
+
+                                                {% set currentIndex = globalIndex - (loop.index - 1) %}
+
                                                 <tr class="align-middle text-center">
-                                                    <td class="text-nowrap">{{ telephone.id }}</td>
+                                                    <td class="text-nowrap">{{ currentIndex }}</td>
                                                     <td class="text-nowrap">
                                                         {% if telephone.ligne != null %}
                                                             <a href="{{ path('admin.telephone_fixe.edit', {id: telephone.id}) }}"><b>{{ telephone.ligne }}</b></a>

@@ -51,14 +51,22 @@ class TelephoneFixeController extends AbstractController
             $telephonesRepo = $telephoneFixeRepository->findBy([], ['id' => 'DESC']);
         }
 
+        $page = $request->query->getInt('page', 1);
+        $limit = 10;
+
         $telephones = $paginator->paginate(
             $telephonesRepo,
-            $request->query->getInt('page', 1),
-            10
+            $page,
+            $limit
         );
+
+        $total = $telephones->getTotalItemCount();
 
         return $this->render('telephone_fixe/show.html.twig', [
             'telephones' => $telephones,
+            'page' => $page,
+            'limit' => $limit,
+            'total' => $total,
             'menu_active' => $this->menu_active,
         ]);
     }

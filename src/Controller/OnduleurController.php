@@ -51,14 +51,22 @@ class OnduleurController extends AbstractController
             $onduleursRepo = $onduleurRepository->findBy([], ['id' => 'DESC']);
         }
 
+        $page = $request->query->getInt('page', 1);
+        $limit = 10;
+
         $onduleurs = $paginator->paginate(
             $onduleursRepo,
-            $request->query->getInt('page', 1),
-            10
+            $page,
+            $limit
         );
+
+        $total = $onduleurs->getTotalItemCount();
 
         return $this->render('onduleur/show.html.twig', [
             'onduleurs' => $onduleurs,
+            'page' => $page,
+            'limit' => $limit,
+            'total' => $total,
             'menu_active' => $this->menu_active,
         ]);
     }

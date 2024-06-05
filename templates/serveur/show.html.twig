@@ -128,9 +128,15 @@
                                     </thead>
                                     <tbody class="list">
                                         {% if serveurs | length != 0 %}
+
+                                            {% set globalIndex = total - (page - 1) * limit %}
+
                                             {% for serveur in serveurs %}
+
+                                                {% set currentIndex = globalIndex - (loop.index - 1) %}
+
                                                 <tr class="align-middle text-center">
-                                                    <td class="text-nowrap">{{ serveur.id }}</td>
+                                                    <td class="text-nowrap">{{ currentIndex }}</td>
                                                     <td class="text-nowrap">
                                                         <a href="{{ path('admin.serveur.edit', {id: serveur.id}) }}"><b>{{ serveur.nom }}</b></a>
                                                     </td>

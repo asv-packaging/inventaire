@@ -53,14 +53,22 @@ class PcFixeController extends AbstractController
             $pcFixesRepo = $pcFixeRepository->findBy([], ['id' => 'DESC']);
         }
 
+        $page = $request->query->getInt('page', 1);
+        $limit = 10;
+
         $pcFixes = $paginator->paginate(
             $pcFixesRepo,
-            $request->query->getInt('page', 1),
-            10
+            $page,
+            $limit
         );
+
+        $total = $pcFixes->getTotalItemCount();
 
         return $this->render('pc_fixe/show.html.twig', [
             'pcFixes' => $pcFixes,
+            'page' => $page,
+            'limit' => $limit,
+            'total' => $total,
             'menu_active' => $this->menu_active,
         ]);
     }

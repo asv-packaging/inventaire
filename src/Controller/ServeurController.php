@@ -51,14 +51,22 @@ class ServeurController extends AbstractController
             $serveursRepo = $serveurRepository->findBy([], ['id' => 'DESC']);
         }
 
+        $page = $request->query->getInt('page', 1);
+        $limit = 10;
+
         $serveurs = $paginator->paginate(
             $serveursRepo,
-            $request->query->getInt('page', 1),
-            10
+            $page,
+            $limit
         );
+
+        $total = $serveurs->getTotalItemCount();
 
         return $this->render('serveur/show.html.twig', [
             'serveurs' => $serveurs,
+            'page' => $page,
+            'limit' => $limit,
+            'total' => $total,
             'menu_active' => $this->menu_active,
         ]);
     }
