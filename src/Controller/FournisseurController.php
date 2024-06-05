@@ -29,14 +29,22 @@ class FournisseurController extends AbstractController
     {
         $fournisseursRepo = $fournisseurRepository->findBy([], ['id' => 'DESC']);
 
+        $page = $request->query->getInt('page', 1);
+        $limit = 10;
+
         $fournisseurs = $paginator->paginate(
             $fournisseursRepo,
-            $request->query->getInt('page', 1),
-            10
+            $page,
+            $limit
         );
+
+        $total = $fournisseurs->getTotalItemCount();
 
         return $this->render('fournisseur/show.html.twig', [
             'fournisseurs' => $fournisseurs,
+            'page' => $page,
+            'limit' => $limit,
+            'total' => $total,
             'menu_active' => $this->menu_active,
         ]);
     }

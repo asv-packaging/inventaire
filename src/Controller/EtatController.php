@@ -29,14 +29,22 @@ class EtatController extends AbstractController
     {
         $etatsRepo = $etatRepository->findBy([], ['id' => 'DESC']);
 
+        $page = $request->query->getInt('page', 1);
+        $limit = 10;
+
         $etats = $paginator->paginate(
             $etatsRepo,
-            $request->query->getInt('page', 1),
-            10
+            $page,
+            $limit
         );
+
+        $total = $etats->getTotalItemCount();
 
         return $this->render('etat/show.html.twig', [
             'etats' => $etats,
+            'page' => $page,
+            'limit' => $limit,
+            'total' => $total,
             'menu_active' => $this->menu_active,
         ]);
     }

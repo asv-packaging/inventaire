@@ -27,14 +27,22 @@ class StockageController extends AbstractController
     {
         $stockagesRepo = $stockageRepository->findBy([], ['id' => 'DESC']);
 
+        $page = $request->query->getInt('page', 1);
+        $limit = 10;
+
         $stockages = $paginator->paginate(
             $stockagesRepo,
-            $request->query->getInt('page', 1),
-            10
+            $page,
+            $limit
         );
+
+        $total = $stockages->getTotalItemCount();
 
         return $this->render('stockage/show.html.twig', [
             'stockages' => $stockages,
+            'page' => $page,
+            'limit' => $limit,
+            'total' => $total,
             'menu_active' => $this->menu_active,
         ]);
     }

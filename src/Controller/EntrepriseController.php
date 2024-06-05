@@ -29,14 +29,22 @@ class EntrepriseController extends AbstractController
     {
         $entreprisesRepo = $entrepriseRepository->findBy([], ['id' => 'DESC']);
 
+        $page = $request->query->getInt('page', 1);
+        $limit = 10;
+
         $entreprises = $paginator->paginate(
             $entreprisesRepo,
-            $request->query->getInt('page', 1),
-            10
+            $page,
+            $limit
         );
+
+        $total = $entreprises->getTotalItemCount();
 
         return $this->render('entreprise/show.html.twig', [
             'entreprises' => $entreprises,
+            'page' => $page,
+            'limit' => $limit,
+            'total' => $total,
             'menu_active' => $this->menu_active,
         ]);
     }

@@ -62,9 +62,15 @@
                                     </thead>
                                     <tbody class="list">
                                         {% if etats | length != 0 %}
+
+                                            {% set globalIndex = total - (page - 1) * limit %}
+
                                             {% for etat in etats %}
+
+                                                {% set currentIndex = globalIndex - (loop.index - 1) %}
+
                                                 <tr class="align-middle text-center">
-                                                    <td class="text-nowrap">{{ etat.id }}</td>
+                                                    <td class="text-nowrap">{{ currentIndex }}</td>
                                                     <td class="text-nowrap">
                                                         <a href="{{ path('admin.etat.edit', {id: etat.id}) }}"><b>{{ etat.nom }}</b></a>
                                                     </td>

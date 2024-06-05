@@ -64,9 +64,15 @@
                                     </thead>
                                     <tbody class="list">
                                         {% if entreprises | length != 0 %}
+
+                                            {% set globalIndex = total - (page - 1) * limit %}
+
                                             {% for entreprise in entreprises %}
+
+                                                {% set currentIndex = globalIndex - (loop.index - 1) %}
+
                                                 <tr class="align-middle text-center">
-                                                    <td class="text-nowrap">{{ entreprise.id }}</td>
+                                                    <td class="text-nowrap">{{ currentIndex }}</td>
                                                     <td class="text-nowrap">
                                                         <a href="{{ path('admin.entreprise.edit', {id: entreprise.id}) }}"><b>{{ entreprise.nom }}</b></a>
                                                     </td>

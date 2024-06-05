@@ -62,9 +62,15 @@
                                     </thead>
                                     <tbody class="list">
                                         {% if emplacements | length != 0 %}
+
+                                            {% set globalIndex = total - (page - 1) * limit %}
+
                                             {% for emplacement in emplacements %}
+
+                                                {% set currentIndex = globalIndex - (loop.index - 1) %}
+
                                                 <tr class="align-middle text-center">
-                                                    <td class="text-nowrap">{{ emplacement.id }}</td>
+                                                    <td class="text-nowrap">{{ currentIndex }}</td>
                                                     <td class="text-nowrap nom">
                                                         <a href="{{ path('admin.emplacement.edit', {id: emplacement.id}) }}"><b>{{ emplacement.nom }}</b></a>
                                                     </td>
@@ -88,9 +94,6 @@
                                                 <td colspan="3">Aucun emplacement n'a été trouvé.</td>
                                             </tr>
                                         {% endif %}
-                                        <tr id="noResultsRow" class="align-middle text-center" style="display: none;">
-                                            <td colspan="3">Aucun emplacement n'a été trouvé.</td>
-                                        </tr>
                                     </tbody>
                                 </table>
                             </div>

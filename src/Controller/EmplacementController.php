@@ -29,14 +29,22 @@ class EmplacementController extends AbstractController
     {
         $emplacementsRepo = $emplacementRepository->findBy([], ['id' => 'DESC']);
 
+        $page = $request->query->getInt('page', 1);
+        $limit = 10;
+
         $emplacements = $paginator->paginate(
             $emplacementsRepo,
-            $request->query->getInt('page', 1),
-            10
+            $page,
+            $limit
         );
+
+        $total = $emplacements->getTotalItemCount();
 
         return $this->render('emplacement/show.html.twig', [
             'emplacements' => $emplacements,
+            'page' => $page,
+            'limit' => $limit,
+            'total' => $total,
             'menu_active' => $this->menu_active,
         ]);
     }

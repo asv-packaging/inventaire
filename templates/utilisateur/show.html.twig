@@ -60,7 +60,7 @@
                                 <select class="selectpicker" name="par" id="par">
                                     <option value="nom" {% if selectedRecherche == 'nom' %} selected {% endif %}>Nom</option>
                                     <option value="prenom" {% if selectedRecherche == 'prenom' %} selected {% endif %}>Prénom</option>
-                                    <option value="email" {% if selectedRecherche == 'email' %} selected {% endif %}>Mail</option>
+                                    <option value="email" {% if selectedRecherche == 'email' %} selected {% endif %}>Email</option>
                                     <option value="entreprise_id" {% if selectedRecherche == 'entreprise_id' %} selected {% endif %}>Site</option>
                                 </select>
                                 <label for="search" class="form-label"></label>
@@ -107,7 +107,7 @@
                                         <tr>
                                             <th class="align-middle text-center">#</th>
                                             <th class="align-middle text-center">{% if selectedRecherche == 'nom' or selectedRecherche == "prenom" %} <span class="badge bg-primary">Nom & Prénom</span> {% else %} Nom & Prénom {% endif %}</th>
-                                            <th class="align-middle text-center">{% if selectedRecherche == 'email' %} <span class="badge bg-primary">Mail</span> {% else %} Mail {% endif %}</th>
+                                            <th class="align-middle text-center">{% if selectedRecherche == 'email' %} <span class="badge bg-primary">Email</span> {% else %} Email {% endif %}</th>
                                             <th class="align-middle text-center">{% if selectedRecherche == 'entreprise_id' %} <span class="badge bg-primary">Site</span> {% else %} Site {% endif %}</th>
                                             <th class="align-middle text-center">Action</th>
                                         </tr>
@@ -152,9 +152,6 @@
                                                 <td colspan="5">Aucun utilisateur n'a été trouvé.</td>
                                             </tr>
                                         {% endif %}
-                                        <tr id="noResultsRow" class="align-middle text-center" style="display: none;">
-                                            <td colspan="5">Aucun utilisateur n'a été trouvé.</td>
-                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
