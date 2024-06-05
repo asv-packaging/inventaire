@@ -3,14 +3,17 @@ namespace App\Service;
 
 use App\Entity\Notification;
 use Doctrine\ORM\EntityManagerInterface;
+use DateTime;
 
 class NotificationService
 {
     private $entityManager;
+    private $lastRunFile;
 
     public function __construct(EntityManagerInterface $entityManager)
     {
         $this->entityManager = $entityManager;
+        $this->lastRunFile = __DIR__.'/../../var/last_notification.txt';
     }
 
     /**
@@ -219,5 +222,23 @@ class NotificationService
             $this->entityManager->remove($notificationFin);
             $this->entityManager->flush();
         }
+    }
+
+    public function shouldRun(): bool
+    {
+        if (!file_exists($this->lastRunFile)) {
+            return true;
+        }
+
+        $lastRun = file_get_contents($this->lastRunFile);
+        $lastRunDateTime = new DateTime($lastRun);
+        $now = new DateTime();
+
+        return $now->format('Y-m-d') !== $lastRunDateTime->format('Y-m-d') && $now->format('H') == 8;
+    }
+
+    public function updateLastRunTime(): void
+    {
+        file_put_contents($this->lastRunFile, (new DateTime())->format('Y-m-d H:i:s'));
     }
 }

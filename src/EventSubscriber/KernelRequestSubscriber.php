@@ -31,15 +31,20 @@ class KernelRequestSubscriber implements EventSubscriberInterface
 
     public function onKernelRequest(RequestEvent $event): void
     {
-        $this->notificationService->sendNotification(Ecran::class, "ecran");
-        $this->notificationService->sendNotification(Imprimante::class, "imprimante");
-        $this->notificationService->sendNotification(Onduleur::class, "onduleur");
-        $this->notificationService->sendNotification(PcFixe::class, "pc_fixe");
-        $this->notificationService->sendNotification(PcPortable::class, "pc_portable");
-        $this->notificationService->sendNotification(Serveur::class, "serveur");
-        $this->notificationService->sendNotification(Tablette::class, "tablette");
-        $this->notificationService->sendNotification(TelephoneFixe::class, "telephone_fixe");
-        $this->notificationService->sendNotification(TelephonePortable::class, "telephone_portable");
+        if ($this->notificationService->shouldRun())
+        {
+            $this->notificationService->sendNotification(Ecran::class, "ecran");
+            $this->notificationService->sendNotification(Imprimante::class, "imprimante");
+            $this->notificationService->sendNotification(Onduleur::class, "onduleur");
+            $this->notificationService->sendNotification(PcFixe::class, "pc_fixe");
+            $this->notificationService->sendNotification(PcPortable::class, "pc_portable");
+            $this->notificationService->sendNotification(Serveur::class, "serveur");
+            $this->notificationService->sendNotification(Tablette::class, "tablette");
+            $this->notificationService->sendNotification(TelephoneFixe::class, "telephone_fixe");
+            $this->notificationService->sendNotification(TelephonePortable::class, "telephone_portable");
+
+            $this->notificationService->updateLastRunTime();
+        }
 
         $this->twig->addGlobal('notifications', $this->notificationService->getNotifications());
         $this->twig->addGlobal('notificationsAll', $this->notificationService->getNotificationsAll());
