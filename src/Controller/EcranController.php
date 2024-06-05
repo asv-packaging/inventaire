@@ -184,7 +184,6 @@ class EcranController extends AbstractController
         $writer = new PngWriter();
         $qrCode = QrCode::create($currentUrl)
             ->setEncoding(new Encoding('UTF-8'))
-            ->setErrorCorrectionLevel(new ErrorCorrectionLevelLow())
             ->setSize(150)
             ->setMargin(0)
             ->setForegroundColor(new Color(0, 0, 0))
