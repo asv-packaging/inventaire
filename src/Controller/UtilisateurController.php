@@ -32,14 +32,22 @@ class UtilisateurController extends AbstractController
     {
         $utilisateursRepo = $utilisateurRepository->findBy([], ['nom' => 'ASC']);
 
+        $page = $request->query->getInt('page', 1);
+        $limit = 10;
+
         $utilisateurs = $paginator->paginate(
             $utilisateursRepo,
-            $request->query->getInt('page', 1),
-            10
+            $page,
+            $limit
         );
+
+        $total = count($utilisateursRepo);
 
         return $this->render('utilisateur/show.html.twig', [
             'utilisateurs' => $utilisateurs,
+            'page' => $page,
+            'limit' => $limit,
+            'total' => $total,
             'menu_active' => $this->menu_active,
         ]);
     }
