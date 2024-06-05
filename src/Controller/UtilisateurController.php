@@ -30,7 +30,17 @@ class UtilisateurController extends AbstractController
     #[Route('', name: 'show')]
     public function index(UtilisateurRepository $utilisateurRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        $utilisateursRepo = $utilisateurRepository->findBy([], ['nom' => 'ASC']);
+        $recherche = $request->query->get('par');
+        $search = $request->query->get('q');
+
+        if ($recherche && $search)
+        {
+            $utilisateursRepo = $utilisateurRepository->findByCritere($recherche, $search);
+        }
+        else
+        {
+            $utilisateursRepo = $utilisateurRepository->findBy([], ['nom' => 'ASC']);
+        }
 
         $page = $request->query->getInt('page', 1);
         $limit = 10;
@@ -41,7 +51,7 @@ class UtilisateurController extends AbstractController
             $limit
         );
 
-        $total = count($utilisateursRepo);
+        $total = $utilisateurs->getTotalItemCount();
 
         return $this->render('utilisateur/show.html.twig', [
             'utilisateurs' => $utilisateurs,

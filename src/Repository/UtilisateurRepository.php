@@ -39,6 +39,28 @@ class UtilisateurRepository extends ServiceEntityRepository
         }
     }
 
+    public function findByCritere($recherche, $search)
+    {
+        $queryBuilder = $this->createQueryBuilder('e');
+
+        if ($recherche === 'nom' || $recherche === 'prenom' || $recherche === 'email')
+        {
+            $queryBuilder
+                ->andWhere('e.'.$recherche.' LIKE :search')
+                ->setParameter('search', '%' . $search . '%')
+                ->orderBy('e.id', 'DESC');
+        }
+        elseif ($recherche === 'entreprise_id')
+        {
+            $queryBuilder->join('e.entreprise', 'ent')
+                ->andWhere('ent.nom LIKE :search')
+                ->setParameter('search', '%' . $search . '%')
+                ->orderBy('e.id', 'DESC');
+        }
+
+        return $queryBuilder->getQuery();
+    }
+
     public function countUtilisateurs(): int
     {
         return $this->createQueryBuilder('u')
