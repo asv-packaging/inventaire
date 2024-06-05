@@ -61,7 +61,7 @@
                                     <option value="nom" {% if selectedRecherche == 'nom' %} selected {% endif %}>Nom</option>
                                     <option value="prenom" {% if selectedRecherche == 'prenom' %} selected {% endif %}>Prénom</option>
                                     <option value="email" {% if selectedRecherche == 'email' %} selected {% endif %}>Mail</option>
-                                    <option value="entreprise_id" {% if selectedRecherche == 'site' %} selected {% endif %}>Site</option>
+                                    <option value="entreprise_id" {% if selectedRecherche == 'entreprise_id' %} selected {% endif %}>Site</option>
                                 </select>
                                 <label for="search" class="form-label"></label>
                                 <input class="form-control" type="search" id="search" name="q" placeholder="Rechercher..." aria-label="Rechercher" value="{{ searchValue }}"/>
@@ -106,9 +106,9 @@
                                     <thead class="bg-200 text-900">
                                         <tr>
                                             <th class="align-middle text-center">#</th>
-                                            <th class="align-middle text-center">Nom & Prénom</th>
-                                            <th class="align-middle text-center">Mail</th>
-                                            <th class="align-middle text-center">Site</th>
+                                            <th class="align-middle text-center">{% if selectedRecherche == 'nom' or selectedRecherche == "prenom" %} <span class="badge bg-primary">Nom & Prénom</span> {% else %} Nom & Prénom {% endif %}</th>
+                                            <th class="align-middle text-center">{% if selectedRecherche == 'email' %} <span class="badge bg-primary">Mail</span> {% else %} Mail {% endif %}</th>
+                                            <th class="align-middle text-center">{% if selectedRecherche == 'entreprise_id' %} <span class="badge bg-primary">Site</span> {% else %} Site {% endif %}</th>
                                             <th class="align-middle text-center">Action</th>
                                         </tr>
                                     </thead>
