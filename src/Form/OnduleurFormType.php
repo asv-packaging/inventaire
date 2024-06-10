@@ -67,7 +67,7 @@ class OnduleurFormType extends AbstractType
                 'choices' => [
                     'FR' => 'FR',
                     'DIN' => 'DIN',
-                    'EIC' => 'IEC',
+                    'IEC' => 'IEC',
                 ]
             ])
             ->add('date_installation', TextType::class, [
