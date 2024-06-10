@@ -84,7 +84,7 @@ class OnduleurController extends AbstractController
 
         if(count($onduleurs) !== 0)
         {
-            $headers = ['ID', 'Nom', 'Marque', 'Modèle', 'Numéro de série', 'Capacité', 'Type de prise', 'Emplacement', 'Site', 'Fournisseur', 'État', 'Date d\'installation', 'Date d\'achat', 'Date de garantie', 'Commentaire'];
+            $headers = ['ID', 'Nom', 'Marque', 'Modèle', 'Numéro de série', 'Capacité', 'Type de prise', 'Emplacement', 'Site', 'Fournisseur', 'État', 'Date d\'installation', 'Date d\'achat', 'Date de remplacement', 'Commentaire'];
             $data = [];
 
             foreach($onduleurs as $onduleur)
