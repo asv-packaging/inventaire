@@ -27,7 +27,16 @@ class EmplacementController extends AbstractController
     #[Route(name: 'show')]
     public function index(EmplacementRepository $emplacementRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        $emplacementsRepo = $emplacementRepository->findBy([], ['id' => 'DESC']);
+        $search = $request->query->get('q');
+
+        if ($search)
+        {
+            $emplacementsRepo = $emplacementRepository->findByCritere($search);
+        }
+        else
+        {
+            $emplacementsRepo = $emplacementRepository->findBy([], ['id' => 'DESC']);
+        }
 
         $page = $request->query->getInt('page', 1);
         $limit = 10;

@@ -25,7 +25,16 @@ class StockageController extends AbstractController
     #[Route(name: 'show')]
     public function index(StockageRepository $stockageRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        $stockagesRepo = $stockageRepository->findBy([], ['id' => 'DESC']);
+        $search = $request->query->get('q');
+
+        if ($search)
+        {
+            $stockagesRepo = $stockageRepository->findByCritere($search);
+        }
+        else
+        {
+            $stockagesRepo = $stockageRepository->findBy([], ['id' => 'DESC']);
+        }
 
         $page = $request->query->getInt('page', 1);
         $limit = 10;

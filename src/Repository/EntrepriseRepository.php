@@ -39,6 +39,18 @@ class EntrepriseRepository extends ServiceEntityRepository
         }
     }
 
+    public function findByCritere($search)
+    {
+        $queryBuilder = $this->createQueryBuilder('e');
+
+        $queryBuilder
+            ->andWhere('e.nom LIKE :search')
+            ->setParameter('search', '%' . $search . '%')
+            ->orderBy('e.id', 'DESC');
+
+        return $queryBuilder->getQuery();
+    }
+
     public function countEntreprises(): int
     {
         return $this->createQueryBuilder('e')

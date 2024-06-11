@@ -27,7 +27,16 @@ class EntrepriseController extends AbstractController
     #[Route(name: 'show')]
     public function index(EntrepriseRepository $entrepriseRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        $entreprisesRepo = $entrepriseRepository->findBy([], ['id' => 'DESC']);
+        $search = $request->query->get('q');
+
+        if ($search)
+        {
+            $entreprisesRepo = $entrepriseRepository->findByCritere($search);
+        }
+        else
+        {
+            $entreprisesRepo = $entrepriseRepository->findBy([], ['id' => 'DESC']);
+        }
 
         $page = $request->query->getInt('page', 1);
         $limit = 10;

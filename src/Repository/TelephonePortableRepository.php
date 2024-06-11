@@ -53,7 +53,7 @@ class TelephonePortableRepository extends ServiceEntityRepository
         elseif($recherche === 'utilisateur_id')
         {
             $queryBuilder->join('e.utilisateur', 'u')
-                ->andWhere('u.nom LIKE :search')
+                ->andWhere('u.nom LIKE :search OR u.prenom LIKE :search')
                 ->setParameter('search', '%' . $search . '%')
                 ->orderBy('e.id', 'DESC');
         }

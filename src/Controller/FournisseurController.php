@@ -27,7 +27,16 @@ class FournisseurController extends AbstractController
     #[Route(name: 'show')]
     public function index(FournisseurRepository $fournisseurRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        $fournisseursRepo = $fournisseurRepository->findBy([], ['id' => 'DESC']);
+        $search = $request->query->get('q');
+
+        if ($search)
+        {
+            $fournisseursRepo = $fournisseurRepository->findByCritere($search);
+        }
+        else
+        {
+            $fournisseursRepo = $fournisseurRepository->findBy([], ['id' => 'DESC']);
+        }
 
         $page = $request->query->getInt('page', 1);
         $limit = 10;

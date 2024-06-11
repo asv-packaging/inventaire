@@ -39,6 +39,18 @@ class StockageRepository extends ServiceEntityRepository
         }
     }
 
+    public function findByCritere($search)
+    {
+        $queryBuilder = $this->createQueryBuilder('s');
+
+        $queryBuilder
+            ->andWhere('s.nom LIKE :search')
+            ->setParameter('search', '%' . $search . '%')
+            ->orderBy('s.id', 'DESC');
+
+        return $queryBuilder->getQuery();
+    }
+
     public function countStockages(): int
     {
         return $this->createQueryBuilder('s')

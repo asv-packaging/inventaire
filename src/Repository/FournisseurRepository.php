@@ -39,6 +39,18 @@ class FournisseurRepository extends ServiceEntityRepository
         }
     }
 
+    public function findByCritere($search)
+    {
+        $queryBuilder = $this->createQueryBuilder('f');
+
+        $queryBuilder
+            ->andWhere('f.nom LIKE :search')
+            ->setParameter('search', '%' . $search . '%')
+            ->orderBy('f.id', 'DESC');
+
+        return $queryBuilder->getQuery();
+    }
+
     public function countFournisseurs(): int
     {
         return $this->createQueryBuilder('f')

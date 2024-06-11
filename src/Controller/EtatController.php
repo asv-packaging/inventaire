@@ -27,7 +27,16 @@ class EtatController extends AbstractController
     #[Route(name: 'show')]
     public function index(EtatRepository $etatRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        $etatsRepo = $etatRepository->findBy([], ['id' => 'DESC']);
+        $search = $request->query->get('q');
+
+        if ($search)
+        {
+            $etatsRepo = $etatRepository->findByCritere($search);
+        }
+        else
+        {
+            $etatsRepo = $etatRepository->findBy([], ['id' => 'DESC']);
+        }
 
         $page = $request->query->getInt('page', 1);
         $limit = 10;

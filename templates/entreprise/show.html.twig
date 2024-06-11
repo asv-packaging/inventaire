@@ -1,5 +1,10 @@
 {% extends 'gui/base.html.twig' %}
 
+{% block stylesheets %}
+    <link href="{{ asset('assets/vendors/select2/select2.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/vendors/select2-bootstrap-5-theme/select2-bootstrap-5-theme.min.css') }}" rel="stylesheet" />
+{% endblock %}
+
 {% block title %}Gestion des sites{% endblock %}
 
 {% block body %}
@@ -25,6 +30,40 @@
                 </div>
             {% endfor %}
             <div class="sticky-sidebar">
+                {# Remplissage automatique du champ de recherche #}
+                {% set searchValue = app.request.query.get('q') %}
+                <div class="card mb-3" id="card-search" {% if searchValue == "" %}hidden{% endif %}>
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">
+                            <span class="fas fa-search"></span>
+                            &nbsp;Recherche
+                        </h5>
+                        <div>
+                            <a class="btn btn-primary btn-sm me-2" id="btn-search-close">
+                                Fermer
+                            </a>
+                        </div>
+                    </div>
+                    <div class="card-body bg-light">
+                        <div class="card-body">
+                            <form action="{{ path('admin.entreprise.show') }}" method="get">
+                                <label for="par" class="form-label">Rechercher par</label>
+                                <select class="selectpicker" name="par" id="par">
+                                    <option value="nom" selected disabled>Nom</option>
+                                </select>
+                                <label for="search" class="form-label"></label>
+                                <input class="form-control" type="search" id="search" name="q" placeholder="Rechercher..." aria-label="Rechercher" value="{{ searchValue }}"/>
+                                <br>
+                                <div class="d-flex justify-content-center">
+                                    <button type="submit" class="btn btn-primary me-1 mb-1">
+                                        <span class="fas fa-search"></span>
+                                        &nbsp;Rechercher
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
                 <div class="card mb-3">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <h5 class="mb-0">
@@ -32,6 +71,9 @@
                             &nbsp;Gestion des sites
                         </h5>
                         <div>
+                            <a class="btn btn-primary btn-sm me-2" id="btn-search" {% if searchValue != "" %}hidden{% endif %}>
+                                <span class="fas fa-search"></span>
+                            </a>
                             <a class="btn btn-primary btn-sm" href="{{ path('admin.entreprise.create') }}">
                                 <span class="fas fa-circle-plus"></span>
                                 &nbsp;Créer un site
@@ -40,25 +82,12 @@
                     </div>
                     <div class="card-body bg-light">
                         <div id="table_sites">
-                            <div class="row justify-content-end g-0">
-                                <div class="col-auto mb-3">
-                                    <div class="input-group">
-                                        <div class="search-box">
-                                            <input id="searchInput" class="form-control search-input" type="search" placeholder="Rechercher..." aria-label="Rechercher" />
-                                            <span class="fas fa-search search-box-icon"></span>
-                                            <div class="btn-close-falcon-container position-absolute end-0 top-50 translate-middle" data-bs-dismiss="search">
-                                                <button class="btn btn-link btn-close-falcon p-0" id="btn-search-close" aria-label="Close"></button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                             <div class="table-responsive scrollbar">
                                 <table class="table overflow-hidden">
                                     <thead class="bg-200 text-900">
                                         <tr>
                                             <th class="align-middle text-center">#</th>
-                                            <th class="align-middle text-center">Nom</th>
+                                            <th class="align-middle text-center">{% if searchValue != "" %} <span class="badge bg-primary">Nom</span> {% else %} Nom {% endif %}</th>
                                             <th class="align-middle text-center">Action</th>
                                         </tr>
                                     </thead>
@@ -96,9 +125,6 @@
                                                 <td colspan="3">Aucun site n'a été trouvé.</td>
                                             </tr>
                                         {% endif %}
-                                        <tr id="noResultsRow" class="align-middle text-center" style="display: none;">
-                                            <td colspan="3">Aucun site n'a été trouvé.</td>
-                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -115,49 +141,21 @@
 {% endblock %}
 
 {% block javascripts %}
+    <script src="{{ asset('assets/vendors/select2/select2.min.js') }}"></script>
     <script>
-        // Script pour la recherche dans le tableau
-        document.addEventListener('DOMContentLoaded', function() {
-            const searchBar = document.getElementById('searchInput');
-            const rows = document.querySelectorAll('.list tr');
-            const noResultsRow = document.getElementById('noResultsRow');
-            const btnCloseSearch = document.getElementById('btn-search-close');
+        document.addEventListener("DOMContentLoaded", function() {
+            document.getElementById('btn-search').addEventListener('click', function() {
+                // Enlève l'attribut 'hidden'
+                document.getElementById('card-search').removeAttribute('hidden');
+                // Cache le bouton
+                this.style.display = 'none';
+            });
 
-            searchBar.addEventListener('input', function(event) {
-                const searchTerm = event.target.value.toLowerCase();
-                let resultsFound = false;
-
-                rows.forEach(row => {
-                    const cells = row.querySelectorAll('td');
-                    let found = false;
-
-                    cells.forEach(cell => {
-                        if (cell.textContent.toLowerCase().includes(searchTerm)) {
-                            found = true;
-                        }
-                    });
-
-                    if (found) {
-                        row.style.display = '';
-                        resultsFound = true;
-                    } else {
-                        row.style.display = 'none';
-                    }
-
-                    if(btnCloseSearch) {
-                        btnCloseSearch.addEventListener('click', function() {
-                            searchBar.value = '';
-                            row.style.display = '';
-                            noResultsRow.style.display = 'none';
-                        });
-                    }
-                });
-
-                if (resultsFound) {
-                    noResultsRow.style.display = 'none';
-                } else {
-                    noResultsRow.style.display = '';
-                }
+            document.getElementById('btn-search-close').addEventListener('click', function() {
+                document.getElementById('card-search').setAttribute('hidden', 'hidden');
+                // Affiche à nouveau le bouton de recherche
+                document.getElementById('btn-search').style.display = 'inline-block';
+                document.getElementById('btn-search').removeAttribute('hidden');
             });
         });
     </script>
