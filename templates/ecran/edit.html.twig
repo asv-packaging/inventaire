@@ -67,7 +67,10 @@
                                 Champs obligatoires
                             </label>
                             <div class="d-flex justify-content-end">
-                                <button class="btn btn-primary me-1 mb-1" type="submit">Sauvegarder</button>
+                                <button class="btn btn-primary me-1 mb-1" type="submit">
+                                    <span class="fas fa-floppy-disk"></span>
+                                    &nbsp;Sauvegarder
+                                </button>
                             </div>
                         {{ form_end(ecranForm) }}
                     </div>
@@ -82,7 +85,10 @@
                     <div class="card-body bg-light">
                         <center>
                             <img src="{{ qrCodes }}" alt="" id="qrCodeImage" /><br><br>
-                            <button class="btn btn-primary me-1 mb-1" id="printButton">Imprimer le QR Code</button>
+                            <button class="btn btn-primary me-1 mb-1" id="printButton">
+                                <span class="fas fa-print"></span>
+                                &nbsp;Imprimer le QR Code
+                            </button>
                         </center>
                     </div>
                 </div>
