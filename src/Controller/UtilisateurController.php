@@ -157,7 +157,7 @@ class UtilisateurController extends AbstractController
      * @return Response
      * Permet de modifier un utilisateur
      */
-    #[Route('/{id}', name: 'edit', methods: ['GET', 'POST'])]
+    #[Route('/{nom}-{prenom}', name: 'edit', methods: ['GET', 'POST'])]
     public function edit(Utilisateur $utilisateur, EntityManagerInterface $entityManager, Request $request): Response
     {
         $utilisateurForm = $this->createForm(UtilisateurFormType::class, $utilisateur);
