@@ -23,6 +23,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\String\Slugger\AsciiSlugger;
 
 #[Route('/gestion/imprimantes', name: 'admin.imprimante.')]
 class ImprimanteController extends AbstractController
@@ -155,6 +156,12 @@ class ImprimanteController extends AbstractController
 
         if($imprimanteForm->isSubmitted() && $imprimanteForm->isValid())
         {
+            $slugger = new AsciiSlugger();
+            $nom = $imprimanteForm->get('nom')->getData();
+            $slug = strtolower($slugger->slug($nom));
+
+            $imprimante->setSlug($slug);
+
             $entityManager->persist($imprimante);
             $entityManager->flush();
 
@@ -178,7 +185,7 @@ class ImprimanteController extends AbstractController
      * @return Response
      * Permet de modifier une imprimante
      */
-    #[Route('/{id}', name: 'edit', methods: ['GET', 'POST'])]
+    #[Route('/{slug}', name: 'edit', methods: ['GET', 'POST'])]
     public function edit(Imprimante $imprimante, EntityManagerInterface $entityManager, Request $request, UrlGeneratorInterface $urlGenerator, NotificationService $notificationService): Response
     {
         $currentUrl = $urlGenerator->generate(
@@ -209,6 +216,12 @@ class ImprimanteController extends AbstractController
         if($imprimanteForm->isSubmitted() && $imprimanteForm->isValid())
         {
             $notificationService->deleteNotification("imprimante", $imprimante->getId());
+
+            $slugger = new AsciiSlugger();
+            $nom = $imprimanteForm->get('nom')->getData();
+            $slug = strtolower($slugger->slug($nom));
+
+            $imprimante->setSlug($slug);
 
             $entityManager->persist($imprimante);
             $entityManager->flush();

@@ -21,6 +21,9 @@ class Emplacement
     #[ORM\OneToMany(mappedBy: 'emplacement', targetEntity: TelephoneFixe::class, cascade: ['persist'])]
     private $telephoneFixes;
 
+    #[ORM\Column(length: 255)]
+    private ?string $slug = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -34,6 +37,18 @@ class Emplacement
     public function setNom(string $nom): static
     {
         $this->nom = $nom;
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): static
+    {
+        $this->slug = $slug;
 
         return $this;
     }

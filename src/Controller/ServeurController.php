@@ -23,6 +23,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\String\Slugger\AsciiSlugger;
 
 #[Route('/gestion/serveurs', name: 'admin.serveur.')]
 class ServeurController extends AbstractController
@@ -160,6 +161,12 @@ class ServeurController extends AbstractController
 
         if($serveurForm->isSubmitted() && $serveurForm->isValid())
         {
+            $slugger = new AsciiSlugger();
+            $nom = $serveurForm->get('nom')->getData();
+            $slug = strtolower($slugger->slug($nom));
+
+            $serveur->setSlug($slug);
+
             $entityManager->persist($serveur);
             $entityManager->flush();
 
@@ -183,7 +190,7 @@ class ServeurController extends AbstractController
      * @return Response
      * Permet de modifier un serveur
      */
-    #[Route('/{id}', name: 'edit', methods: ['GET', 'POST'])]
+    #[Route('/{slug}', name: 'edit', methods: ['GET', 'POST'])]
     public function edit(Serveur $serveur, EntityManagerInterface $entityManager, Request $request, UrlGeneratorInterface $urlGenerator, NotificationService $notificationService): Response
     {
         $currentUrl = $urlGenerator->generate(
@@ -213,6 +220,12 @@ class ServeurController extends AbstractController
 
         if($serveurForm->isSubmitted() && $serveurForm->isValid())
         {
+            $slugger = new AsciiSlugger();
+            $nom = $serveurForm->get('nom')->getData();
+            $slug = strtolower($slugger->slug($nom));
+
+            $serveur->setSlug($slug);
+
             $notificationService->deleteNotification("serveur", $serveur->getId());
 
             $entityManager->persist($serveur);

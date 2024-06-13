@@ -11,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\AsciiSlugger;
 
 #[Route('/parametres/sites', name: 'admin.entreprise.')]
 class EntrepriseController extends AbstractController
@@ -75,6 +76,12 @@ class EntrepriseController extends AbstractController
 
         if($entrepriseForm->isSubmitted() && $entrepriseForm->isValid())
         {
+            $slugger = new AsciiSlugger();
+            $nom = $entrepriseForm->get('nom')->getData();
+            $slug = strtolower($slugger->slug($nom));
+
+            $entreprise->setSlug($slug);
+
             $entityManager->persist($entreprise);
             $entityManager->flush();
 
@@ -96,7 +103,7 @@ class EntrepriseController extends AbstractController
      * @return Response
      * Permet de modifier une entreprise (site)
      */
-    #[Route('/{id}', name: 'edit', methods: ['GET', 'POST'])]
+    #[Route('/{slug}', name: 'edit', methods: ['GET', 'POST'])]
     public function edit(Entreprise $entreprise, EntityManagerInterface $entityManager, Request $request): Response
     {
         $entrepriseForm = $this->createForm(EntrepriseFormType::class, $entreprise);
@@ -105,6 +112,12 @@ class EntrepriseController extends AbstractController
 
         if($entrepriseForm->isSubmitted() && $entrepriseForm->isValid())
         {
+            $slugger = new AsciiSlugger();
+            $nom = $entrepriseForm->get('nom')->getData();
+            $slug = strtolower($slugger->slug($nom));
+
+            $entreprise->setSlug($slug);
+
             $entityManager->persist($entreprise);
             $entityManager->flush();
 

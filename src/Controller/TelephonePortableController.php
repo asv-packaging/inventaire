@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\AsciiSlugger;
 
 #[Route('/gestion/telephones/portables', name: 'admin.telephone_portable.')]
 class TelephonePortableController extends AbstractController
@@ -147,6 +148,12 @@ class TelephonePortableController extends AbstractController
 
         if($telephoneForm->isSubmitted() && $telephoneForm->isValid())
         {
+            $slugger = new AsciiSlugger();
+            $nom = $telephoneForm->get('nom')->getData();
+            $slug = strtolower($slugger->slug($nom));
+
+            $telephoneForm->setSlug($slug);
+
             $entityManager->persist($telephone);
             $entityManager->flush();
 
@@ -169,7 +176,7 @@ class TelephonePortableController extends AbstractController
      * @return Response
      * Permet de modifier un téléphone portable
      */
-    #[Route('/{id}', name: 'edit', methods: ['GET', 'POST'])]
+    #[Route('/{slug}', name: 'edit', methods: ['GET', 'POST'])]
     public function edit(TelephonePortable $telephone, EntityManagerInterface $entityManager, Request $request, NotificationService $notificationService): Response
     {
         $telephoneForm = $this->createForm(TelephonePortableFormType::class, $telephone);
@@ -178,6 +185,12 @@ class TelephonePortableController extends AbstractController
 
         if($telephoneForm->isSubmitted() && $telephoneForm->isValid())
         {
+            $slugger = new AsciiSlugger();
+            $nom = $telephoneForm->get('nom')->getData();
+            $slug = strtolower($slugger->slug($nom));
+
+            $telephoneForm->setSlug($slug);
+
             $notificationService->deleteNotification("telephone_portable", $telephone->getId());
 
             $entityManager->persist($telephone);

@@ -23,6 +23,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\String\Slugger\AsciiSlugger;
 
 #[Route('/gestion/pc/portables', name: 'admin.pc_portable.')]
 class PcPortableController extends AbstractController
@@ -160,6 +161,12 @@ class PcPortableController extends AbstractController
 
         if($pcPortableForm->isSubmitted() && $pcPortableForm->isValid())
         {
+            $slugger = new AsciiSlugger();
+            $nom = $pcPortableForm->get('nom')->getData();
+            $slug = strtolower($slugger->slug($nom));
+
+            $pcPortable->setSlug($slug);
+
             $entityManager->persist($pcPortable);
             $entityManager->flush();
 
@@ -183,7 +190,7 @@ class PcPortableController extends AbstractController
      * @return Response
      * Permet de modifier un PC Portable
      */
-    #[Route('/{id}', name: 'edit', methods: ['GET', 'POST'])]
+    #[Route('/{slug}', name: 'edit', methods: ['GET', 'POST'])]
     public function edit(PcPortable $pcPortable, EntityManagerInterface $entityManager, Request $request, UrlGeneratorInterface $urlGenerator, NotificationService $notificationService): Response
     {
         $currentUrl = $urlGenerator->generate(
@@ -213,6 +220,12 @@ class PcPortableController extends AbstractController
 
         if($pcPortableForm->isSubmitted() && $pcPortableForm->isValid())
         {
+            $slugger = new AsciiSlugger();
+            $nom = $pcPortableForm->get('nom')->getData();
+            $slug = strtolower($slugger->slug($nom));
+
+            $pcPortable->setSlug($slug);
+
             $notificationService->deleteNotification("pc_portable", $pcPortable->getId());
 
             $entityManager->persist($pcPortable);

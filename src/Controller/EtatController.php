@@ -11,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\AsciiSlugger;
 
 #[Route('/parametres/etats', name: 'admin.etat.')]
 class EtatController extends AbstractController
@@ -75,6 +76,12 @@ class EtatController extends AbstractController
 
         if($etatForm->isSubmitted() && $etatForm->isValid())
         {
+            $slugger = new AsciiSlugger();
+            $nom = $etatForm->get('nom')->getData();
+            $slug = strtolower($slugger->slug($nom));
+
+            $etat->setSlug($slug);
+
             $entityManager->persist($etat);
             $entityManager->flush();
 
@@ -96,7 +103,7 @@ class EtatController extends AbstractController
      * @return Response
      * Permet de modifier un état
      */
-    #[Route('/{id}', name: 'edit', methods: ['GET', 'POST'])]
+    #[Route('/{slug}', name: 'edit', methods: ['GET', 'POST'])]
     public function edit(Etat $etat, EntityManagerInterface $entityManager, Request $request): Response
     {
         $etatForm = $this->createForm(EtatFormType::class, $etat);
@@ -105,6 +112,12 @@ class EtatController extends AbstractController
 
         if($etatForm->isSubmitted() && $etatForm->isValid())
         {
+            $slugger = new AsciiSlugger();
+            $nom = $etatForm->get('nom')->getData();
+            $slug = strtolower($slugger->slug($nom));
+
+            $etat->setSlug($slug);
+
             $entityManager->persist($etat);
             $entityManager->flush();
 

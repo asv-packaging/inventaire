@@ -23,6 +23,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\String\Slugger\AsciiSlugger;
 
 #[Route('/gestion/telephones/fixes', name: 'admin.telephone_fixe.')]
 class TelephoneFixeController extends AbstractController
@@ -156,6 +157,12 @@ class TelephoneFixeController extends AbstractController
 
         if($telephoneForm->isSubmitted() && $telephoneForm->isValid())
         {
+            $slugger = new AsciiSlugger();
+            $nom = $telephoneForm->get('nom')->getData();
+            $slug = strtolower($slugger->slug($nom));
+
+            $telephone->setSlug($slug);
+
             $entityManager->persist($telephone);
             $entityManager->flush();
 
@@ -178,7 +185,7 @@ class TelephoneFixeController extends AbstractController
      * @return Response
      * Permet de modifier un téléphone fixe
      */
-    #[Route('/{id}', name: 'edit', methods: ['GET', 'POST'])]
+    #[Route('/{slug}', name: 'edit', methods: ['GET', 'POST'])]
     public function edit(TelephoneFixe $telephone, EntityManagerInterface $entityManager, Request $request, NotificationService $notificationService): Response
     {
         $telephoneForm = $this->createForm(TelephoneFixeFormType::class, $telephone);
@@ -187,6 +194,12 @@ class TelephoneFixeController extends AbstractController
 
         if($telephoneForm->isSubmitted() && $telephoneForm->isValid())
         {
+            $slugger = new AsciiSlugger();
+            $nom = $telephoneForm->get('nom')->getData();
+            $slug = strtolower($slugger->slug($nom));
+
+            $telephone->setSlug($slug);
+
             $notificationService->deleteNotification("telephone_fixe", $telephone->getId());
 
             $entityManager->persist($telephone);

@@ -103,10 +103,10 @@
                                                 <tr class="align-middle text-center">
                                                     <td class="text-nowrap">{{ currentIndex }}</td>
                                                     <td class="text-nowrap">
-                                                        <a href="{{ path('admin.etat.edit', {id: etat.id}) }}"><b>{{ etat.nom }}</b></a>
+                                                        <a href="{{ path('admin.etat.edit', {slug: etat.slug}) }}"><b>{{ etat.nom }}</b></a>
                                                     </td>
                                                     <td class="text-nowrap">
-                                                        <a href="{{ path('admin.etat.edit', {id: etat.id}) }}" class="btn btn-primary btn-sm">
+                                                        <a href="{{ path('admin.etat.edit', {slug: etat.slug}) }}" class="btn btn-primary btn-sm">
                                                             <span class="bi bi-pencil-square"></span>
                                                         </a>
 

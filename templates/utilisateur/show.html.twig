@@ -123,7 +123,7 @@
                                                 <tr class="align-middle text-center">
                                                     <td class="text-nowrap">{{ currentIndex }}</td>
                                                     <td class="text-nowrap">
-                                                        <a href="{{ path('admin.utilisateur.edit', {nom: utilisateur.nom | lower, prenom: utilisateur.prenom | lower}) }}"><b>{{ utilisateur.nom }} {{ utilisateur.prenom }}</b></a>
+                                                        <a href="{{ path('admin.utilisateur.edit', {slug: utilisateur.slug}) }}"><b>{{ utilisateur.nom }} {{ utilisateur.prenom }}</b></a>
                                                     </td>
                                                     <td class="text-nowrap">
                                                         {{ utilisateur.email | default('<span class="badge bg-danger">N/A</span>') | raw }}
@@ -132,7 +132,7 @@
                                                         {{ utilisateur.getEntreprise.nom | default('<span class="badge bg-danger">N/A</span>') | raw }}
                                                     </td>
                                                     <td class="text-nowrap">
-                                                        <a href="{{ path('admin.utilisateur.edit', {nom: utilisateur.nom | lower, prenom: utilisateur.prenom | lower}) }}" class="btn btn-primary btn-sm">
+                                                        <a href="{{ path('admin.utilisateur.edit', {slug: utilisateur.slug}) }}" class="btn btn-primary btn-sm">
                                                             <span class="bi bi-pencil-square"></span>
                                                         </a>
 

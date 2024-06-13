@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\AsciiSlugger;
 
 #[Route('/parametres/utilisateurs', name: 'admin.utilisateur.')]
 class UtilisateurController extends AbstractController
@@ -27,7 +28,7 @@ class UtilisateurController extends AbstractController
      * @return Response
      * Permet d'afficher la liste des utilisateurs
      */
-    #[Route('', name: 'show')]
+    #[Route(name: 'show')]
     public function index(UtilisateurRepository $utilisateurRepository, PaginatorInterface $paginator, Request $request): Response
     {
         $recherche = $request->query->get('par');
@@ -136,6 +137,12 @@ class UtilisateurController extends AbstractController
 
         if($utilisateurForm->isSubmitted() && $utilisateurForm->isValid())
         {
+            $slugger = new AsciiSlugger();
+            $nom = $utilisateurForm->get('nom')->getData();
+            $slug = strtolower($slugger->slug($nom));
+
+            $utilisateur->setSlug($slug);
+
             $entityManager->persist($utilisateur);
             $entityManager->flush();
 
@@ -157,7 +164,7 @@ class UtilisateurController extends AbstractController
      * @return Response
      * Permet de modifier un utilisateur
      */
-    #[Route('/{nom}-{prenom}', name: 'edit', methods: ['GET', 'POST'])]
+    #[Route('/{slug}', name: 'edit', methods: ['GET', 'POST'])]
     public function edit(Utilisateur $utilisateur, EntityManagerInterface $entityManager, Request $request): Response
     {
         $utilisateurForm = $this->createForm(UtilisateurFormType::class, $utilisateur);
@@ -166,6 +173,12 @@ class UtilisateurController extends AbstractController
 
         if($utilisateurForm->isSubmitted() && $utilisateurForm->isValid())
         {
+            $slugger = new AsciiSlugger();
+            $nom = $utilisateurForm->get('nom')->getData();
+            $slug = strtolower($slugger->slug($nom));
+
+            $utilisateur->setSlug($slug);
+
             $entityManager->persist($utilisateur);
             $entityManager->flush();
 

@@ -11,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\AsciiSlugger;
 
 #[Route('/parametres/fournisseurs', name: 'admin.fournisseur.')]
 class FournisseurController extends AbstractController
@@ -75,6 +76,12 @@ class FournisseurController extends AbstractController
 
         if($fournisseurForm->isSubmitted() && $fournisseurForm->isValid())
         {
+            $slugger = new AsciiSlugger();
+            $nom = $fournisseurForm->get('nom')->getData();
+            $slug = strtolower($slugger->slug($nom));
+
+            $fournisseur->setSlug($slug);
+
             $entityManager->persist($fournisseur);
             $entityManager->flush();
 
@@ -96,7 +103,7 @@ class FournisseurController extends AbstractController
      * @return Response
      * Permet de modifier un fournisseur
      */
-    #[Route('/{id}', name: 'edit', methods: ['GET', 'POST'])]
+    #[Route('/{slug}', name: 'edit', methods: ['GET', 'POST'])]
     public function edit(Fournisseur $fournisseur, EntityManagerInterface $entityManager, Request $request): Response
     {
         $fournisseurForm = $this->createForm(FournisseurFormType::class, $fournisseur);
@@ -105,6 +112,12 @@ class FournisseurController extends AbstractController
 
         if($fournisseurForm->isSubmitted() && $fournisseurForm->isValid())
         {
+            $slugger = new AsciiSlugger();
+            $nom = $fournisseurForm->get('nom')->getData();
+            $slug = strtolower($slugger->slug($nom));
+
+            $fournisseur->setSlug($slug);
+
             $entityManager->persist($fournisseur);
             $entityManager->flush();
 

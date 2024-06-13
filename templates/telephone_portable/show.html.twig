@@ -136,7 +136,7 @@
                                                 <tr class="align-middle text-center">
                                                     <td class="text-nowrap">{{ currentIndex }}</td>
                                                     <td class="text-nowrap">
-                                                        <a href="{{ path('admin.telephone_portable.edit', {id: telephone.id}) }}"><b>{{ telephone.ligne }}</b></a>
+                                                        <a href="{{ path('admin.telephone_portable.edit', {slug: telephone.slug}) }}"><b>{{ telephone.ligne }}</b></a>
                                                     </td>
                                                     <td class="text-nowrap">
                                                         {{ telephone.imei1 | default('<span class="badge bg-danger">N/A</span>') | raw }}
@@ -168,7 +168,7 @@
                                                         </span>
                                                     </td>
                                                     <td class="text-nowrap">
-                                                        <a href="{{ path('admin.telephone_portable.edit', {id: telephone.id}) }}" class="btn btn-primary btn-sm">
+                                                        <a href="{{ path('admin.telephone_portable.edit', {slug: telephone.slug}) }}" class="btn btn-primary btn-sm">
                                                             <span class="bi bi-pencil-square"></span>
                                                         </a>
 

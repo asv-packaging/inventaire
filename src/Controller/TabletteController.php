@@ -23,6 +23,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\String\Slugger\AsciiSlugger;
 
 #[Route('/gestion/tablettes', name: 'admin.tablette.')]
 class TabletteController extends AbstractController
@@ -155,6 +156,12 @@ class TabletteController extends AbstractController
 
         if($tabletteForm->isSubmitted() && $tabletteForm->isValid())
         {
+            $slugger = new AsciiSlugger();
+            $nom = $tabletteForm->get('nom')->getData();
+            $slug = strtolower($slugger->slug($nom));
+
+            $tablette->setSlug($slug);
+
             $entityManager->persist($tablette);
             $entityManager->flush();
 
@@ -178,7 +185,7 @@ class TabletteController extends AbstractController
      * @return Response
      * Permet de modifier une tablette
      */
-    #[Route('/{id}', name: 'edit', methods: ['GET', 'POST'])]
+    #[Route('/{slug}', name: 'edit', methods: ['GET', 'POST'])]
     public function edit(Tablette $tablette, EntityManagerInterface $entityManager, Request $request, UrlGeneratorInterface $urlGenerator, NotificationService $notificationService): Response
     {
         $currentUrl = $urlGenerator->generate(
@@ -208,6 +215,12 @@ class TabletteController extends AbstractController
 
         if($tabletteForm->isSubmitted() && $tabletteForm->isValid())
         {
+            $slugger = new AsciiSlugger();
+            $nom = $tabletteForm->get('nom')->getData();
+            $slug = strtolower($slugger->slug($nom));
+
+            $tablette->setSlug($slug);
+
             $notificationService->deleteNotification("tablette", $tablette->getId());
 
             $entityManager->persist($tablette);

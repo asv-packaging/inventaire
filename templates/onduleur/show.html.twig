@@ -136,7 +136,7 @@
                                                 <tr class="align-middle text-center">
                                                     <td class="text-nowrap">{{ currentIndex }}</td>
                                                     <td class="text-nowrap">
-                                                        <a href="{{ path('admin.onduleur.edit', {id: onduleur.id}) }}">
+                                                        <a href="{{ path('admin.onduleur.edit', {slug: onduleur.slug}) }}">
                                                             <b>{{ onduleur.nom }}</b>
                                                         </a>
                                                     </td>
@@ -170,7 +170,7 @@
                                                         </span>
                                                     </td>
                                                     <td class="text-nowrap">
-                                                        <a href="{{ path('admin.onduleur.edit', {id: onduleur.id}) }}" class="btn btn-primary btn-sm">
+                                                        <a href="{{ path('admin.onduleur.edit', {slug: onduleur.slug}) }}" class="btn btn-primary btn-sm">
                                                             <span class="bi bi-pencil-square"></span>
                                                         </a>
 

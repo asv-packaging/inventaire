@@ -11,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\AsciiSlugger;
 
 #[Route('/parametres/emplacements', name: 'admin.emplacement.')]
 class EmplacementController extends AbstractController
@@ -75,6 +76,12 @@ class EmplacementController extends AbstractController
 
         if($emplacementForm->isSubmitted() && $emplacementForm->isValid())
         {
+            $slugger = new AsciiSlugger();
+            $nom = $emplacementForm->get('nom')->getData();
+            $slug = strtolower($slugger->slug($nom));
+
+            $emplacement->setSlug($slug);
+
             $entityManager->persist($emplacement);
             $entityManager->flush();
 
@@ -96,7 +103,7 @@ class EmplacementController extends AbstractController
      * @return Response
      * Permet de modifier un emplacement
      */
-    #[Route('/{id}', name: 'edit', methods: ['GET', 'POST'])]
+    #[Route('/{slug}', name: 'edit', methods: ['GET', 'POST'])]
     public function edit(Emplacement $emplacement, EntityManagerInterface $entityManager, Request $request): Response
     {
         $emplacementForm = $this->createForm(EmplacementFormType::class, $emplacement);
@@ -105,6 +112,12 @@ class EmplacementController extends AbstractController
 
         if($emplacementForm->isSubmitted() && $emplacementForm->isValid())
         {
+            $slugger = new AsciiSlugger();
+            $nom = $emplacementForm->get('nom')->getData();
+            $slug = strtolower($slugger->slug($nom));
+
+            $emplacement->setSlug($slug);
+
             $entityManager->persist($emplacement);
             $entityManager->flush();
 

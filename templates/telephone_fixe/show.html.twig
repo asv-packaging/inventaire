@@ -139,7 +139,7 @@
                                                     <td class="text-nowrap">{{ currentIndex }}</td>
                                                     <td class="text-nowrap">
                                                         {% if telephone.ligne != null %}
-                                                            <a href="{{ path('admin.telephone_fixe.edit', {id: telephone.id}) }}"><b>{{ telephone.ligne }}</b></a>
+                                                            <a href="{{ path('admin.telephone_fixe.edit', {slug: telephone.slug}) }}"><b>{{ telephone.ligne }}</b></a>
                                                         {% else %}
                                                             <span class="badge bg-danger">N/A</span>
                                                         {% endif %}
@@ -187,7 +187,7 @@
                                                         </span>
                                                     </td>
                                                     <td class="text-nowrap">
-                                                        <a href="{{ path('admin.telephone_fixe.edit', {id: telephone.id}) }}" class="btn btn-primary btn-sm">
+                                                        <a href="{{ path('admin.telephone_fixe.edit', {slug: telephone.slug}) }}" class="btn btn-primary btn-sm">
                                                             <span class="bi bi-pencil-square"></span>
                                                         </a>
 

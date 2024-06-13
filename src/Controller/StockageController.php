@@ -11,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\AsciiSlugger;
 
 #[Route('/parametres/stockages', name: 'admin.stockage.')]
 class StockageController extends AbstractController
@@ -73,6 +74,12 @@ class StockageController extends AbstractController
 
         if($stockageForm->isSubmitted() && $stockageForm->isValid())
         {
+            $slugger = new AsciiSlugger();
+            $nom = $stockageForm->get('nom')->getData();
+            $slug = strtolower($slugger->slug($nom));
+
+            $stockage->setSlug($slug);
+
             $entityManager->persist($stockage);
             $entityManager->flush();
 
@@ -94,7 +101,7 @@ class StockageController extends AbstractController
      * @return Response
      * Permet de modifier un type de stockage
      */
-    #[Route('/{id}', name: 'edit', methods: ['GET', 'POST'])]
+    #[Route('/{slug}', name: 'edit', methods: ['GET', 'POST'])]
     public function edit(Stockage $stockage, EntityManagerInterface $entityManager, Request $request): Response
     {
         $stockageForm = $this->createForm(StockageFormType::class, $stockage);
@@ -103,6 +110,12 @@ class StockageController extends AbstractController
 
         if($stockageForm->isSubmitted() && $stockageForm->isValid())
         {
+            $slugger = new AsciiSlugger();
+            $nom = $stockageForm->get('nom')->getData();
+            $slug = strtolower($slugger->slug($nom));
+
+            $stockage->setSlug($slug);
+
             $entityManager->persist($stockage);
             $entityManager->flush();
 

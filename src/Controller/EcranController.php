@@ -25,6 +25,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\String\Slugger\AsciiSlugger;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 
 #[Route('/gestion/ecrans', name: 'admin.ecran.')]
@@ -157,6 +158,12 @@ class EcranController extends AbstractController
 
         if($ecranForm->isSubmitted() && $ecranForm->isValid())
         {
+            $slugger = new AsciiSlugger();
+            $nom = $ecranForm->get('nom')->getData();
+            $slug = strtolower($slugger->slug($nom));
+
+            $ecran->setSlug($slug);
+
             $entityManager->persist($ecran);
             $entityManager->flush();
 
@@ -180,7 +187,7 @@ class EcranController extends AbstractController
      * @return Response
      * Permet de modifier un écran
      */
-    #[Route('/{id}', name: 'edit', methods: ['GET', 'POST'])]
+    #[Route('/{slug}', name: 'edit', methods: ['GET', 'POST'], requirements: ['slug' => '[a-z0-9-]+'])]
     public function edit(Ecran $ecran, EntityManagerInterface $entityManager, Request $request, UrlGeneratorInterface $urlGenerator, NotificationService $notificationService): Response
     {
         $currentUrl = $urlGenerator->generate(
@@ -210,6 +217,13 @@ class EcranController extends AbstractController
 
         if($ecranForm->isSubmitted() && $ecranForm->isValid())
         {
+
+            $slugger = new AsciiSlugger();
+            $nom = $ecranForm->get('nom')->getData();
+            $slug = strtolower($slugger->slug($nom));
+
+            $ecran->setSlug($slug);
+
             $notificationService->deleteNotification("ecran", $ecran->getId());
 
             $entityManager->persist($ecran);

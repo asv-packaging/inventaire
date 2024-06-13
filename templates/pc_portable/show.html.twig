@@ -138,7 +138,7 @@
                                             <tr class="align-middle text-center">
                                                 <td class="text-nowrap">{{ currentIndex }}</td>
                                                 <td class="text-nowrap">
-                                                    <a href="{{ path('admin.pc_portable.edit', {id: pcPortable.id}) }}"><b>{{ pcPortable.nom }}</b></a>
+                                                    <a href="{{ path('admin.pc_portable.edit', {slug: pcPortable.slug}) }}"><b>{{ pcPortable.nom }}</b></a>
                                                 </td>
                                                 <td class="text-nowrap">
                                                     {{ pcPortable.ip | default('<span class="badge bg-danger">N/A</span>') | raw }}
@@ -173,7 +173,7 @@
                                                     </span>
                                                 </td>
                                                 <td class="text-nowrap">
-                                                    <a href="{{ path('admin.pc_portable.edit', {id: pcPortable.id}) }}" class="btn btn-primary btn-sm">
+                                                    <a href="{{ path('admin.pc_portable.edit', {slug: pcPortable.slug}) }}" class="btn btn-primary btn-sm">
                                                         <span class="bi bi-pencil-square"></span>
                                                     </a>
 

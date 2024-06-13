@@ -25,6 +25,7 @@ use Symfony\Component\Process\Exception\ProcessTimedOutException;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\String\Slugger\AsciiSlugger;
 
 #[Route('/gestion/pc/fixes', name: 'admin.pc_fixe.')]
 class PcFixeController extends AbstractController
@@ -162,6 +163,12 @@ class PcFixeController extends AbstractController
 
         if($pcFixeForm->isSubmitted() && $pcFixeForm->isValid())
         {
+            $slugger = new AsciiSlugger();
+            $nom = $pcFixeForm->get('nom')->getData();
+            $slug = strtolower($slugger->slug($nom));
+
+            $pcFixe->setSlug($slug);
+
             $entityManager->persist($pcFixe);
             $entityManager->flush();
 
@@ -185,7 +192,7 @@ class PcFixeController extends AbstractController
      * @return Response
      * Permet de modifier un PC Fixe
      */
-    #[Route('/{id}', name: 'edit', methods: ['GET', 'POST'])]
+    #[Route('/{slug}', name: 'edit', methods: ['GET', 'POST'])]
     public function edit(PcFixe $pcFixe, EntityManagerInterface $entityManager, Request $request, UrlGeneratorInterface $urlGenerator, NotificationService $notificationService): Response
     {
         $currentUrl = $urlGenerator->generate(
@@ -215,6 +222,12 @@ class PcFixeController extends AbstractController
 
         if($pcFixeForm->isSubmitted() && $pcFixeForm->isValid())
         {
+            $slugger = new AsciiSlugger();
+            $nom = $pcFixeForm->get('nom')->getData();
+            $slug = strtolower($slugger->slug($nom));
+
+            $pcFixe->setSlug($slug);
+
             $notificationService->deleteNotification("pc_fixe", $pcFixe->getId());
 
             $entityManager->persist($pcFixe);

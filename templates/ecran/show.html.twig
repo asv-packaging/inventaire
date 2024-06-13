@@ -134,7 +134,7 @@
                                                 <tr class="align-middle text-center">
                                                     <td class="text-nowrap">{{ currentIndex }}</td>
                                                     <td class="text-nowrap">
-                                                        <a href="{{ path('admin.ecran.edit', {id: ecran.id}) }}">
+                                                        <a href="{{ path('admin.ecran.edit', {slug: ecran.slug}) }}">
                                                             <b>{{ ecran.nom }}</b>
                                                         </a>
                                                     </td>
@@ -165,7 +165,7 @@
                                                         </span>
                                                     </td>
                                                     <td class="text-nowrap">
-                                                        <a href="{{ path('admin.ecran.edit', {id: ecran.id}) }}" class="btn btn-primary btn-sm">
+                                                        <a href="{{ path('admin.ecran.edit', {slug: ecran.slug}) }}" class="btn btn-primary btn-sm">
                                                             <span class="bi bi-pencil-square"></span>
                                                         </a>
 
