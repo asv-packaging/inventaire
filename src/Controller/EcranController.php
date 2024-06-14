@@ -179,6 +179,25 @@ class EcranController extends AbstractController
     }
 
     /**
+     * @param int $id
+     * @param EcranRepository $ecranRepository
+     * @param UrlGeneratorInterface $urlGenerator
+     * @return Response
+     * Permet de rediriger vers l'écran en fonction de son ID
+     */
+    #[Route('/{id}', name: 'redirectToSlug', methods: ['GET'], requirements: ['id' => '\d+'])]
+    public function redirectToSlug(int $id, EcranRepository $ecranRepository, UrlGeneratorInterface $urlGenerator): Response
+    {
+        $ecran = $ecranRepository->find($id);
+        if (!$ecran) {
+            throw $this->createNotFoundException();
+        }
+
+        $url = $urlGenerator->generate('admin.ecran.edit', ['slug' => $ecran->getSlug()]);
+        return $this->redirect($url);
+    }
+
+    /**
      * @param Ecran $ecran
      * @param EntityManagerInterface $entityManager
      * @param Request $request
@@ -190,11 +209,7 @@ class EcranController extends AbstractController
     #[Route('/{slug}', name: 'edit', methods: ['GET', 'POST'], requirements: ['slug' => '[a-z0-9-]+'])]
     public function edit(Ecran $ecran, EntityManagerInterface $entityManager, Request $request, UrlGeneratorInterface $urlGenerator, NotificationService $notificationService): Response
     {
-        $currentUrl = $urlGenerator->generate(
-            $request->attributes->get('_route'),
-            $request->attributes->get('_route_params'),
-            UrlGeneratorInterface::ABSOLUTE_URL
-        );
+        $currentUrl = $urlGenerator->generate('admin.ecran.redirectToSlug', ['id' => $ecran->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
 
         $writer = new PngWriter();
         $qrCode = QrCode::create($currentUrl)
