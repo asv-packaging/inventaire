@@ -182,6 +182,25 @@ class ServeurController extends AbstractController
     }
 
     /**
+     * @param int $id
+     * @param ServeurRepository $serveurRepository
+     * @param UrlGeneratorInterface $urlGenerator
+     * @return Response
+     * Permet de rediriger vers le slug de l'imprimante
+     */
+    #[Route('/{id}', name: 'redirectToSlug', methods: ['GET'], requirements: ['id' => '\d+'])]
+    public function redirectToSlug(int $id, ServeurRepository $serveurRepository, UrlGeneratorInterface $urlGenerator): Response
+    {
+        $serveur = $serveurRepository->find($id);
+        if (!$serveur) {
+            throw $this->createNotFoundException();
+        }
+
+        $url = $urlGenerator->generate('admin.serveur.edit', ['slug' => $serveur->getSlug()]);
+        return $this->redirect($url);
+    }
+
+    /**
      * @param Serveur $serveur
      * @param EntityManagerInterface $entityManager
      * @param Request $request
@@ -193,11 +212,7 @@ class ServeurController extends AbstractController
     #[Route('/{slug}', name: 'edit', methods: ['GET', 'POST'])]
     public function edit(Serveur $serveur, EntityManagerInterface $entityManager, Request $request, UrlGeneratorInterface $urlGenerator, NotificationService $notificationService): Response
     {
-        $currentUrl = $urlGenerator->generate(
-            $request->attributes->get('_route'),
-            $request->attributes->get('_route_params'),
-            UrlGeneratorInterface::ABSOLUTE_URL
-        );
+        $currentUrl = $urlGenerator->generate('admin.serveur.edit', ['slug' => $serveur->getSlug()], UrlGeneratorInterface::ABSOLUTE_URL);
 
         $writer = new PngWriter();
         $qrCode = QrCode::create($currentUrl)

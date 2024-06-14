@@ -181,7 +181,7 @@ class ImprimanteController extends AbstractController
      * @param ImprimanteRepository $imprimanteRepository
      * @param UrlGeneratorInterface $urlGenerator
      * @return Response
-     * Redirige vers l'URL de l'imprimante en utilisant le slug
+     * Permet de rediriger vers le slug de l'imprimante
      */
     #[Route('/{id}', name: 'redirectToSlug', methods: ['GET'], requirements: ['id' => '\d+'])]
     public function redirectToSlug(int $id, ImprimanteRepository $imprimanteRepository, UrlGeneratorInterface $urlGenerator): Response

@@ -183,7 +183,7 @@ class EcranController extends AbstractController
      * @param EcranRepository $ecranRepository
      * @param UrlGeneratorInterface $urlGenerator
      * @return Response
-     * Permet de rediriger vers l'écran en fonction de son ID
+     * Permet de rediriger vers le slug de l'écran
      */
     #[Route('/{id}', name: 'redirectToSlug', methods: ['GET'], requirements: ['id' => '\d+'])]
     public function redirectToSlug(int $id, EcranRepository $ecranRepository, UrlGeneratorInterface $urlGenerator): Response

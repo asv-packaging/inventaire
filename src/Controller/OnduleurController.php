@@ -177,6 +177,25 @@ class OnduleurController extends AbstractController
     }
 
     /**
+     * @param int $id
+     * @param OnduleurRepository $onduleurRepository
+     * @param UrlGeneratorInterface $urlGenerator
+     * @return Response
+     * Permet de rediriger vers le slug de l'onduleur
+     */
+    #[Route('/{id}', name: 'redirectToSlug', methods: ['GET'], requirements: ['id' => '\d+'])]
+    public function redirectToSlug(int $id, OnduleurRepository $onduleurRepository, UrlGeneratorInterface $urlGenerator): Response
+    {
+        $onduleur = $onduleurRepository->find($id);
+        if (!$onduleur) {
+            throw $this->createNotFoundException();
+        }
+
+        $url = $urlGenerator->generate('admin.onduleur.edit', ['slug' => $onduleur->getSlug()]);
+        return $this->redirect($url);
+    }
+
+    /**
      * @param Onduleur $onduleur
      * @param EntityManagerInterface $entityManager
      * @param Request $request
@@ -188,11 +207,7 @@ class OnduleurController extends AbstractController
     #[Route('/{slug}', name: 'edit', methods: ['GET', 'POST'])]
     public function edit(Onduleur $onduleur, EntityManagerInterface $entityManager, Request $request, UrlGeneratorInterface $urlGenerator, NotificationService $notificationService): Response
     {
-        $currentUrl = $urlGenerator->generate(
-            $request->attributes->get('_route'),
-            $request->attributes->get('_route_params'),
-            UrlGeneratorInterface::ABSOLUTE_URL
-        );
+        $currentUrl = $urlGenerator->generate('admin.onduleur.edit', ['slug' => $onduleur->getSlug()], UrlGeneratorInterface::ABSOLUTE_URL);
 
         $writer = new PngWriter();
         $qrCode = QrCode::create($currentUrl)

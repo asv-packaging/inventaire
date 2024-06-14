@@ -184,6 +184,25 @@ class PcFixeController extends AbstractController
     }
 
     /**
+     * @param int $id
+     * @param PcFixeRepository $pcFixeRepository
+     * @param UrlGeneratorInterface $urlGenerator
+     * @return Response
+     * Permet de rediriger vers le slug d'un PC Fixe
+     */
+    #[Route('/{id}', name: 'redirectToSlug', methods: ['GET'], requirements: ['id' => '\d+'])]
+    public function redirectToSlug(int $id, PcFixeRepository $pcFixeRepository, UrlGeneratorInterface $urlGenerator): Response
+    {
+        $pcFixe = $pcFixeRepository->find($id);
+        if (!$pcFixe) {
+            throw $this->createNotFoundException();
+        }
+
+        $url = $urlGenerator->generate('admin.pc_fixe.edit', ['slug' => $pcFixe->getSlug()]);
+        return $this->redirect($url);
+    }
+
+    /**
      * @param PcFixe $pcFixe
      * @param EntityManagerInterface $entityManager
      * @param Request $request
@@ -195,11 +214,7 @@ class PcFixeController extends AbstractController
     #[Route('/{slug}', name: 'edit', methods: ['GET', 'POST'])]
     public function edit(PcFixe $pcFixe, EntityManagerInterface $entityManager, Request $request, UrlGeneratorInterface $urlGenerator, NotificationService $notificationService): Response
     {
-        $currentUrl = $urlGenerator->generate(
-            $request->attributes->get('_route'),
-            $request->attributes->get('_route_params'),
-            UrlGeneratorInterface::ABSOLUTE_URL
-        );
+        $currentUrl = $urlGenerator->generate('admin.pc_fixe.edit', ['slug' => $pcFixe->getSlug()], UrlGeneratorInterface::ABSOLUTE_URL);
 
         $writer = new PngWriter();
         $qrCode = QrCode::create($currentUrl)

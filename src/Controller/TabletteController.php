@@ -177,6 +177,25 @@ class TabletteController extends AbstractController
     }
 
     /**
+     * @param int $id
+     * @param TabletteRepository $tabletteRepository
+     * @param UrlGeneratorInterface $urlGenerator
+     * @return Response
+     * Permet de rediriger vers le slug de l'imprimante
+     */
+    #[Route('/{id}', name: 'redirectToSlug', methods: ['GET'], requirements: ['id' => '\d+'])]
+    public function redirectToSlug(int $id, TabletteRepository $tabletteRepository, UrlGeneratorInterface $urlGenerator): Response
+    {
+        $tablette = $tabletteRepository->find($id);
+        if (!$tablette) {
+            throw $this->createNotFoundException();
+        }
+
+        $url = $urlGenerator->generate('admin.tablette.edit', ['slug' => $tablette->getSlug()]);
+        return $this->redirect($url);
+    }
+
+    /**
      * @param Tablette $tablette
      * @param EntityManagerInterface $entityManager
      * @param Request $request
@@ -188,11 +207,7 @@ class TabletteController extends AbstractController
     #[Route('/{slug}', name: 'edit', methods: ['GET', 'POST'])]
     public function edit(Tablette $tablette, EntityManagerInterface $entityManager, Request $request, UrlGeneratorInterface $urlGenerator, NotificationService $notificationService): Response
     {
-        $currentUrl = $urlGenerator->generate(
-            $request->attributes->get('_route'),
-            $request->attributes->get('_route_params'),
-            UrlGeneratorInterface::ABSOLUTE_URL
-        );
+        $currentUrl = $urlGenerator->generate('admin.tablette.edit', ['slug' => $tablette->getSlug()], UrlGeneratorInterface::ABSOLUTE_URL);
 
         $writer = new PngWriter();
         $qrCode = QrCode::create($currentUrl)

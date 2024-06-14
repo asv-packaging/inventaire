@@ -182,6 +182,25 @@ class PcPortableController extends AbstractController
     }
 
     /**
+     * @param int $id
+     * @param PcPortableRepository $pcPortableRepository
+     * @param UrlGeneratorInterface $urlGenerator
+     * @return Response
+     * Permet de rediriger vers le slug d'un PC Portable
+     */
+    #[Route('/{id}', name: 'redirectToSlug', methods: ['GET'], requirements: ['id' => '\d+'])]
+    public function redirectToSlug(int $id, PcPortableRepository $pcPortableRepository, UrlGeneratorInterface $urlGenerator): Response
+    {
+        $pcPortable = $pcPortableRepository->find($id);
+        if (!$pcPortable) {
+            throw $this->createNotFoundException();
+        }
+
+        $url = $urlGenerator->generate('admin.pc_portable.edit', ['slug' => $pcPortable->getSlug()]);
+        return $this->redirect($url);
+    }
+
+    /**
      * @param PcPortable $pcPortable
      * @param EntityManagerInterface $entityManager
      * @param Request $request
@@ -193,11 +212,7 @@ class PcPortableController extends AbstractController
     #[Route('/{slug}', name: 'edit', methods: ['GET', 'POST'])]
     public function edit(PcPortable $pcPortable, EntityManagerInterface $entityManager, Request $request, UrlGeneratorInterface $urlGenerator, NotificationService $notificationService): Response
     {
-        $currentUrl = $urlGenerator->generate(
-            $request->attributes->get('_route'),
-            $request->attributes->get('_route_params'),
-            UrlGeneratorInterface::ABSOLUTE_URL
-        );
+        $currentUrl = $urlGenerator->generate('admin.pc_portable.edit', ['slug' => $pcPortable->getSlug()], UrlGeneratorInterface::ABSOLUTE_URL);
 
         $writer = new PngWriter();
         $qrCode = QrCode::create($currentUrl)
