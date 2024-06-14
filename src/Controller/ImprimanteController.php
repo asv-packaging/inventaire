@@ -207,7 +207,7 @@ class ImprimanteController extends AbstractController
     #[Route('/{slug}', name: 'edit', methods: ['GET', 'POST'])]
     public function edit(Imprimante $imprimante, EntityManagerInterface $entityManager, Request $request, UrlGeneratorInterface $urlGenerator, NotificationService $notificationService): Response
     {
-        $currentUrl = $urlGenerator->generate('admin.imprimante.edit', ['slug' => $imprimante->getSlug()], UrlGeneratorInterface::ABSOLUTE_URL);
+        $currentUrl = $urlGenerator->generate('admin.imprimante.redirectToSlug', ['slug' => $imprimante->getSlug()], UrlGeneratorInterface::ABSOLUTE_URL);
 
         $writer = new PngWriter();
         $qrCode = QrCode::create($currentUrl)
