@@ -207,7 +207,7 @@ class OnduleurController extends AbstractController
     #[Route('/{slug}', name: 'edit', methods: ['GET', 'POST'])]
     public function edit(Onduleur $onduleur, EntityManagerInterface $entityManager, Request $request, UrlGeneratorInterface $urlGenerator, NotificationService $notificationService): Response
     {
-        $currentUrl = $urlGenerator->generate('admin.onduleur.redirectToSlug', ['slug' => $onduleur->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
+        $currentUrl = $urlGenerator->generate('admin.onduleur.redirectToSlug', ['id' => $onduleur->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
 
         $writer = new PngWriter();
         $qrCode = QrCode::create($currentUrl)

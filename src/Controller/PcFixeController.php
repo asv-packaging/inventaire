@@ -214,7 +214,7 @@ class PcFixeController extends AbstractController
     #[Route('/{slug}', name: 'edit', methods: ['GET', 'POST'])]
     public function edit(PcFixe $pcFixe, EntityManagerInterface $entityManager, Request $request, UrlGeneratorInterface $urlGenerator, NotificationService $notificationService): Response
     {
-        $currentUrl = $urlGenerator->generate('admin.pc_fixe.redirectToSlug', ['slug' => $pcFixe->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
+        $currentUrl = $urlGenerator->generate('admin.pc_fixe.redirectToSlug', ['id' => $pcFixe->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
 
         $writer = new PngWriter();
         $qrCode = QrCode::create($currentUrl)

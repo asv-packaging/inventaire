@@ -212,7 +212,7 @@ class PcPortableController extends AbstractController
     #[Route('/{slug}', name: 'edit', methods: ['GET', 'POST'])]
     public function edit(PcPortable $pcPortable, EntityManagerInterface $entityManager, Request $request, UrlGeneratorInterface $urlGenerator, NotificationService $notificationService): Response
     {
-        $currentUrl = $urlGenerator->generate('admin.pc_portable.redirectToSlug', ['slug' => $pcPortable->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
+        $currentUrl = $urlGenerator->generate('admin.pc_portable.redirectToSlug', ['id' => $pcPortable->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
 
         $writer = new PngWriter();
         $qrCode = QrCode::create($currentUrl)

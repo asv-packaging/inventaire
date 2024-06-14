@@ -212,7 +212,7 @@ class ServeurController extends AbstractController
     #[Route('/{slug}', name: 'edit', methods: ['GET', 'POST'])]
     public function edit(Serveur $serveur, EntityManagerInterface $entityManager, Request $request, UrlGeneratorInterface $urlGenerator, NotificationService $notificationService): Response
     {
-        $currentUrl = $urlGenerator->generate('admin.serveur.redirectToSlug', ['slug' => $serveur->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
+        $currentUrl = $urlGenerator->generate('admin.serveur.redirectToSlug', ['id' => $serveur->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
 
         $writer = new PngWriter();
         $qrCode = QrCode::create($currentUrl)
