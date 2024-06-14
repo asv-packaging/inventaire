@@ -21,11 +21,11 @@
     <body>
         <main class="main" id="top">
             <div class="container-fluid" data-layout="container">
-                {% include 'gui/menuGauche.html.twig' %}
+                {% include 'gui/partials/menuGauche.html.twig' %}
                 <div class="content">
-                    {% include 'gui/menuHaut.html.twig' %}
+                    {% include 'gui/partials/menuHaut.html.twig' %}
                     {% block body %}{% endblock %}
-                    {% include 'gui/footer.html.twig' %}
+                    {% include 'gui/partials/footer.html.twig' %}
                 </div>
             </div>
         </main>
