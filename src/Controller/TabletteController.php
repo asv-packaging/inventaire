@@ -16,6 +16,7 @@ use Endroid\QrCode\Label\Label;
 use Endroid\QrCode\QrCode;
 use Endroid\QrCode\Writer\PngWriter;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -205,7 +206,7 @@ class TabletteController extends AbstractController
      * Permet de modifier une tablette
      */
     #[Route('/{slug}', name: 'edit', methods: ['GET', 'POST'])]
-    public function edit(Tablette $tablette, EntityManagerInterface $entityManager, Request $request, UrlGeneratorInterface $urlGenerator, NotificationService $notificationService): Response
+    public function edit(#[MapEntity(mapping: ['slug' => 'slug'])] Tablette $tablette, EntityManagerInterface $entityManager, Request $request, UrlGeneratorInterface $urlGenerator, NotificationService $notificationService): Response
     {
         $currentUrl = $urlGenerator->generate('admin.tablette.redirectToSlug', ['id' => $tablette->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
 

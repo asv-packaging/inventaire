@@ -9,6 +9,7 @@ use App\Service\ExcelExportService;
 use App\Service\NotificationService;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -177,7 +178,7 @@ class TelephonePortableController extends AbstractController
      * Permet de modifier un téléphone portable
      */
     #[Route('/{slug}', name: 'edit', methods: ['GET', 'POST'])]
-    public function edit(TelephonePortable $telephone, EntityManagerInterface $entityManager, Request $request, NotificationService $notificationService): Response
+    public function edit(#[MapEntity(mapping: ['slug' => 'slug'])] TelephonePortable $telephone, EntityManagerInterface $entityManager, Request $request, NotificationService $notificationService): Response
     {
         $telephoneForm = $this->createForm(TelephonePortableFormType::class, $telephone);
 

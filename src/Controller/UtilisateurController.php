@@ -8,6 +8,7 @@ use App\Repository\UtilisateurRepository;
 use App\Service\ExcelExportService;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -165,7 +166,7 @@ class UtilisateurController extends AbstractController
      * Permet de modifier un utilisateur
      */
     #[Route('/{slug}', name: 'edit', methods: ['GET', 'POST'])]
-    public function edit(Utilisateur $utilisateur, EntityManagerInterface $entityManager, Request $request): Response
+    public function edit(#[MapEntity(mapping: ['slug' => 'slug'])] Utilisateur $utilisateur, EntityManagerInterface $entityManager, Request $request): Response
     {
         $utilisateurForm = $this->createForm(UtilisateurFormType::class, $utilisateur);
 

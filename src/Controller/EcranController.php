@@ -18,6 +18,7 @@ use Endroid\QrCode\ErrorCorrectionLevel\ErrorCorrectionLevelLow;
 use Endroid\QrCode\QrCode;
 use Endroid\QrCode\Color\Color;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -207,7 +208,7 @@ class EcranController extends AbstractController
      * Permet de modifier un écran
      */
     #[Route('/{slug}', name: 'edit', methods: ['GET', 'POST'], requirements: ['slug' => '[a-z0-9-]+'])]
-    public function edit(Ecran $ecran, EntityManagerInterface $entityManager, Request $request, UrlGeneratorInterface $urlGenerator, NotificationService $notificationService): Response
+    public function edit(#[MapEntity(mapping: ['slug' => 'slug'])] Ecran $ecran, EntityManagerInterface $entityManager, Request $request, UrlGeneratorInterface $urlGenerator, NotificationService $notificationService): Response
     {
         $currentUrl = $urlGenerator->generate('admin.ecran.redirectToSlug', ['id' => $ecran->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
 

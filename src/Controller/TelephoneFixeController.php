@@ -16,6 +16,7 @@ use Endroid\QrCode\Label\Label;
 use Endroid\QrCode\QrCode;
 use Endroid\QrCode\Writer\PngWriter;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -186,7 +187,7 @@ class TelephoneFixeController extends AbstractController
      * Permet de modifier un téléphone fixe
      */
     #[Route('/{slug}', name: 'edit', methods: ['GET', 'POST'])]
-    public function edit(TelephoneFixe $telephone, EntityManagerInterface $entityManager, Request $request, NotificationService $notificationService): Response
+    public function edit(#[MapEntity(mapping: ['slug' => 'slug'])] TelephoneFixe $telephone, EntityManagerInterface $entityManager, Request $request, NotificationService $notificationService): Response
     {
         $telephoneForm = $this->createForm(TelephoneFixeFormType::class, $telephone);
 

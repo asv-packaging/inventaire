@@ -16,6 +16,7 @@ use Endroid\QrCode\Label\Label;
 use Endroid\QrCode\QrCode;
 use Endroid\QrCode\Writer\PngWriter;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -212,7 +213,7 @@ class PcFixeController extends AbstractController
      * Permet de modifier un PC Fixe
      */
     #[Route('/{slug}', name: 'edit', methods: ['GET', 'POST'])]
-    public function edit(PcFixe $pcFixe, EntityManagerInterface $entityManager, Request $request, UrlGeneratorInterface $urlGenerator, NotificationService $notificationService): Response
+    public function edit(#[MapEntity(mapping: ['slug' => 'slug'])] PcFixe $pcFixe, EntityManagerInterface $entityManager, Request $request, UrlGeneratorInterface $urlGenerator, NotificationService $notificationService): Response
     {
         $currentUrl = $urlGenerator->generate('admin.pc_fixe.redirectToSlug', ['id' => $pcFixe->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
 

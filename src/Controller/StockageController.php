@@ -7,6 +7,7 @@ use App\Form\StockageFormType;
 use App\Repository\StockageRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -102,7 +103,7 @@ class StockageController extends AbstractController
      * Permet de modifier un type de stockage
      */
     #[Route('/{slug}', name: 'edit', methods: ['GET', 'POST'])]
-    public function edit(Stockage $stockage, EntityManagerInterface $entityManager, Request $request): Response
+    public function edit(#[MapEntity(mapping: ['slug' => 'slug'])] Stockage $stockage, EntityManagerInterface $entityManager, Request $request): Response
     {
         $stockageForm = $this->createForm(StockageFormType::class, $stockage);
 

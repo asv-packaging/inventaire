@@ -7,6 +7,7 @@ use App\Form\EntrepriseFormType;
 use App\Repository\EntrepriseRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -104,7 +105,7 @@ class EntrepriseController extends AbstractController
      * Permet de modifier une entreprise (site)
      */
     #[Route('/{slug}', name: 'edit', methods: ['GET', 'POST'])]
-    public function edit(Entreprise $entreprise, EntityManagerInterface $entityManager, Request $request): Response
+    public function edit(#[MapEntity(mapping: ['slug' => 'slug'])] Entreprise $entreprise, EntityManagerInterface $entityManager, Request $request): Response
     {
         $entrepriseForm = $this->createForm(EntrepriseFormType::class, $entreprise);
 

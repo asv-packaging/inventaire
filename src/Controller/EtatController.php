@@ -7,6 +7,7 @@ use App\Form\EtatFormType;
 use App\Repository\EtatRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -104,7 +105,7 @@ class EtatController extends AbstractController
      * Permet de modifier un état
      */
     #[Route('/{slug}', name: 'edit', methods: ['GET', 'POST'])]
-    public function edit(Etat $etat, EntityManagerInterface $entityManager, Request $request): Response
+    public function edit(#[MapEntity(mapping: ['slug' => 'slug'])] Etat $etat, EntityManagerInterface $entityManager, Request $request): Response
     {
         $etatForm = $this->createForm(EtatFormType::class, $etat);
 
