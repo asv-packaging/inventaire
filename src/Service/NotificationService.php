@@ -168,10 +168,14 @@ class NotificationService
      */
     public function getNotificationsRead(): array
     {
-        $notifications = $this->entityManager->getRepository(Notification::class)->findBy(
-            ['isRead' => true],
-            ['createdAt' => 'DESC']
-        );
+        $notifications = $this->entityManager->getRepository(Notification::class)
+            ->createQueryBuilder('n')
+            ->where('n.isRead = :isRead')
+            ->setParameter('isRead', true)
+            ->orderBy('n.createdAt', 'DESC')
+            ->setMaxResults(5)
+            ->getQuery()
+            ->getResult();
 
         return $notifications;
     }

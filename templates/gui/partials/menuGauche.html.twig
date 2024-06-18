@@ -19,7 +19,7 @@
             <ul class="navbar-nav flex-column mb-3" id="navbarVerticalNav">
                 <li class="nav-item">
                     <div class="d-flex align-items-center">
-                        <a class="nav-link {% if menu_active == 'home' %}active{% endif %}" href="{{ path('admin.home') }}" role="button">
+                        <a class="nav-link {% if menu_active is defined and menu_active == 'home' %}active{% endif %}" href="{{ path('admin.home') }}" role="button">
                             <div class="d-flex align-items-center">
                                 <span class="nav-link-icon">
                                     <span class="fas fa-home"></span>
@@ -39,23 +39,23 @@
                             <span class="nav-link-text ps-1">Gestion</span>
                         </div>
                     </a>
-                    <ul class="nav collapse {% if menu_active == 'ecran' or menu_active == 'imprimante' or menu_active == 'onduleur' or menu_active == 'serveur' or menu_active == 'tablette' or menu_active == 'pc_fixe' or menu_active == 'pc_portable' or menu_active == 'telephone_portable' or menu_active == 'telephone_fixe' %}show{% endif %}" id="gestion">
+                    <ul class="nav collapse {% if menu_active is defined and menu_active == 'ecran' or menu_active is defined and menu_active == 'imprimante' or menu_active is defined and menu_active == 'onduleur' or menu_active is defined and menu_active == 'serveur' or menu_active is defined and menu_active == 'tablette' or menu_active is defined and menu_active == 'pc_fixe' or menu_active is defined and menu_active == 'pc_portable' or menu_active is defined and menu_active == 'telephone_portable' or menu_active is defined and menu_active == 'telephone_fixe' %}show{% endif %}" id="gestion">
                         <li class="nav-item">
-                            <a class="nav-link {% if menu_active == 'ecran' %}active{% endif %}" href="{{ path('admin.ecran.show') }}">
+                            <a class="nav-link {% if menu_active is defined and menu_active == 'ecran' %}active{% endif %}" href="{{ path('admin.ecran.show') }}">
                                 <div class="d-flex align-items-center">
                                     <span class="nav-link-text ps-1">Écrans</span>
                                 </div>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {% if menu_active == 'imprimante' %}active{% endif %}" href="{{ path('admin.imprimante.show') }}">
+                            <a class="nav-link {% if menu_active is defined and menu_active == 'imprimante' %}active{% endif %}" href="{{ path('admin.imprimante.show') }}">
                                 <div class="d-flex align-items-center">
                                     <span class="nav-link-text ps-1">Imprimantes</span>
                                 </div>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {% if menu_active == 'onduleur' %}active{% endif %}" href="{{ path('admin.onduleur.show') }}">
+                            <a class="nav-link {% if menu_active is defined and menu_active == 'onduleur' %}active{% endif %}" href="{{ path('admin.onduleur.show') }}">
                                 <div class="d-flex align-items-center">
                                     <span class="nav-link-text ps-1">Onduleurs</span>
                                 </div>
@@ -67,16 +67,16 @@
                                     <span class="nav-link-text ps-1">PC</span>
                                 </div>
                             </a>
-                            <ul class="nav collapse {% if menu_active == 'pc_fixe' or menu_active == 'pc_portable' %}show{% endif %}" id="pc">
+                            <ul class="nav collapse {% if menu_active is defined and menu_active == 'pc_fixe' or menu_active is defined and menu_active == 'pc_portable' %}show{% endif %}" id="pc">
                                 <li class="nav-item">
-                                    <a class="nav-link {% if menu_active == 'pc_fixe' %}active{% endif %}" href="{{ path('admin.pc_fixe.show') }}">
+                                    <a class="nav-link {% if menu_active is defined and menu_active == 'pc_fixe' %}active{% endif %}" href="{{ path('admin.pc_fixe.show') }}">
                                         <div class="d-flex align-items-center">
                                             <span class="nav-link-text ps-1">Fixes</span>
                                         </div>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link {% if menu_active == 'pc_portable' %}active{% endif %}" href="{{ path('admin.pc_portable.show') }}">
+                                    <a class="nav-link {% if menu_active is defined and menu_active == 'pc_portable' %}active{% endif %}" href="{{ path('admin.pc_portable.show') }}">
                                         <div class="d-flex align-items-center">
                                             <span class="nav-link-text ps-1">Portables</span>
                                         </div>
@@ -85,14 +85,14 @@
                             </ul>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {% if menu_active == 'serveur' %}active{% endif %}" href="{{ path('admin.serveur.show') }}">
+                            <a class="nav-link {% if menu_active is defined and menu_active == 'serveur' %}active{% endif %}" href="{{ path('admin.serveur.show') }}">
                                 <div class="d-flex align-items-center">
                                     <span class="nav-link-text ps-1">Serveurs</span>
                                 </div>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {% if menu_active == 'tablette' %}active{% endif %}" href="{{ path('admin.tablette.show') }}">
+                            <a class="nav-link {% if menu_active is defined and menu_active == 'tablette' %}active{% endif %}" href="{{ path('admin.tablette.show') }}">
                                 <div class="d-flex align-items-center">
                                     <span class="nav-link-text ps-1">Tablettes</span>
                                 </div>
@@ -104,16 +104,16 @@
                                     <span class="nav-link-text ps-1">Téléphones</span>
                                 </div>
                             </a>
-                            <ul class="nav collapse {% if menu_active == 'telephone_fixe' or menu_active == 'telephone_portable' %}show{% endif %}" id="telephones">
+                            <ul class="nav collapse {% if menu_active is defined and menu_active == 'telephone_fixe' or menu_active is defined and menu_active == 'telephone_portable' %}show{% endif %}" id="telephones">
                                 <li class="nav-item">
-                                    <a class="nav-link {% if menu_active == 'telephone_fixe' %}active{% endif %}" href="{{ path('admin.telephone_fixe.show') }}">
+                                    <a class="nav-link {% if menu_active is defined and menu_active == 'telephone_fixe' %}active{% endif %}" href="{{ path('admin.telephone_fixe.show') }}">
                                         <div class="d-flex align-items-center">
                                             <span class="nav-link-text ps-1">Fixes</span>
                                         </div>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link {% if menu_active == 'telephone_portable' %}active{% endif %}" href="{{ path('admin.telephone_portable.show') }}">
+                                    <a class="nav-link {% if menu_active is defined and menu_active == 'telephone_portable' %}active{% endif %}" href="{{ path('admin.telephone_portable.show') }}">
                                         <div class="d-flex align-items-center">
                                             <span class="nav-link-text ps-1">Portables</span>
                                         </div>
@@ -132,51 +132,51 @@
                             <span class="nav-link-text ps-1">Paramètres</span>
                         </div>
                     </a>
-                    <ul class="nav collapse {% if menu_active == 'entreprise' or menu_active == 'emplacement' or menu_active == 'etat' or menu_active == 'fournisseur' or menu_active == 'os' or menu_active == 'stockage' or menu_active == 'utilisateur' %}show{% endif %}" id="parametres">
+                    <ul class="nav collapse {% if menu_active is defined and menu_active == 'entreprise' or menu_active is defined and menu_active == 'emplacement' or menu_active is defined and menu_active == 'etat' or menu_active is defined and menu_active == 'fournisseur' or menu_active is defined and menu_active == 'os' or menu_active is defined and menu_active == 'stockage' or menu_active is defined and menu_active == 'utilisateur' %}show{% endif %}" id="parametres">
                         <li class="nav-item">
-                            <a class="nav-link {% if menu_active == 'emplacement' %}active{% endif %}" href="{{ path('admin.emplacement.show') }}">
+                            <a class="nav-link {% if menu_active is defined and menu_active == 'emplacement' %}active{% endif %}" href="{{ path('admin.emplacement.show') }}">
                                 <div class="d-flex align-items-center">
                                     <span class="nav-link-text ps-1">Emplacements</span>
                                 </div>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {% if menu_active == 'etat' %}active{% endif %}" href="{{ path('admin.etat.show') }}">
+                            <a class="nav-link {% if menu_active is defined and menu_active == 'etat' %}active{% endif %}" href="{{ path('admin.etat.show') }}">
                                 <div class="d-flex align-items-center">
                                     <span class="nav-link-text ps-1">États</span>
                                 </div>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {% if menu_active == 'fournisseur' %}active{% endif %}" href="{{ path('admin.fournisseur.show') }}">
+                            <a class="nav-link {% if menu_active is defined and menu_active == 'fournisseur' %}active{% endif %}" href="{{ path('admin.fournisseur.show') }}">
                                 <div class="d-flex align-items-center">
                                     <span class="nav-link-text ps-1">Fournisseurs</span>
                                 </div>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {% if menu_active == 'entreprise' %}active{% endif %}" href="{{ path('admin.entreprise.show') }}">
+                            <a class="nav-link {% if menu_active is defined and menu_active == 'entreprise' %}active{% endif %}" href="{{ path('admin.entreprise.show') }}">
                                 <div class="d-flex align-items-center">
                                     <span class="nav-link-text ps-1">Sites</span>
                                 </div>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {% if menu_active == 'os' %}active{% endif %}" href="{{ path('admin.systeme-exploitation.show') }}">
+                            <a class="nav-link {% if menu_active is defined and menu_active == 'os' %}active{% endif %}" href="{{ path('admin.systeme-exploitation.show') }}">
                                 <div class="d-flex align-items-center">
                                     <span class="nav-link-text ps-1">Systèmes d'exploitation</span>
                                 </div>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {% if menu_active == 'stockage' %}active{% endif %}" href="{{ path('admin.stockage.show') }}">
+                            <a class="nav-link {% if menu_active is defined and menu_active == 'stockage' %}active{% endif %}" href="{{ path('admin.stockage.show') }}">
                                 <div class="d-flex align-items-center">
                                     <span class="nav-link-text ps-1">Types de stockage</span>
                                 </div>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {% if menu_active == 'utilisateur' %}active{% endif %}" href="{{ path('admin.utilisateur.show') }}">
+                            <a class="nav-link {% if menu_active is defined and menu_active == 'utilisateur' %}active{% endif %}" href="{{ path('admin.utilisateur.show') }}">
                                 <div class="d-flex align-items-center">
                                     <span class="nav-link-text ps-1">Utilisateurs</span>
                                 </div>

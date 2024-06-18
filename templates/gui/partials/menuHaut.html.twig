@@ -61,7 +61,7 @@
                                     </div>
                                 {% endfor %}
                             {% endif %}
-                            <div class="list-group-title border-bottom">LU</div>
+                            <div class="list-group-title border-bottom">5 DERNIÈRES NOTIFICATIONS LUES</div>
                             {% if notificationsRead|length > 0 %}
                                     {% for notifications in notificationsRead %}
                                         <div class="list-group-item" id="notification-lu">
@@ -87,7 +87,7 @@
                             {% endif %}
                         </div>
                     <div class="card-footer text-center border-top">
-                        <a class="card-link d-block" href="#">Toutes les notifications</a>
+                        <a class="card-link d-block" href="{{ path('admin.notification.show') }}">Toutes les notifications</a>
                     </div>
                 </div>
             </div>

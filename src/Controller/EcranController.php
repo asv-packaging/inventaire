@@ -233,7 +233,6 @@ class EcranController extends AbstractController
 
         if($ecranForm->isSubmitted() && $ecranForm->isValid())
         {
-
             $slugger = new AsciiSlugger();
             $nom = $ecranForm->get('nom')->getData();
             $slug = strtolower($slugger->slug($nom));

@@ -327,12 +327,12 @@
                     <div class="card-header d-flex justify-content-between">
                         <h5 class="mb-0">
                             <span class="bi bi-eye-slash-fill text-danger"></span>
-                            Notifications non lues
+                            5 dernières notifications non lues
                         </h5>
                     </div>
                     <div class="card-body p-0">
-                        {% for notifications in notificationsNotRead %}
-                            <a id="unread-notification-index" class="border-bottom-0 notification-unread notification rounded-0 border-x-0 border-300">
+                        {% for notifications in notificationsNotRead |slice(0, 5) %}
+                            <a id="unread-notification-index" class="border-bottom-0 notification-unread notification rounded-0 border-x-0 border-300" href="{{ path('admin.notification.show') }}">
                                 <div class="notification-body">
                                     <p class="mb-1">{{ notifications.message|raw }}</p>
                                     <span class="notification-time">
@@ -346,7 +346,7 @@
                 </div>
             {% endif %}
             <div class="card mb-3 pe-lg-0">
-                <div class="card-header bg-body-tertiary d-flex justify-content-between">
+                <div class="card-header bg-body-tertiary justify-content-between align-items-center">
                     <h5 class="mb-0">
                         <span class="bi bi-eye-fill text-primary"></span>
                         5 dernières notifications lues
@@ -355,7 +355,7 @@
                 <div class="card-body p-0">
                     {% if notificationsRead is not empty %}
                         {% for notifications in notificationsRead|slice(0, 5) %}
-                            <a id="unread-notification-index" class="border-bottom-0 notification rounded-0 border-x-0 border-300">
+                            <a id="unread-notification-index" class="border-bottom-0 notification rounded-0 border-x-0 border-300" href="{{ path('admin.notification.show') }}">
                                 <div class="notification-body">
                                     <p class="mb-1">{{ notifications.message|raw }}</p>
                                     <span class="notification-time">

@@ -47,7 +47,7 @@ class KernelRequestSubscriber implements EventSubscriberInterface
         }
 
         $this->twig->addGlobal('notifications', $this->notificationService->getNotifications());
-        $this->twig->addGlobal('notificationsAll', $this->notificationService->getNotificationsAll());
+//        $this->twig->addGlobal('notificationsAll', $this->notificationService->getNotificationsAll());
         $this->twig->addGlobal('notificationsRead', $this->notificationService->getNotificationsRead());
         $this->twig->addGlobal('notificationsNotRead', $this->notificationService->getNotificationsNotRead());
     }
