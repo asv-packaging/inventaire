@@ -238,7 +238,7 @@ class NotificationService
         $lastRunDateTime = new DateTime($lastRun);
         $now = new DateTime();
 
-        return $now->format('Y-m-d') !== $lastRunDateTime->format('Y-m-d') && $now->format('H') == 8;
+        return $now->format('Y-m-d') !== $lastRunDateTime->format('Y-m-d');
     }
 
     public function updateLastRunTime(): void
