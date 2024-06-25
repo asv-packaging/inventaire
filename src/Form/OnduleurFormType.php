@@ -87,10 +87,10 @@ class OnduleurFormType extends AbstractType
                 'required' => false,
             ])
             ->add('date_garantie', TextType::class, [
-                'label' => 'Date de garantie',
+                'label' => 'Date de remplacement',
                 'attr' => [
                     'class' => 'datetimepicker',
-                    'placeholder' => 'Date de garantie'
+                    'placeholder' => 'Date de remplacement'
                 ],
                 'required' => false,
             ])

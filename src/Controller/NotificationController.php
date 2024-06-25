@@ -42,6 +42,8 @@ class NotificationController extends AbstractController
 
         $entityManager->flush();
 
+        $this->addFlash('success', 'Toutes les notifications ont été marquées comme lues');
+
         return $this->redirectToRoute('admin.notification.show');
     }
 

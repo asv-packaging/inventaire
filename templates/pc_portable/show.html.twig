@@ -23,18 +23,18 @@
     </div>
     <div class="row g-0">
         <div class="col-lg-12 ps-lg-2">
-            {% for message in app.flashes('success') %}
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <strong>Parfait :</strong> {{ message }}
-                    <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            {% endfor %}
-            {% for message in app.flashes('danger') %}
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <strong>Erreur :</strong> {{ message }}
-                    <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            {% endfor %}
+{#            {% for message in app.flashes('success') %}#}
+{#                <div class="alert alert-success alert-dismissible fade show" role="alert">#}
+{#                    <strong>Parfait :</strong> {{ message }}#}
+{#                    <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>#}
+{#                </div>#}
+{#            {% endfor %}#}
+{#            {% for message in app.flashes('danger') %}#}
+{#                <div class="alert alert-danger alert-dismissible fade show" role="alert">#}
+{#                    <strong>Erreur :</strong> {{ message }}#}
+{#                    <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>#}
+{#                </div>#}
+{#            {% endfor %}#}
             <div class="sticky-sidebar">
                 {# Sélection automatique de l'option dans le menu déroulant #}
                 {% set selectedRecherche = app.request.query.get('par') %}
@@ -223,6 +223,14 @@
                 // Affiche à nouveau le bouton de recherche
                 document.getElementById('btn-search').style.display = 'inline-block';
             });
+
+            {% for message in app.flashes('success') %}
+            toastr.success("{{ message }}", "Parfait :");
+            {% endfor %}
+
+            {% for message in app.flashes('danger') %}
+            toastr.error("{{ message }}", "Erreur :");
+            {% endfor %}
         });
     </script>
 {% endblock %}
