@@ -159,7 +159,7 @@ class TelephoneFixeController extends AbstractController
         if($telephoneForm->isSubmitted() && $telephoneForm->isValid())
         {
             $slugger = new AsciiSlugger();
-            $nom = $telephoneForm->get('nom')->getData();
+            $nom = $telephoneForm->get('ligne')->getData();
             $slug = strtolower($slugger->slug($nom));
 
             $telephone->setSlug($slug);
@@ -196,7 +196,7 @@ class TelephoneFixeController extends AbstractController
         if($telephoneForm->isSubmitted() && $telephoneForm->isValid())
         {
             $slugger = new AsciiSlugger();
-            $nom = $telephoneForm->get('nom')->getData();
+            $nom = $telephoneForm->get('ligne')->getData();
             $slug = strtolower($slugger->slug($nom));
 
             $telephone->setSlug($slug);

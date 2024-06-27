@@ -150,10 +150,10 @@ class TelephonePortableController extends AbstractController
         if($telephoneForm->isSubmitted() && $telephoneForm->isValid())
         {
             $slugger = new AsciiSlugger();
-            $nom = $telephoneForm->get('nom')->getData();
+            $nom = $telephoneForm->get('ligne')->getData();
             $slug = strtolower($slugger->slug($nom));
 
-            $telephoneForm->setSlug($slug);
+            $telephone->setSlug($slug);
 
             $entityManager->persist($telephone);
             $entityManager->flush();
@@ -187,10 +187,10 @@ class TelephonePortableController extends AbstractController
         if($telephoneForm->isSubmitted() && $telephoneForm->isValid())
         {
             $slugger = new AsciiSlugger();
-            $nom = $telephoneForm->get('nom')->getData();
+            $nom = $telephoneForm->get('ligne')->getData();
             $slug = strtolower($slugger->slug($nom));
 
-            $telephoneForm->setSlug($slug);
+            $telephone->setSlug($slug);
 
             $notificationService->deleteNotification("telephone_portable", $telephone->getId());
 
