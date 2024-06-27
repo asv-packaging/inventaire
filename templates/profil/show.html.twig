@@ -1,0 +1,159 @@
+{% extends 'gui/partials/base.html.twig' %}
+
+{% block title %}Gérer mon compte{% endblock %}
+
+{% block body %}
+    <div class="d-flex mb-4 mt-3">
+        <span class="fa-stack me-2 ms-n1">
+            <i class="fas fa-circle fa-stack text-300"></i>
+            <i class="fa-inverse fa-stack-1x text-danger fas fa-user-edit"></i>
+        </span>
+        <div class="col">
+            <h5 class="mb-0 text-danger position-relative">
+                <span class="bg-200 dark__bg-1100 pe-3">Profil</span>
+                <span class="border position-absolute top-50 translate-middle-y w-100 start-0 z-n1"></span>
+            </h5>
+            <p class="mb-0">Cette page permet l'édition du compte.</p>
+        </div>
+    </div>
+    <div class="row g-0">
+        <div class="col-12">
+            <div class="card mb-3 btn-reveal-trigger">
+                <div class="card-header position-relative min-vh-25 mb-7">
+                    <div class="cover-image">
+                        <div class="bg-holder rounded-3 rounded-bottom-0" style="background-image:url({{ asset('assets/img/connexion/ASV.jpg') }});"></div>
+                    </div>
+                    <div class="avatar avatar-5xl avatar-profile shadow-sm img-thumbnail rounded-circle">
+                        <div class="h-100 w-100 rounded-circle overflow-hidden position-relative">
+                            <img src="{{ asset('assets/img/favicons/favicon-removebg.png') }}" width="200" alt="" data-dz-thumbnail="data-dz-thumbnail" />
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h4 class="mb-1">
+                                {{ utilisateur.nom }}
+                                {% if 'ROLE_ADMIN' in utilisateur.roles %}
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="#0095f6">
+                                        <path d="m339.09-47.69-78.96-131.92-150.04-33.69 14.13-152.48L23.13-480l101.09-114.22-14.13-152.48 150.04-33.69 78.96-131.92L480-851.91l140.91-60.4 78.96 131.92 150.04 33.69-14.13 152.48L936.87-480 835.78-365.78l14.13 152.48-150.04 33.69-78.96 131.92L480-108.09l-140.91 60.4ZM429-329.78 673.22-573l-57.79-56.65L429-444.22l-84.43-84.56L286.78-471 429-329.78Z"/>
+                                    </svg>
+                                {% endif %}
+                            </h4>
+                            <h5 class="fs-9 fw-normal">
+                                {% if "ROLE_ADMIN" in utilisateur.roles %}
+                                    <span class="badge bg-danger">Administrateur</span>
+                                {% endif %}
+                            </h5>
+                            <div class="border-bottom border-dashed my-4 d-lg-none"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row g-0">
+        <div class="col-lg-8 pe-lg-2">
+{#            {% for message in app.flashes('success-information') %}#}
+{#                <div class="alert alert-success alert-dismissible fade show" role="alert">#}
+{#                    <strong>Parfait :</strong> {{ message }}#}
+{#                    <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>#}
+{#                </div>#}
+{#            {% endfor %}#}
+{#            {% for message in app.flashes('danger-information') %}#}
+{#                <div class="alert alert-danger alert-dismissible fade show" role="alert">#}
+{#                    <strong>Erreur :</strong> {{ message }}#}
+{#                    <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>#}
+{#                </div>#}
+{#            {% endfor %}#}
+            <div class="card mb-3">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Édition du profil</h5>
+                </div>
+                <div class="card-body bg-body-tertiary">
+                    {{ form_start(profilForm) }}
+                    <div class="row">
+                        <div class="col-lg-12">
+                            {{ form_row(profilForm.email) }}
+                        </div>
+                        <div class="col-lg-12">
+                            {{ form_row(profilForm.nom) }}
+                        </div>
+                    </div>
+                    <label class="fw-medium">
+                        <a style="color: red">*</a>
+                        Champs obligatoires
+                    </label>
+                    <div class="d-flex justify-content-end">
+                        <button class="btn btn-primary me-1 mb-1" type="submit">
+                            <span class="fas fa-floppy-disk"></span>
+                            Mettre à jour
+                        </button>
+                    </div>
+                    {{ form_end(profilForm) }}
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 ps-lg-2">
+            <div class="sticky-sidebar">
+{#                {% for message in app.flashes('success-mot-de-passe') %}#}
+{#                    <div class="alert alert-success alert-dismissible fade show" role="alert">#}
+{#                        <strong>Parfait :</strong> {{ message }}#}
+{#                        <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>#}
+{#                    </div>#}
+{#                {% endfor %}#}
+{#                {% for message in app.flashes('danger-mot-de-passe') %}#}
+{#                    <div class="alert alert-danger alert-dismissible fade show" role="alert">#}
+{#                        <strong>Erreur :</strong> {{ message }}#}
+{#                        <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>#}
+{#                    </div>#}
+{#                {% endfor %}#}
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <h5 class="mb-0">Changer le mot de passe</h5>
+                    </div>
+                    <div class="card-body bg-body-tertiary">
+                        {{ form_start(profilPasswordForm) }}
+                        <div class="row">
+                            <div class="col-lg-12">
+                                {{ form_row(profilPasswordForm.password) }}
+                            </div>
+                        </div>
+                        <label class="fw-medium">
+                            <a style="color: red">*</a>
+                            Champs obligatoires
+                        </label>
+                        <div class="d-flex justify-content-end">
+                            <button class="btn btn-primary me-1 mb-1" type="submit">
+                                <span class="fas fa-floppy-disk"></span>
+                                Mettre à jour
+                            </button>
+                        </div>
+                        {{ form_end(profilPasswordForm) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            {% for message in app.flashes('success-information') %}
+                toastr.success("{{ message }}", "Parfait :");
+            {% endfor %}
+
+            {% for message in app.flashes('success-password') %}
+                toastr.success("{{ message }}", "Parfait :");
+            {% endfor %}
+
+            {% for message in app.flashes('danger-information') %}
+                toastr.error("{{ message }}", "Erreur :");
+            {% endfor %}
+            {% for message in app.flashes('danger-password') %}
+                toastr.error("{{ message }}", "Erreur :");
+            {% endfor %}
+        });
+    </script>
+{% endblock %}

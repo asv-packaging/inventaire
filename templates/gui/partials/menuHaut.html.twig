@@ -49,7 +49,7 @@
                                 <div class="list-group-title border-bottom" id="non-lu">NON LU</div>
                                 {% for notifications in notificationsNotRead %}
                                     <div class="list-group-item" id="non-lu">
-                                        <a class="notification notification-flush notification-unread">
+                                        <a class="notification notification-flush notification-unread" href="{{ path('admin.notification.show') }}">
                                             <div class="notification-body">
                                                 <p class="mb-1">{{ notifications.message|raw }}</p>
                                                 <span class="notification-time">
@@ -102,6 +102,11 @@
             </a>
             <div class="dropdown-menu dropdown-caret dropdown-caret dropdown-menu-end py-0" aria-labelledby="navbarDropdownUser">
                 <div class="bg-white dark__bg-1000 rounded-2 py-2">
+                    <a class="dropdown-item" href="{{ path('admin.profil.show') }}">
+                        <i class="fas fa-user-edit"></i>
+                        Gérer mon compte
+                    </a>
+                    <div class="dropdown-divider"></div>
                     <a style="color: red" class="dropdown-item" href="{{ path('admin.security.deconnexion') }}">
                         <i class="fas fa-sign-out-alt"></i>
                         Se déconnecter
