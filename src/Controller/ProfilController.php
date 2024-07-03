@@ -27,7 +27,7 @@ class ProfilController extends AbstractController
         {
             $entityManager->flush();
 
-            $this->addFlash('success-information', 'Vos informations ont bien été modifiées !!');
+            $this->addFlash('success-information', 'Vos informations ont bien été modifiées !');
 
             return $this->redirectToRoute('admin.profil.show');
         }
