@@ -101,7 +101,7 @@ class OnduleurController extends AbstractController
                     $onduleur->getTypePrise() ?? 'N/A',
                     $onduleur->getEmplacement()->getNom(),
                     $onduleur->getEntreprise() !== null ? $onduleur->getEntreprise()->getNom() : 'N/A',
-                    $onduleur->getFournisseur()->getNom(),
+                    $onduleur->getFournisseur() !== null ? $onduleur->getFournisseur()->getNom() : 'N/A',
                     $onduleur->getEtat()->getNom(),
                     $onduleur->getDateInstallation() ?? 'N/A',
                     $onduleur->getDateAchat() ?? 'N/A',

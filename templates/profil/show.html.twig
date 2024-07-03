@@ -40,11 +40,11 @@
                                     </svg>
                                 {% endif %}
                             </h4>
-                            <h5 class="fs-9 fw-normal">
-                                {% if "ROLE_ADMIN" in utilisateur.roles %}
-                                    <span class="badge bg-danger">Administrateur</span>
-                                {% endif %}
-                            </h5>
+{#                            <h5 class="fs-9 fw-normal">#}
+{#                                {% if "ROLE_ADMIN" in utilisateur.roles %}#}
+{#                                    <span class="badge bg-danger">Administrateur</span>#}
+{#                                {% endif %}#}
+{#                            </h5>#}
                             <div class="border-bottom border-dashed my-4 d-lg-none"></div>
                         </div>
                     </div>
@@ -70,7 +70,7 @@
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <h5 class="mb-0">Édition du profil</h5>
                 </div>
-                <div class="card-body bg-body-tertiary">
+                <div class="card-body bg-light">
                     {{ form_start(profilForm) }}
                     <div class="row">
                         <div class="col-lg-12">
@@ -112,7 +112,7 @@
                     <div class="card-header">
                         <h5 class="mb-0">Changer le mot de passe</h5>
                     </div>
-                    <div class="card-body bg-body-tertiary">
+                    <div class="card-body bg-light">
                         {{ form_start(profilPasswordForm) }}
                         <div class="row">
                             <div class="col-lg-12">
